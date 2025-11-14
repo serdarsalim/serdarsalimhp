@@ -1,0 +1,40 @@
+import { Project } from '../types';
+
+export const projects: Project[] = [
+  {
+    id: 'culturia',
+    name: 'Culturia',
+    letter: 'C',
+    shortDescription: 'Interactive world map exploring global music culture through curated playlists',
+    fullDescription: 'An immersive platform that combines YouTube playlists with an interactive world map interface. Discover music from every corner of the globe, explore cultural connections, and build your own musical journey across continents. Features real-time playlist syncing, cultural insights, and community-driven curation.',
+    techStack: ['React', 'TypeScript', 'Three.js', 'YouTube API', 'Mapbox'],
+    year: '2024',
+    category: 'Web App',
+    demoUrl: 'https://culturia.demo',
+    githubUrl: 'https://github.com/yourusername/culturia',
+  },
+  {
+    id: 'budget-tracker',
+    name: 'Budget Tracker',
+    letter: 'B',
+    shortDescription: 'Smart personal finance app with AI-powered insights and expense tracking',
+    fullDescription: 'A comprehensive budget tracking application that helps you monitor your expenses, set financial goals, and gain insights into your spending habits. Features include automated transaction categorization, spending predictions, budget alerts, and beautiful data visualizations to help you make informed financial decisions.',
+    techStack: ['Next.js', 'PostgreSQL', 'Prisma', 'Chart.js', 'Tailwind'],
+    year: '2024',
+    category: 'Finance',
+    demoUrl: 'https://budget-tracker.demo',
+    githubUrl: 'https://github.com/yourusername/budget-tracker',
+  },
+  {
+    id: 'workout-tracker',
+    name: 'Workout Tracker',
+    letter: 'W',
+    shortDescription: 'Fitness companion with workout logging, progress analytics, and social features',
+    fullDescription: 'A comprehensive fitness tracking app designed to help you record workouts, track progress over time, and achieve your health goals. Features include customizable workout routines, progress photos, body metrics tracking, rest timer, personal records, and achievement system to keep you motivated.',
+    techStack: ['React Native', 'Node.js', 'MongoDB', 'Express', 'Firebase'],
+    year: '2023',
+    category: 'Mobile App',
+    demoUrl: 'https://workout-tracker.demo',
+    githubUrl: 'https://github.com/yourusername/workout-tracker',
+  },
+];
