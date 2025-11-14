@@ -33,15 +33,15 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 flex items-center min-h-screen">
-        <div className="grid md:grid-cols-2 gap-12 items-end w-full -ml-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo */}
-          <div className="relative animate-fade-in-up flex justify-center self-start -mt-64">
+          <div className="flex relative animate-fade-in-up justify-center self-start -mt-48 md:-mt-64">
             <div className="relative">
               <img
                 src="/profile.png"
                 alt="Serdar Salim"
-                className="w-full max-w-md object-contain drop-shadow-2xl"
+                className="w-full max-w-xs md:max-w-md object-contain drop-shadow-2xl"
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
@@ -51,30 +51,40 @@ export default function Hero() {
           </div>
 
           {/* Right side - Text */}
-          <div className="space-y-6 animate-fade-in-up animation-delay-200">
+          <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-48">
             {/* Title */}
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-900">
               Portfolio
             </h1>
 
             {/* Name - casual handwriting style */}
-            <p className="text-3xl md:text-4xl text-gray-700" style={{ fontFamily: 'var(--font-caveat)' }}>
+            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-700" style={{ fontFamily: 'var(--font-caveat)' }}>
               Serdar Salim
             </p>
 
             {/* Subtitle */}
-            <div className="text-base md:text-lg text-gray-600 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-              <p>Product Manager & Developer</p>
-              <p>Building software that solves problems</p>
+            <div className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+              <p>Builds software that solves problems</p>
+              <p>Creates content that inspires</p>
+              <p>Dreams by the day</p>
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-4">
+            {/* CTA Button - Islamic Pattern */}
+            <div className="pt-4 flex justify-center md:justify-start">
               <a
                 href="#projects"
-                className="inline-block px-8 py-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-all duration-200 shadow-lg shadow-teal-200"
+                className="group relative inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-teal-600 text-white rounded-lg font-medium overflow-hidden shadow-lg shadow-teal-200 hover:shadow-xl transition-shadow text-sm md:text-base"
               >
-                View My Work
+                {/* 2 rotating squares Islamic pattern */}
+                <div className="relative w-6 h-6 md:w-8 md:h-8 flex-shrink-0">
+                  {/* Outer square - clockwise */}
+                  <div className="absolute inset-0 border-2 border-white/40 transform group-hover:rotate-45 transition-transform duration-1000"></div>
+
+                  {/* Inner square - counter-clockwise */}
+                  <div className="absolute inset-2 border-2 border-white/60 transform group-hover:-rotate-45 transition-transform duration-1000"></div>
+                </div>
+
+                <span className="relative z-10">View My Work</span>
               </a>
             </div>
           </div>

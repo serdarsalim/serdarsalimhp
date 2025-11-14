@@ -26,22 +26,22 @@ export default function Experience() {
   ];
 
   return (
-    <section className="py-32 bg-white">
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="py-16 md:py-32 bg-white">
+      <div className="max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
-        <div className="mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12">Experience</h2>
-          <div className="space-y-8">
+        <div className="mb-12 md:mb-20">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">Experience</h2>
+          <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, index) => (
-              <div key={index} className="border-l-2 border-gray-200 pl-6">
+              <div key={index} className="border-l-2 border-gray-200 pl-4 md:pl-6">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
-                    <p className="text-gray-600">{exp.company}</p>
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{exp.role}</h3>
+                    <p className="text-sm md:text-base text-gray-600">{exp.company}</p>
                   </div>
-                  <span className="text-sm text-gray-500 mt-1 md:mt-0">{exp.period}</span>
+                  <span className="text-xs md:text-sm text-gray-500 mt-1 md:mt-0">{exp.period}</span>
                 </div>
-                <p className="text-gray-600 leading-relaxed">{exp.description}</p>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
@@ -49,18 +49,18 @@ export default function Experience() {
 
         {/* Education */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-12">Education</h2>
-          <div className="space-y-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">Education</h2>
+          <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
-              <div key={index} className="border-l-2 border-gray-200 pl-6">
+              <div key={index} className="border-l-2 border-gray-200 pl-4 md:pl-6">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900">{edu.degree}</h3>
-                    <p className="text-gray-600">{edu.school}</p>
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{edu.degree}</h3>
+                    <p className="text-sm md:text-base text-gray-600">{edu.school}</p>
                   </div>
-                  <span className="text-sm text-gray-500 mt-1 md:mt-0">{edu.period}</span>
+                  <span className="text-xs md:text-sm text-gray-500 mt-1 md:mt-0">{edu.period}</span>
                 </div>
-                <p className="text-gray-600 leading-relaxed">{edu.description}</p>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">{edu.description}</p>
               </div>
             ))}
           </div>
