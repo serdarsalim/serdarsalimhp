@@ -1,16 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
-import ProjectModal from './components/ProjectModal';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
+import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
-import { Project } from './types';
 
 export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -85,14 +82,14 @@ export default function Home() {
       <Hero />
 
       {/* Projects Section */}
-      <section id="projects" className="py-16 md:py-32 bg-gradient-to-b from-teal-50 to-orange-50">
+      <section id="projects" className="relative py-16 md:py-32 bg-gradient-to-b from-teal-50 to-orange-50">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-              Featured Projects
+              Selected Projects
             </h2>
             <p className="text-base md:text-lg text-gray-600">
-              Building experiences that matter
+              Building forward not backward
             </p>
           </div>
 
@@ -103,14 +100,14 @@ export default function Home() {
                 className="animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <ProjectCard
-                  project={project}
-                  onClick={() => setSelectedProject(project)}
-                />
+                <ProjectCard project={project} />
               </div>
             ))}
           </div>
         </div>
+
+        {/* Subtle Islamic pattern - fades upward */}
+        <IslamicPattern position="bottom" variant={1} />
       </section>
 
       {/* Experience Section */}
@@ -127,12 +124,6 @@ export default function Home() {
           </p>
         </div>
       </footer>
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
     </div>
   );
 }

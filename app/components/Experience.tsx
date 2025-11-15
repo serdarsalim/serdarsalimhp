@@ -1,32 +1,34 @@
 'use client';
 
+import IslamicPattern from './IslamicPattern';
+
 export default function Experience() {
   const experiences = [
     {
       company: 'Twitter',
-      role: 'Program Manager, Global Training',
+      role: 'Training & Quality Program Manager',
       period: '2013 - 2023',
-      description: 'Led global training programs and content localization across 50+ countries. Started as localization specialist and grew into program management role.',
+      description: 'Led crisis management initiatives for content moderation and online safety training during critical incidents. Managed training for new hires and policy changes across 100+ support policies. Built strong cross-functional relationships with Quality Teams, Vendor Partners, Engineering and Policy Owners. Facilitated the launch of multiple vendor sites in over 10 locations worldwide.',
     },
     {
       company: 'Webzen',
-      role: 'Community Manager',
+      role: 'Localisation and Support Specialist',
       period: '2012 - 2013',
-      description: 'Managed community engagement and player relations for international gaming community.',
+      description: 'Translated, proofread, and tested video game content from English to Turkish. Provided customer support via email and organized events for the player community.',
     },
   ];
 
   const education = [
     {
-      school: 'University',
-      degree: 'Transcultural Communication',
-      period: '2007 - 2011',
+      school: 'University of Graz',
+      degree: 'Bachelor of Arts in Transcultural Communication',
+      period: '2008 - 2012',
       description: 'Studied communication across cultures, languages, and systems.',
     },
   ];
 
   return (
-    <section className="py-16 md:py-32 bg-white">
+    <section className="relative py-16 md:py-32 bg-gradient-to-b from-blue-50 to-purple-100">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">
@@ -66,6 +68,9 @@ export default function Experience() {
           </div>
         </div>
       </div>
+
+      {/* Subtle Islamic pattern - fades upward */}
+      <IslamicPattern position="bottom" variant={1} />
     </section>
   );
 }
