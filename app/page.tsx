@@ -198,7 +198,7 @@ export default function Home() {
       <footer className="py-8 md:py-12 bg-white border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
           <p className="text-gray-500 text-xs md:text-sm">
-            © {new Date().getFullYear()} All rights reserved.
+            © {new Date().getFullYear()} — All rights reseved, some lefts unreserved.
           </p>
         </div>
       </footer>

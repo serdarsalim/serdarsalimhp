@@ -19,13 +19,13 @@ export default function Contact() {
           <div className="flex flex-col md:grid md:grid-cols-3 gap-5 md:gap-8">
             {/* Email */}
             <a
-              href="mailto:serdar.dom@gmail.com"
-              className="group flex items-center justify-center md:justify-start gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+              href="mailto:contact@serdarsalim.com"
+              className="group flex items-center justify-center md:justify-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="font-medium text-sm md:text-base break-all">serdar.dom@gmail.com</span>
+              <span className="font-medium text-sm md:text-base break-all">contact@serdarsalim.com</span>
             </a>
 
             {/* LinkedIn */}
@@ -46,7 +46,7 @@ export default function Contact() {
               href="https://tiktok.com/@salimspoke"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center md:justify-start gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+              className="group flex items-center justify-center md:justify-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
