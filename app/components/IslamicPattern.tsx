@@ -14,16 +14,18 @@ export default function IslamicPattern({
     : 'linear-gradient(to bottom, black 0%, black 30%, transparent 100%)';
 
   return (
-    <div
-      className={`absolute left-0 right-0 h-32 pointer-events-none overflow-hidden z-10 ${
-        position === 'bottom' ? 'bottom-0' : 'top-0'
-      }`}
-      style={{
-        maskImage: gradientDirection,
-        WebkitMaskImage: gradientDirection,
-        opacity: 0.12
-      }}
-    >
+    <>
+      {/* Desktop: Bottom of section */}
+      <div
+        className={`hidden md:block absolute left-0 right-0 h-32 overflow-hidden z-10 ${
+          position === 'bottom' ? 'bottom-0' : 'top-0'
+        }`}
+        style={{
+          maskImage: gradientDirection,
+          WebkitMaskImage: gradientDirection,
+          opacity: 0.2
+        }}
+      >
       <svg
         className="w-full h-full"
         viewBox="0 0 1200 120"
@@ -72,7 +74,7 @@ export default function IslamicPattern({
             fill="none"
             stroke="currentColor"
             strokeWidth="6"
-            className="text-teal-600 square-teal"
+            className="text-purple-600 square-teal"
             opacity="0.6"
           />
 
@@ -91,5 +93,6 @@ export default function IslamicPattern({
         </g>
       </svg>
     </div>
+  </>
   );
 }

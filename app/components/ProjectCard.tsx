@@ -8,33 +8,53 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div
-      className="group relative overflow-hidden rounded-xl md:rounded-2xl bg-white border border-gray-200 hover:border-purple-300 transition-all duration-500 hover:shadow-xl"
-    >
-      <div className="p-5 md:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-6">
+    <div className="group relative overflow-hidden rounded-xl md:rounded-2xl bg-white border border-gray-200 hover:border-purple-300 transition-all duration-500">
+      <div className="p-3 pr-4 md:pr-6">
+        <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-4 md:gap-6">
           {/* Left Column - Logo, Title, Links */}
-          <div className="flex flex-col md:min-w-[280px]">
-            <div className="flex items-center gap-3 md:gap-4 mb-4">
+          <div className="flex flex-col md:min-w-[220px]">
+            <div className="flex flex-row md:flex-col items-center md:items-center gap-3 md:gap-3 mb-4 text-left md:text-center">
               {/* Logo */}
               {project.image ? (
-                <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-200">
-                  <img src={project.image} alt={`${project.name} logo`} className="w-full h-full object-contain" />
-                </div>
+                project.demoUrl ? (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-200"
+                  >
+                    <img src={project.image} alt={`${project.name} logo`} className="w-full h-full object-contain" />
+                  </a>
+                ) : (
+                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-200">
+                    <img src={project.image} alt={`${project.name} logo`} className="w-full h-full object-contain" />
+                  </div>
+                )
               ) : (
-                <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
-                  {project.letter}
-                </div>
+                project.demoUrl ? (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm"
+                  >
+                    {project.letter}
+                  </a>
+                ) : (
+                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
+                    {project.letter}
+                  </div>
+                )
               )}
 
               {/* Title & Category */}
-              <div>
+              <div className="flex-1">
                 {project.demoUrl ? (
                   <a
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg md:text-xl font-semibold text-gray-900 hover:text-teal-600 mb-1 inline-block transition-colors"
+                    className="text-lg md:text-xl font-semibold text-gray-900 hover:text-purple-600 mb-1 inline-block transition-colors"
                   >
                     {project.name}
                   </a>

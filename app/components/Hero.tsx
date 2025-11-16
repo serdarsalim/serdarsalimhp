@@ -30,10 +30,28 @@ export default function Hero() {
   }, [isHoveringPhoto]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Subtle space video anchored at bottom with fade upward */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
+        <video
+          className="w-full h-full object-cover pointer-events-none"
+          src="/universe.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          style={{
+            maskImage: 'linear-gradient(to top, black 30%, black 30%, transparent 70%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 30%, black 30%, transparent 70%, transparent 100%)',
+          }}
+        />
+      </div>
+
       {/* Import statement will be at top of file */}
+
       {/* Mountain sunset gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-100 via-purple-100 to-blue-200">
+      <div className="absolute inset-0 bg-gradient-to-b from-orange-100/70 via-purple-100/70 to-blue-200/70">
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -52,9 +70,9 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo with video overlay */}
-          <div className="flex relative animate-fade-in-up justify-center self-start -mt-48 md:-mt-64">
+          <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-64">
             <div
-              className="relative cursor-pointer"
+              className="relative"
               onMouseEnter={() => setIsHoveringPhoto(true)}
               onMouseLeave={() => setIsHoveringPhoto(false)}
               onClick={() => setIsHoveringPhoto(!isHoveringPhoto)}
@@ -92,33 +110,37 @@ export default function Hero() {
           {/* Right side - Text */}
           <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-48">
             {/* Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900">
               Portfolio
             </h1>
 
             {/* Name - casual handwriting style */}
-            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-700" style={{ fontFamily: 'var(--font-caveat)' }}>
+            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-900 font-semibold" style={{ fontFamily: 'var(--font-caveat)' }}>
               Serdar Salim
             </p>
 
             {/* Subtitle */}
-            <div className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-              <p>Builds software that solves problems</p>
-              <p>Creates content that inspires</p>
-              <p>Dreamer of the day</p>
+            <div className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+              <p className="font-semibold">Builds software that solves problems</p>
+              <p className="font-semibold">Creates content that inspires</p>
+              <p className="font-semibold">Dreamer of the day</p>
             </div>
 
             {/* Subtle CTA that matches the design */}
             <div className="pt-6 flex justify-center md:justify-start">
               <a
                 href="#projects"
-                className="group inline-flex items-center gap-3 px-6 py-3 bg-white/60 backdrop-blur-sm border border-teal-200 rounded-lg text-gray-700 hover:bg-teal-50 hover:border-teal-300 transition-all duration-300"
+                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-gray-900 font-medium bg-white/75 backdrop-blur-md border border-slate-200 shadow-lg shadow-slate-300/50 hover:shadow-xl hover:shadow-slate-400/60 transition-all duration-300 overflow-hidden"
                 style={{ fontFamily: 'var(--font-jetbrains)' }}
               >
-                <span className="text-base md:text-lg font-medium">View my work</span>
-                <svg className="w-5 h-5 transform group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                {/* Glow sweep */}
+                <span className="absolute inset-0 bg-gradient-to-r from-indigo-200/0 via-white/50 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden />
+                <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                  <span>View my work</span>
+                  <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
+                  </svg>
+                </span>
               </a>
             </div>
 
