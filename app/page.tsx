@@ -12,10 +12,11 @@ export default function Home() {
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showNavBrand, setShowNavBrand] = useState(false);
+  const [isNavHovered, setIsNavHovered] = useState(false);
 
   const taglines = [
     { text: "Building forward not backward", animation: "moveForward" },
-    { text: "Actually building backwards and shipping forwards", animation: "moveBackward" },
+    { text: "Building backwards and shipping forwards", animation: "moveBackward" },
     { text: "Actually sometimes building sideways", animation: "moveSideways" },
     { text: "Building in circles!", animation: "moveCircles" }
   ];
@@ -35,15 +36,15 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const hero = document.getElementById('hero-section');
-    if (!hero) return;
+    const heroTitle = document.getElementById('hero-title');
+    if (!heroTitle) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => setShowNavBrand(!entry.isIntersecting),
-      { threshold: 0.2 }
+      { threshold: 0 }
     );
 
-    observer.observe(hero);
+    observer.observe(heroTitle);
     return () => observer.disconnect();
   }, []);
 
@@ -78,11 +79,14 @@ export default function Home() {
             {showNavBrand && (
               <a
                 href="#"
-                className="inline-flex items-center text-lg md:text-xl font-semibold text-gray-900 transition-opacity"
-                style={{ letterSpacing: '0.05em' }}
+                className="inline-flex items-center text-lg md:text-xl font-extrabold tracking-tight text-gray-900 transition-opacity select-none cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsNavHovered(!isNavHovered);
+                }}
               >
-                <span className="leading-none" style={{ fontFamily: 'var(--font-caveat)' }}>
-                  serdarsalim
+                <span className="leading-none transition-all duration-300">
+                  {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
                 </span>
               </a>
             )}

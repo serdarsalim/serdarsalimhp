@@ -6,6 +6,7 @@ import IslamicPattern from './IslamicPattern';
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringPhoto, setIsHoveringPhoto] = useState(false);
+  const [isHoveringName, setIsHoveringName] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -110,13 +111,17 @@ export default function Hero() {
           {/* Right side - Text */}
           <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-48">
             {/* Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900">
-              Portfolio
+            <h1
+              id="hero-title"
+              className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 select-none cursor-pointer transition-all duration-300"
+              onClick={() => setIsHoveringName(!isHoveringName)}
+            >
+              {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
             </h1>
 
-            {/* Name - casual handwriting style */}
-            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-900 font-semibold" style={{ fontFamily: 'var(--font-caveat)' }}>
-              Serdar Salim
+            {/* Location - casual handwriting style */}
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold" style={{ fontFamily: 'var(--font-caveat)' }}>
+              Based in Malaysia 🇲🇾
             </p>
 
             {/* Subtitle */}

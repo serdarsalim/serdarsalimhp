@@ -24,8 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Project portfolio showcase",
+  title: "Serdar Salim",
+  description: "Serdar Salim - Builder, Creator, Dreamer",
 };
 
 export default function RootLayout({
