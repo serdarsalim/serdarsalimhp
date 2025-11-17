@@ -8,19 +8,16 @@ export default function Contact() {
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-            Connect With Me
+            Let's Connect
           </h2>
-          <p className="text-base md:text-lg text-gray-600">
-            Have a project in mind? I'd love to hear about it.
-          </p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-6 md:p-12 border border-purple-200">
+        <div className="p-6 md:p-12 bg-white/80 backdrop-blur-sm rounded-2xl border border-purple-200">
           <div className="flex flex-col md:grid md:grid-cols-3 gap-5 md:gap-8">
             {/* Email */}
             <a
               href="mailto:contact@serdarsalim.com"
-              className="group flex items-center justify-center md:justify-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center justify-center md:justify-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

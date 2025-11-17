@@ -134,14 +134,13 @@ export default function Hero() {
             {/* Subtle CTA that matches the design */}
             <div className="pt-6 flex justify-center md:justify-start">
               <a
-                href="#projects"
-                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-gray-900 font-medium bg-white/75 backdrop-blur-md border border-slate-200 shadow-lg shadow-slate-300/50 hover:shadow-xl hover:shadow-slate-400/60 transition-all duration-300 overflow-hidden"
+                href="#about"
+                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-gray-900 font-medium bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                 style={{ fontFamily: 'var(--font-jetbrains)' }}
               >
-                {/* Glow sweep */}
-                <span className="absolute inset-0 bg-gradient-to-r from-indigo-200/0 via-white/50 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden />
+                <span className="absolute inset-0 bg-gradient-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
                 <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
-                  <span>View my work</span>
+                  <span>About me</span>
                   <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                   </svg>

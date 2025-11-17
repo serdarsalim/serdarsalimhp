@@ -133,6 +133,101 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
+      {/* About Section */}
+      <section id="about" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
+        {/* Video Background */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/stars.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          style={{ filter: 'blur(0px)' }}
+          onLoadedMetadata={(e) => {
+            e.currentTarget.playbackRate = 0.5;
+          }}
+        />
+
+        {/* Black Overlay */}
+        <div className="absolute inset-0 bg-black opacity-70"></div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24">
+          <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 md:mb-8 text-center" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' }}>
+            About Me
+          </h2>
+          <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
+            <p>
+              I'm Serdar Salim. I design tools that solve some of your problems and create content on Islamic values and living with purpose. I'm currently based in Malaysia, after living in five countries 🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬.
+            </p>
+            <p>
+              I was born into poverty in Türkiye. Migrated to Austria as part of the{' '}
+              <a
+                href="https://en.wikipedia.org/wiki/Gastarbeiter"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 underline"
+              >
+                Gastarbeiter
+              </a>
+              {' '}wave. I was expected to integrate fully into the system as a low-skilled worker. But I didn't fit in.
+            </p>
+            <p>
+              So I chose a different route: graduated university as the first person in my family to do so. Upgraded my status from immigrant to expat by moving to Ireland as a tech employee. Became a global training manager at Twitter. Visited 50+ countries. I left the corporate world in 2023.
+            </p>
+            <p>
+              Now I'm married and raising a daughter.
+            </p>
+            <p className="pt-2">
+              What drives me: contributing to a future where Muslims aren't the immigrants.
+            </p>
+            <p className="pt-2">
+              Read more on my{' '}
+              <a
+                href="https://halqa.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 font-medium underline"
+              >
+                blog
+              </a>
+              . Watch more on my{' '}
+              <a
+                href="https://tiktok.com/@salimspoke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 font-medium underline"
+              >
+                TikTok
+              </a>
+              .
+            </p>
+
+            {/* View my work button */}
+            <div className="pt-8 flex justify-center">
+              <a
+                href="#projects"
+                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-medium bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                style={{ fontFamily: 'var(--font-jetbrains)' }}
+              >
+                <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
+                <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                  <span>View my work</span>
+                  <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Subtle Islamic pattern - fades upward */}
+        <IslamicPattern position="bottom" variant={1} />
+      </section>
+
       {/* Projects Section */}
       <section
         id="projects"
