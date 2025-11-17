@@ -26,6 +26,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Serdar Salim",
   description: "Serdar Salim - Builder, Creator, Dreamer",
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/apple-touch-icon.svg',
+  },
 };
 
 export default function RootLayout({

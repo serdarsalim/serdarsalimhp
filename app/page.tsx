@@ -94,12 +94,6 @@ export default function Home() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8 ml-auto">
               <a
-                href="#projects"
-                className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
-              >
-                Projects
-              </a>
-              <a
                 href="https://halqa.co/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -116,10 +110,18 @@ export default function Home() {
             </div>
 
             {/* Mobile Menu - Simplified */}
-            <div className="md:hidden flex items-center gap-4 ml-auto">
+            <div className="md:hidden flex items-center gap-3 ml-auto">
+              <a
+                href="https://halqa.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors text-xs font-medium"
+              >
+                Blog
+              </a>
               <a
                 href="#contact"
-                className="px-3 py-2 bg-linear-to-r from-indigo-500 to-purple-600 text-white rounded-lg text-xs font-medium hover:brightness-110 transition-colors"
+                className="px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors text-xs font-medium"
               >
                 Contact
               </a>

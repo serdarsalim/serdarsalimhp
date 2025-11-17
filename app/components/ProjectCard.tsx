@@ -36,12 +36,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm"
+                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm"
                   >
                     {project.letter}
                   </a>
                 ) : (
-                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
+                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
                     {project.letter}
                   </div>
                 )
@@ -72,9 +72,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Right Column - Description */}
           <div className="flex items-center">
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-              {project.shortDescription}
-            </p>
+            <div className="text-sm md:text-base text-gray-600 leading-relaxed space-y-2">
+              {project.shortDescription.split('\n').map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
           </div>
         </div>
 
