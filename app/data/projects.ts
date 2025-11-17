@@ -36,7 +36,7 @@ export const projects: Project[] = [
     techStack: ['Google Sheets', 'Google Apps Script'],
     year: '2023',
     category: 'Productivity',
-    demoUrl: 'https://docs.google.com/spreadsheets/d/1YvikSdyz43yETDIvrjSJQYkk730nQc3I34jxR0ol6LM/copy?gid=1396586418#gid=1396586418',
+    demoUrl: 'https://slmfit.vercel.app/',
     githubUrl: '',
   },
 ];

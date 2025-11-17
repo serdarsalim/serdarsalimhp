@@ -115,7 +115,7 @@ export default function Home() {
             <div className="md:hidden flex items-center gap-4 ml-auto">
               <a
                 href="#contact"
-                className="px-3 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg text-xs font-medium hover:brightness-110 transition-colors"
+                className="px-3 py-2 bg-linear-to-r from-indigo-500 to-purple-600 text-white rounded-lg text-xs font-medium hover:brightness-110 transition-colors"
               >
                 Contact
               </a>
@@ -198,7 +198,7 @@ export default function Home() {
       <footer className="py-8 md:py-12 bg-white border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
           <p className="text-gray-500 text-xs md:text-sm">
-            © {new Date().getFullYear()} — All rights reseved, some lefts unreserved.
+            © {new Date().getFullYear()} — All rights reserved, some lefts unreserved.
           </p>
         </div>
       </footer>
