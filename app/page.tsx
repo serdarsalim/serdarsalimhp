@@ -160,10 +160,10 @@ export default function Home() {
           </h2>
           <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
             <p>
-              I'm Serdar Salim. I design tools that solve some of your problems and create content on Islamic values and living with purpose. I'm currently based in Malaysia, after living in five countries 🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬.
+              I'm Serdar Salim. I design tools that solve problems and create content on Islamic values and living with purpose. After living in five (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) countries, I now call Malaysia home.
             </p>
             <p>
-              I was born into poverty in Türkiye. Migrated to Austria as part of the{' '}
+              I was born in Türkiye and migrated to Austria as part of the{' '}
               <a
                 href="https://en.wikipedia.org/wiki/Gastarbeiter"
                 target="_blank"
@@ -172,16 +172,15 @@ export default function Home() {
               >
                 Gastarbeiter
               </a>
-              {' '}wave. I was expected to integrate fully into the system as a low-skilled worker. But I didn't fit in.
+              {' '}wave.  I was expected to stay quiet, integrate as a low-skilled worker, and fit in. But I didn’t.
             </p>
             <p>
-              So I chose a different route: graduated university as the first person in my family to do so. Upgraded my status from immigrant to expat by moving to Ireland as a tech employee. Became a global training manager at Twitter. Visited 50+ countries. I left the corporate world in 2023.
-            </p>
+I became the first in my family to graduate university, moved to Ireland as a tech expat, and ended up training teams globally at Twitter. I visited 50+ countries before leaving corporate life in 2023.            </p>
             <p>
-              Now I'm married and raising a daughter.
+              Now I'm married and raising a daughter and building for a different future.
             </p>
             <p className="pt-2">
-              What drives me: contributing to a future where Muslims aren't the immigrants.
+              A future where I don’t have to leave home to give my daughter a good life.
             </p>
             <p className="pt-2">
               Read more on my{' '}
