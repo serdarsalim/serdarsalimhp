@@ -7,6 +7,7 @@ export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringPhoto, setIsHoveringPhoto] = useState(false);
   const [isHoveringName, setIsHoveringName] = useState(false);
+  const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -128,7 +129,25 @@ export default function Hero() {
             <div className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
               <p className="font-semibold">Builds software that solves problems</p>
               <p className="font-semibold">Creates content that inspires</p>
-              <p className="font-semibold">Dreamer of the day</p>
+              <div
+                className="relative cursor-pointer select-none"
+                onClick={() => setIsHoveringQuote(!isHoveringQuote)}
+              >
+                {/* English - always rendered to maintain layout space */}
+                <p
+                  className={`font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
+                >
+                  Be in this world as if you are a<br />
+                  stranger or a wayfarer
+                </p>
+                {/* Arabic - absolute positioned overlay */}
+                <p
+                  className={`absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
+                  style={{ fontFamily: 'var(--font-reem-kufi)' }}
+                >
+                  كن في الدنيا كأنك غريب أو عابر سبيل
+                </p>
+              </div>
             </div>
 
             {/* Subtle CTA that matches the design */}
