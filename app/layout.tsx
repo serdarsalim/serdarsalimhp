@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   title: "Serdar Salim",
   description: "Serdar Salim - Builder, Creator, Dreamer",
   icons: {
-    icon: '/favicon.svg',
-    apple: '/apple-touch-icon.svg',
+    icon: '/favicon-32.png',
+    apple: '/app-logo.png',
   },
   openGraph: {
     title: "Serdar Salim",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     siteName: 'Serdar Salim',
     images: [
       {
-        url: '/app-logo.svg',
-        width: 512,
-        height: 512,
+        url: '/app-logo.png',
+        width: 1024,
+        height: 1024,
         alt: 'Serdar Salim',
       },
     ],
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: "Serdar Salim",
     description: "Builder, Creator, Dreamer",
-    images: ['/app-logo.svg'],
+    images: ['/app-logo.png'],
   },
 };
 
