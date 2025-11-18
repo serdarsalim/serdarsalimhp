@@ -31,6 +31,28 @@ export const metadata: Metadata = {
     icon: '/favicon.svg',
     apple: '/apple-touch-icon.svg',
   },
+  openGraph: {
+    title: "Serdar Salim",
+    description: "Builder, Creator, Dreamer",
+    url: 'https://serdarsalim.com',
+    siteName: 'Serdar Salim',
+    images: [
+      {
+        url: '/app-logo.svg',
+        width: 512,
+        height: 512,
+        alt: 'Serdar Salim',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: "Serdar Salim",
+    description: "Builder, Creator, Dreamer",
+    images: ['/app-logo.svg'],
+  },
 };
 
 export default function RootLayout({
