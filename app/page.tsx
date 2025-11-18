@@ -160,7 +160,7 @@ export default function Home() {
           </h2>
           <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
             <p>
-              I'm Serdar Salim. I design tools that solve problems and create content on Islamic values and living with purpose. After living in five (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) countries, I now call Malaysia home.
+              I'm Serdar Salim. I build tools that solve problems, create content on Islamic values and living with purpose. After living in five (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) countries, I now call Malaysia home.
             </p>
             <p>
               I was born in Türkiye and migrated to Austria as part of the{' '}
@@ -175,9 +175,9 @@ export default function Home() {
               {' '}wave.  I was expected to stay quiet, integrate as a low-skilled worker, and fit in. But I didn’t.
             </p>
             <p>
-I became the first in my family to graduate university, moved to Ireland as a tech expat, and ended up training teams globally at Twitter. I visited 50+ countries before leaving corporate life in 2023.            </p>
+I became the first in my family to graduate university, moved to Ireland as a tech expat and built a career as a Program Manager at Twitter. I visited 50+ countries before leaving corporate life in 2023.            </p>
             <p>
-              Now I'm married and raising a daughter and building for a different future.
+              Now I'm married, raising a daughter and building for a different future.
             </p>
             <p className="pt-2">
               A future where I don’t have to leave home to give my daughter a good life.
