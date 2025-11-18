@@ -26,14 +26,14 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Serdar Salim",
-  description: "Serdar Salim - Builder, Creator, Dreamer",
+  description: "Serdar Salim - Builder. Muslim. Father.",
   icons: {
     icon: '/favicon-32.png',
     apple: '/app-logo.png',
   },
   openGraph: {
     title: "Serdar Salim",
-    description: "Builder, Creator, Dreamer",
+    description: "Builder. Muslim. Father.",
     url: 'https://serdarsalim.com',
     siteName: 'Serdar Salim',
     images: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: "Serdar Salim",
-    description: "Builder, Creator, Dreamer",
+    description: "Builder. Muslim. Father.",
     images: ['/app-logo.png'],
   },
 };
