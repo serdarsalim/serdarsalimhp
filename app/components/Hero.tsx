@@ -8,6 +8,7 @@ export default function Hero() {
   const [isHoveringPhoto, setIsHoveringPhoto] = useState(false);
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
+  const [showOrigin, setShowOrigin] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -134,8 +135,12 @@ export default function Hero() {
             </h1>
 
             {/* Location - casual handwriting style */}
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold" style={{ fontFamily: 'var(--font-caveat)' }}>
-              Based in Malaysia 🇲🇾
+            <p
+              className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold cursor-pointer select-none transition-all duration-300"
+              style={{ fontFamily: 'var(--font-caveat)' }}
+              onClick={() => setShowOrigin(!showOrigin)}
+            >
+              {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
             </p>
 
             {/* Subtitle */}

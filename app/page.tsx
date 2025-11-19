@@ -76,25 +76,38 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-purple-50/80 backdrop-blur-md border-b border-purple-200">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-3">
           <div className="flex items-center">
-            {showNavBrand && (
+            <div className="inline-flex items-center gap-3">
+              {/* Logo - always visible, scrolls to top */}
               <a
-                href="#"
-                className="inline-flex items-center text-lg md:text-xl font-extrabold tracking-tight text-gray-900 transition-opacity select-none cursor-pointer"
+                href="#hero-section"
+                className="select-none cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsNavHovered(!isNavHovered);
+                  document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <span className="leading-none transition-all duration-300">
+                <img
+                  src="/app-logo.png"
+                  alt="Serdar Salim"
+                  className="h-6 md:h-8 w-auto rounded-md"
+                />
+              </a>
+
+              {/* Name - only visible when scrolled down, flips on click */}
+              {showNavBrand && (
+                <span
+                  className="text-lg md:text-xl font-extrabold tracking-tight text-gray-900 transition-all duration-300 cursor-pointer select-none"
+                  onClick={() => setIsNavHovered(!isNavHovered)}
+                >
                   {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
                 </span>
-              </a>
-            )}
+              )}
+            </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8 ml-auto">
               <a
-                href="https://halqa.co/"
+                href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
@@ -112,7 +125,7 @@ export default function Home() {
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
               <a
-                href="https://halqa.co/"
+                href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors text-xs font-medium"
@@ -185,7 +198,7 @@ I became the first in my family to graduate university, moved to Ireland as a te
             <p className="pt-2">
               Read more on my{' '}
               <a
-                href="https://halqa.co/"
+                href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-400 hover:text-purple-300 font-medium underline"

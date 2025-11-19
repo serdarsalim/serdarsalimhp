@@ -93,7 +93,7 @@ export default function RootLayout({
                 addressLocality: "Malaysia"
               },
               sameAs: [
-                "https://halqa.co",
+                "https://blog.serdarsalim.com",
                 "https://tiktok.com/@salimspoke"
               ],
               description: "Builder, Muslim, Father. Ex-Twitter Program Manager building Halqa and Culturia in Malaysia."
