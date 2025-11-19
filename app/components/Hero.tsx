@@ -73,11 +73,24 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo with video overlay */}
           <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-64">
+            {/* Mobile - just static image, no interaction */}
+            <div className="relative md:hidden">
+              <img
+                src="/profile.png"
+                alt="Serdar Salim"
+                className="w-full max-w-xs object-contain drop-shadow-2xl"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+                }}
+              />
+            </div>
+
+            {/* Desktop - interactive with video */}
             <div
-              className="relative"
+              className="hidden md:block relative cursor-pointer"
               onMouseEnter={() => setIsHoveringPhoto(true)}
               onMouseLeave={() => setIsHoveringPhoto(false)}
-              onClick={() => setIsHoveringPhoto(!isHoveringPhoto)}
             >
               {/* Static image */}
               <img
@@ -92,7 +105,7 @@ export default function Hero() {
                 }}
               />
 
-              {/* Video overlay - plays on hover */}
+              {/* Video overlay - plays on hover (desktop only) */}
               <video
                 ref={videoRef}
                 src="/test3.mov"
