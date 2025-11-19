@@ -1,12 +1,39 @@
 'use client';
 
 import { Project } from '../types';
+import { useEffect, useRef, useState } from 'react';
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const logoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Only run mobile animation for Culturia
+    if (project.id !== 'culturia') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (logoRef.current) {
+      observer.observe(logoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [project.id, hasAnimated]);
+
+  const isCulturia = project.id === 'culturia';
+
   return (
     <div className="group relative overflow-hidden rounded-xl md:rounded-2xl bg-white border border-gray-200 hover:border-purple-300 transition-all duration-500">
       <div className="p-3 pr-4 md:pr-6">
@@ -21,13 +48,45 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-200"
+                    ref={logoRef}
+                    onMouseEnter={() => isCulturia && setIsHovered(true)}
+                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
+                      isCulturia && isHovered
+                        ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
+                        : isCulturia
+                        ? 'md:transition-transform md:duration-[1500ms]'
+                        : 'group-hover:scale-105 transition-all duration-200'
+                    }`}
                   >
-                    <img src={project.image} alt={`${project.name} logo`} className="w-full h-full object-contain" />
+                    <img
+                      src={project.image}
+                      alt={`${project.name} logo`}
+                      className={`w-full h-full object-contain ${
+                        isCulturia && hasAnimated ? 'md:!animate-none animate-spin-once' : ''
+                      }`}
+                      style={isCulturia && hasAnimated ? { animation: 'spin-once 2s ease-in-out forwards' } : {}}
+                    />
                   </a>
                 ) : (
-                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-200">
-                    <img src={project.image} alt={`${project.name} logo`} className="w-full h-full object-contain" />
+                  <div
+                    ref={logoRef}
+                    onMouseEnter={() => isCulturia && setIsHovered(true)}
+                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
+                      isCulturia && isHovered
+                        ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
+                        : isCulturia
+                        ? 'md:transition-transform md:duration-[1500ms]'
+                        : 'group-hover:scale-105 transition-all duration-200'
+                    }`}
+                  >
+                    <img
+                      src={project.image}
+                      alt={`${project.name} logo`}
+                      className={`w-full h-full object-contain ${
+                        isCulturia && hasAnimated ? 'md:!animate-none animate-spin-once' : ''
+                      }`}
+                      style={isCulturia && hasAnimated ? { animation: 'spin-once 2s ease-in-out forwards' } : {}}
+                    />
                   </div>
                 )
               ) : (
