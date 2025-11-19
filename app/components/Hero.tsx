@@ -1,15 +1,13 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHoveringPhoto, setIsHoveringPhoto] = useState(false);
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const [showOrigin, setShowOrigin] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -19,18 +17,6 @@ export default function Hero() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-
-  // Play/pause video based on photo hover/tap
-  useEffect(() => {
-    if (videoRef.current) {
-      if (isHoveringPhoto) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0; // Reset to start
-      }
-    }
-  }, [isHoveringPhoto]);
 
   return (
     <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -72,59 +58,23 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
-          {/* Left side - Photo with video overlay */}
-          <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-64">
-            {/* Mobile - just static image, no interaction */}
-            <div className="relative md:hidden">
+          {/* Left side - Photo */}
+          <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-96">
+            <div className="relative">
               <img
                 src="/profile.png"
                 alt="Serdar Salim"
-                className="w-full max-w-xs object-contain drop-shadow-2xl"
+                className="w-full max-w-xs md:max-w-lg object-contain drop-shadow-2xl"
                 style={{
-                  maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                }}
-              />
-            </div>
-
-            {/* Desktop - interactive with video */}
-            <div
-              className="hidden md:block relative cursor-pointer"
-              onMouseEnter={() => setIsHoveringPhoto(true)}
-              onMouseLeave={() => setIsHoveringPhoto(false)}
-            >
-              {/* Static image */}
-              <img
-                src="/profile.png"
-                alt="Serdar Salim"
-                className="w-full max-w-xs md:max-w-md object-contain drop-shadow-2xl"
-                style={{
-                  maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                  opacity: isHoveringPhoto ? 0 : 1,
-                  transition: 'opacity 0ms'
-                }}
-              />
-
-              {/* Video overlay - plays on hover (desktop only) */}
-              <video
-                ref={videoRef}
-                src="/test3.mov"
-                muted
-                playsInline
-                className="absolute inset-0 w-full max-w-xs md:max-w-md object-contain drop-shadow-2xl pointer-events-none"
-                style={{
-                  maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                  opacity: isHoveringPhoto ? 1 : 0,
-                  transition: 'opacity 0ms'
+                  maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
                 }}
               />
             </div>
           </div>
 
           {/* Right side - Text */}
-          <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-48">
+          <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-32">
             {/* Title */}
             <h1
               id="hero-title"
