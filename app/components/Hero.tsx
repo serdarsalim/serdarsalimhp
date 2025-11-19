@@ -27,13 +27,13 @@ export default function Hero() {
         />
       </div>
 
-      {/* Mountain sunset gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-100/70 via-purple-100/70 to-blue-200/70" />
+      {/* Light sky gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-sky-200/80 via-blue-100/70 to-indigo-200/70" />
 
-      {/* Subtle layered atmosphere */}
+      {/* Subtle layered atmosphere with clouds effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-orange-200 to-transparent opacity-40" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-blue-300 to-transparent opacity-40" />
+        <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-sky-100 to-transparent opacity-50" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-indigo-300/50 to-transparent opacity-40" />
       </div>
 
       {/* Content */}
