@@ -1,22 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const [showOrigin, setShowOrigin] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
     <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -37,17 +27,8 @@ export default function Hero() {
         />
       </div>
 
-      {/* Import statement will be at top of file */}
-
       {/* Mountain sunset gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-100/70 via-purple-100/70 to-blue-200/70">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(147, 197, 253, 0.3), transparent 50%)`,
-          }}
-        />
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-orange-100/70 via-purple-100/70 to-blue-200/70" />
 
       {/* Subtle layered atmosphere */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
