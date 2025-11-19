@@ -10,7 +10,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const logoRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement | HTMLDivElement>(null);
 
   useEffect(() => {
     // Only run mobile animation for Culturia
