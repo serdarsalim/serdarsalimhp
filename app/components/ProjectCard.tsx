@@ -48,7 +48,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    ref={logoRef}
+                    ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
                     className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
                       isCulturia && isHovered
@@ -69,7 +69,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   </a>
                 ) : (
                   <div
-                    ref={logoRef}
+                    ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
                     className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
                       isCulturia && isHovered
