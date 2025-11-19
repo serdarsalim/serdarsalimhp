@@ -28,7 +28,7 @@ export default function Experience() {
   ];
 
   return (
-    <section className="relative py-16 md:py-32 bg-gradient-to-b from-blue-50 to-purple-100">
+    <section className="relative py-16 md:py-32 bg-gradient-to-b from-indigo-50 to-blue-100">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">

@@ -4,7 +4,7 @@ import IslamicPattern from './IslamicPattern';
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-16 md:py-32 bg-gradient-to-b from-orange-50 to-purple-50">
+    <section id="contact" className="relative py-16 md:py-32 bg-gradient-to-b from-indigo-100 to-purple-100">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
@@ -12,7 +12,7 @@ export default function Contact() {
           </h2>
         </div>
 
-        <div className="p-6 md:p-12 bg-white/80 backdrop-blur-sm rounded-2xl border border-purple-200">
+        <div className="p-6 md:p-12 bg-white border border-gray-200 rounded-xl md:rounded-2xl mx-auto">
           <div className="flex flex-col md:grid md:grid-cols-3 gap-5 md:gap-8">
             {/* Email */}
             <a

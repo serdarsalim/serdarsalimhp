@@ -50,28 +50,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Islamic pattern decorations - left edge */}
-      <div className="fixed left-0 top-0 bottom-0 w-32 pointer-events-none opacity-10 z-0">
-        <svg className="w-full h-full" viewBox="0 0 100 400" preserveAspectRatio="xMinYMid slice">
-          <pattern id="islamicPatternLeft" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-            <path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z" fill="currentColor" className="text-purple-600" opacity="0.3"/>
-            <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-orange-400" opacity="0.4"/>
-          </pattern>
-          <rect width="100" height="400" fill="url(#islamicPatternLeft)" />
-        </svg>
-      </div>
-
-      {/* Islamic pattern decorations - right edge */}
-      <div className="fixed right-0 top-0 bottom-0 w-32 pointer-events-none opacity-10 z-0">
-        <svg className="w-full h-full" viewBox="0 0 100 400" preserveAspectRatio="xMaxYMid slice">
-          <pattern id="islamicPatternRight" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-            <path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z" fill="currentColor" className="text-purple-600" opacity="0.3"/>
-            <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-orange-400" opacity="0.4"/>
-          </pattern>
-          <rect width="100" height="400" fill="url(#islamicPatternRight)" />
-        </svg>
-      </div>
-
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-purple-50/80 backdrop-blur-md border-b border-purple-200">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-3">
@@ -163,8 +141,8 @@ export default function Home() {
           }}
         />
 
-        {/* Black Overlay */}
-        <div className="absolute inset-0 bg-black opacity-70"></div>
+        {/* Blue Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/75 via-indigo-900/70 to-blue-800/75"></div>
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24">
@@ -243,7 +221,7 @@ I became the first in my family to graduate university, moved to Ireland as a te
       {/* Projects Section */}
       <section
         id="projects"
-        className="relative pt-24 pb-12 md:pt-24 md:pb-24 bg-linear-to-b from-purple-50 to-orange-50 scroll-mt-0"
+        className="relative pt-24 pb-12 md:pt-24 md:pb-24 bg-gradient-to-b from-sky-100 to-blue-50 scroll-mt-0"
       >
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-10 md:mb-6">
@@ -308,7 +286,7 @@ I became the first in my family to graduate university, moved to Ireland as a te
       <Contact />
 
       {/* Footer */}
-      <footer className="py-8 md:py-12 bg-white border-t border-gray-200">
+      <footer className="py-8 md:py-12 bg-gradient-to-b from-purple-100 to-purple-50 border-t border-purple-200/50">
         <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
           <p className="text-gray-500 text-xs md:text-sm">
             © {new Date().getFullYear()} Serdar Salim Domurcuk
