@@ -136,9 +136,6 @@ export default function Home() {
           playsInline
           aria-hidden="true"
           style={{ filter: 'blur(0px)' }}
-          onLoadedMetadata={(e) => {
-            e.currentTarget.playbackRate = 0.5;
-          }}
         />
 
         {/* Blue Overlay */}
