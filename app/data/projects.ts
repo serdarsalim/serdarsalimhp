@@ -50,14 +50,15 @@ export const projects: Project[] = [
   },
   {
     id: 'workout-tracker',
-    name: 'SLMFIT',
+    name: 'Gym Tracker 4',
     letter: '🏋️',
+    image: '/gymtracker4.png',
     shortDescription: '• Simple, no-bloat gym tracker for beginners and pros\n• Build workout plans and track sets, reps, and weights\n• Each exercise includes a YouTube form video so you never have to search again\n• Web app that works across devices with the same account',
     fullDescription: '• Simple, no-bloat gym tracker for beginners and pros\n• Build workout plans and track sets, reps, and weights\n• Each exercise includes a YouTube form video so you never have to search again\n• Web app that works across devices with the same account',
     techStack: ['Google Sheets', 'Google Apps Script'],
     year: '2023',
     category: 'Web App',
-    demoUrl: 'https://slmfit.vercel.app/',
+    demoUrl: 'https://gymtracker4.vercel.app/',
     githubUrl: '',
   },
 ];

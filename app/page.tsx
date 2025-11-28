@@ -202,6 +202,9 @@ I became the first in my family to graduate university, moved to Ireland as a te
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
               Apps I Developed
             </h2>
+            <p className="text-sm md:text-base text-gray-600" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+              free to use
+            </p>
           </div>
 
           <div className="grid gap-6 md:max-w-4xl md:mx-auto">
