@@ -2,6 +2,27 @@ import { Project } from '../types';
 
 export const projects: Project[] = [
   {
+    id: 'yummii',
+    name: 'Yummii',
+    letter: 'Y',
+    image: '/yummii_logo.png',
+    shortDescription:
+      '• Weekly meal board that keeps breakfast, lunch, and dinner in one timeline\n' +
+      '• Pick meals from a growing library of recipes or add private family favorites\n' +
+      '• Share meal plans with your spouse or helper so everyone stays aligned\n' +
+      '• Built-in shopping list view keeps ingredients grouped and editable',
+    fullDescription:
+      '• Weekly meal board that keeps breakfast, lunch, and dinner in one timeline\n' +
+      '• Pick meals from a growing library of recipes or add private family favorites\n' +
+      '• Share meal plans with your spouse or helper so everyone stays aligned\n' +
+      '• Built-in shopping list view keeps ingredients grouped and editable',
+    techStack: ['Next.js', 'PostgreSQL', 'Tailwind CSS', 'Clerk'],
+    year: '2025',
+    category: 'Web App',
+    demoUrl: 'https://yummii.vercel.app/',
+    githubUrl: '',
+  },
+  {
     id: 'culturia',
     name: 'Culturia',
     letter: 'C',

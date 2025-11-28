@@ -9,31 +9,8 @@ import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 
 export default function Home() {
-  const [taglineIndex, setTaglineIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [showNavBrand, setShowNavBrand] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
-
-  const taglines = [
-    { text: "Building forward not backward", animation: "moveForward" },
-    { text: "Building backwards and shipping forwards", animation: "moveBackward" },
-    { text: "Actually sometimes building sideways", animation: "moveSideways" },
-    { text: "Building in circles!", animation: "moveCircles" }
-  ];
-
-  const handleHover = () => {
-    if (isAnimating) return; // Prevent multiple hovers during animation
-
-    // Pick a random index (1-3, excluding the default 0)
-    const randomIndex = Math.floor(Math.random() * 3) + 1;
-    setTaglineIndex(randomIndex);
-    setIsAnimating(true);
-
-    // Stop animation after it completes, but keep the text
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 2000);
-  };
 
   useEffect(() => {
     const heroTitle = document.getElementById('hero-title');
@@ -201,7 +178,7 @@ I became the first in my family to graduate university, moved to Ireland as a te
               >
                 <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
                 <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
-                  <span>View my work</span>
+                  <span>View my apps</span>
                   <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                   </svg>
@@ -223,40 +200,8 @@ I became the first in my family to graduate university, moved to Ireland as a te
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-10 md:mb-6">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-              Selected Projects
+              Apps I Developed
             </h2>
-            <div className="relative h-8 flex items-center justify-center overflow-visible">
-              <p
-                className="text-base md:text-lg text-gray-600 cursor-pointer inline-block"
-                onMouseEnter={handleHover}
-                style={{
-                  animation: isAnimating ? `${taglines[taglineIndex].animation} 2s ease-in-out` : 'none'
-                }}
-              >
-                {taglines[taglineIndex].text}
-              </p>
-            </div>
-            <style jsx>{`
-              @keyframes moveForward {
-                0%, 100% { transform: translateX(0); }
-                50% { transform: translateX(100px); }
-              }
-              @keyframes moveBackward {
-                0%, 100% { transform: translateX(0); }
-                50% { transform: translateX(-100px); }
-              }
-              @keyframes moveSideways {
-                0%, 100% { transform: translate(0, 0); }
-                50% { transform: translate(50px, 30px); }
-              }
-              @keyframes moveCircles {
-                0% { transform: translate(0, 0); }
-                25% { transform: translate(30px, -30px); }
-                50% { transform: translate(0, -60px); }
-                75% { transform: translate(-30px, -30px); }
-                100% { transform: translate(0, 0); }
-              }
-            `}</style>
           </div>
 
           <div className="grid gap-6 md:max-w-4xl md:mx-auto">
