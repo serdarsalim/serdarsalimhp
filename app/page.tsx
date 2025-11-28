@@ -125,27 +125,16 @@ export default function Home() {
           </h2>
           <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
             <p>
-              I'm Serdar Salim. I build tools that solve problems, create content on Islamic values and living with purpose. After living in five (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) countries, I now call Malaysia home.
+              I'm Serdar Salim. I build tools that solve problems and create content about a purposeful life. After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
             </p>
             <p>
-              I was born in Türkiye and migrated to Austria as part of the{' '}
-              <a
-                href="https://en.wikipedia.org/wiki/Gastarbeiter"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-400 hover:text-purple-300 underline"
-              >
-                Gastarbeiter
-              </a>
-              {' '}wave.  I was expected to stay quiet, integrate as a low-skilled worker, and fit in. But I didn’t.
+              I was born in Türkiye and migrated to Austria with the hope of a better future. There, I was expected to integrate into society as an immigrant by staying quiet and keeping the system running. I refused.
             </p>
             <p>
-I became the first in my family to graduate university, moved to Ireland as a tech expat and built a career as a Program Manager at Twitter. I visited 50+ countries before leaving corporate life in 2023.            </p>
-            <p>
-              Now I'm married, raising a daughter and building for a different future.
+              I became the first in my family to graduate university, moving to Ireland to manage projects at Twitter. During that time, I traveled to more than 50 countries before leaving corporate life in 2023.
             </p>
-            <p className="pt-2">
-              A future where I don’t have to leave home to give my daughter a good life.
+            <p>
+              Now married and raising a daughter, I am building a future here in Malaysia, where our lifestyle aligns with our Islamic values.
             </p>
             <p className="pt-2">
               Read more on my{' '}

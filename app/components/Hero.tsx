@@ -28,12 +28,13 @@ export default function Hero() {
       </div>
 
       {/* Light sky gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-sky-200/80 via-blue-100/70 to-indigo-200/70" />
+      <div className="absolute inset-0 bg-linear-to-b from-sky-300/90 via-blue-300/80 to-indigo-500/80" />
+      <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
 
       {/* Subtle layered atmosphere with clouds effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-100 to-transparent opacity-50" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-indigo-300/50 to-transparent opacity-40" />
+        <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-200 to-transparent opacity-70" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-indigo-500/60 to-transparent opacity-60" />
       </div>
 
       {/* Content */}
