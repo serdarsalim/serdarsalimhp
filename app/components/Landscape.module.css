@@ -131,7 +131,7 @@
     -25vmin 0 0 -0.6vmin currentcolor;
   opacity: 0.3;
   transform: translate3d(-150vmin, 0, 0);
-  animation: clouds 120s infinite;
+  animation: clouds 120s forwards;
   animation-delay: -10s;
 }
 
@@ -220,9 +220,9 @@
   width: 20vmin;
   height: 20vmin;
   left: calc(60% - 10vmin);
-  top: 100%;
+  top: -20vmin;
   transform: translate3d(0, 0, 0);
-  animation: rise 20s infinite;
+  animation: set 30s forwards;
   box-shadow: 0 0 10px white;
 }
 
@@ -236,7 +236,7 @@
   transform-origin: bottom center;
   transform: rotate(4deg);
   box-shadow: inset -1px 0 0 var(--s2), -6vmin 3vmin 0 0, 80vmin 0 0 0;
-  animation: verticalise 20s infinite;
+  animation: verticalise 20s forwards;
 }
 
 .reed-1 {
@@ -245,7 +245,7 @@
   height: 50vmin;
   bottom: -5vmin;
   transform: rotate(-2deg);
-  animation: verticalise-1 20s infinite;
+  animation: verticalise-1 20s forwards;
   box-shadow: inset -1px 0 0 var(--s1), 6vmin 13vmin 0 0 var(--s1),
     80vmin 10vmin 0 0 var(--v3);
 }
@@ -267,7 +267,8 @@
     transform: rotate(4deg);
   }
   30%,
-  70% {
+  70%,
+  100% {
     transform: rotate(0);
   }
 }
@@ -278,25 +279,33 @@
     transform: rotate(-2deg);
   }
   45%,
-  70% {
+  70%,
+  100% {
     transform: rotate(0) translateY(-6vmin);
   }
 }
 
-@keyframes rise {
+@keyframes set {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
   100% {
-    transform: translate3d(0, -100vh, 20vmin);
+    transform: translate3d(0, 100vh, 0);
   }
 }
 
-@keyframes rise-reflection {
-  30% {
+@keyframes set-reflection {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, -20vmin, 0);
+  }
+  70% {
     opacity: 0;
     transform: translate3d(0, 5vmin, 0);
   }
   100% {
     opacity: 0;
-    transform: translate3d(0, 80vmin, 0);
+    transform: translate3d(0, 20vmin, 0);
   }
 }
 
@@ -313,17 +322,18 @@
   top: 0;
   bottom: 0;
   background: radial-gradient(circle at 60% 100%, var(--s2), transparent);
-  animation: fade 20s infinite;
+  animation: fade-reverse 20s forwards;
   mix-blend-mode: color-burn;
 }
 
-@keyframes fade {
-  10% {
-    opacity: 1;
-  }
-  30%,
-  70% {
+@keyframes fade-reverse {
+  0%,
+  30% {
     opacity: 0;
+  }
+  60%,
+  100% {
+    opacity: 1;
   }
 }
 
@@ -339,7 +349,7 @@
   opacity: 1;
   top: 0;
   transform: translate3d(0, -20vmin, 0);
-  animation-name: rise-reflection;
+  animation-name: set-reflection;
 }
 
 .light {
@@ -350,7 +360,7 @@
   right: 0;
   margin: auto;
   top: calc(50% + 1vmin);
-  animation: light 20s infinite;
+  animation: light 20s forwards;
   opacity: 0;
   transform: scaleX(0.1) translate3d(0%, 0, 0);
   border-radius: 0.25vh;
@@ -425,7 +435,7 @@
   border-radius: 50%;
   bottom: 5vmin;
   left: 70%;
-  animation: splash 9s infinite;
+  animation: splash 9s forwards;
   transform: scale(0);
 }
 

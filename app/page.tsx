@@ -209,18 +209,6 @@ export default function Home() {
 
       {/* Landscape Section */}
       <Landscape />
-
-      {/* Footer */}
-      <footer className="py-8 md:py-12 bg-gradient-to-b from-purple-100 to-purple-50 border-t border-purple-200/50">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
-          <p className="text-gray-500 text-xs md:text-sm">
-            © {new Date().getFullYear()} Serdar Salim Domurcuk
-          </p>
-          <p className="text-gray-500 text-xs md:text-sm mt-1">
-            All rights reserved, some lefts unreserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,9 +1,17 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import styles from './Landscape.module.css';
 
 export default function Landscape() {
+  const [key, setKey] = useState(0);
+
+  const handleClick = () => {
+    setKey(prev => prev + 1);
+  };
+
   return (
-    <div className={styles.landscape}>
+    <div key={key} className={styles.landscape} onClick={handleClick}>
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
