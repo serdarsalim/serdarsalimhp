@@ -28,7 +28,7 @@ export default function Hero() {
       </div>
 
       {/* Light sky gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-indigo-700/90 via-indigo-600/80 to-slate-900/80" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#cc5f5f]/95 via-[#b83b7b]/90 to-[#4c2372]/85" />
       <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
 
       {/* Subtle layered atmosphere with clouds effect */}
@@ -46,10 +46,12 @@ export default function Hero() {
               <img
                 src="/profile.png"
                 alt="Serdar Salim"
-                className="w-full max-w-xs md:max-w-lg object-contain drop-shadow-2xl"
+                className="w-full max-w-xs md:max-w-lg object-contain drop-shadow-2xl relative"
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+                  filter: 'none',
+                  mixBlendMode: 'normal',
                 }}
               />
             </div>

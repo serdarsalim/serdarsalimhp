@@ -3,16 +3,16 @@
 export default function Experience() {
   const experiences = [
     {
+      company: 'Independent',
+      role: 'Web Developer',
+      period: '2023 - Present',
+      description: 'Designing and building multi-user web apps and content sites using Next.js, Supabase, Google Cloud, Google Apps Script, and AI-assisted tooling like Codex CLI and Claude Code.',
+    },
+    {
       company: 'Twitter',
       role: 'Training & Quality Program Manager',
       period: '2013 - 2023',
       description: 'Led crisis management initiatives for content moderation and online safety training during critical incidents. Managed training for new hires and policy changes across 100+ support policies. Built strong cross-functional relationships with Quality Teams, Vendor Partners, Engineering and Policy Owners. Facilitated the launch of multiple vendor sites in over 10 locations worldwide.',
-    },
-    {
-      company: 'Webzen',
-      role: 'Localisation and Support Specialist',
-      period: '2012 - 2013',
-      description: 'Translated, proofread, and tested video game content from English to Turkish. Provided customer support via email and organized events for the player community.',
     },
   ];
 

@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#e7effc] border-b border-purple-200">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#d2dcff] border-b border-[#aebef5]">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
@@ -100,7 +100,7 @@ export default function Home() {
           playsInline
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden="true" />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
@@ -111,9 +111,9 @@ export default function Home() {
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
-            <p>
-              I'm Serdar Salim. I build tools that solve problems and create content about a purposeful life. After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
-            </p>
+              <p>
+                Hi wanderer! I build tools that solve problems and create content about a purposeful life. After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
+              </p>
             <p>
               I was born in Türkiye and migrated to Austria with the hope of a better future. There, I was expected to integrate into society as an immigrant by staying quiet and keeping the system running. I refused.
             </p>
@@ -146,6 +146,24 @@ export default function Home() {
             </p>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center pt-6 relative z-10">
+            <a
+              href="#projects"
+              className="group relative flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden uppercase tracking-wide text-sm w-full justify-center md:w-auto cursor-pointer"
+              style={{ fontFamily: 'var(--font-jetbrains)' }}
+              onClick={(event) => {
+                event.preventDefault();
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <span className="relative flex items-center gap-3 justify-center w-full">
+                <span>My Apps</span>
+                <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
+                </svg>
+              </span>
+            </a>
           </div>
         </div>
 

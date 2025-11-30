@@ -17,7 +17,7 @@ export default function IslamicPattern({
     <>
       {/* Desktop: Bottom of section */}
       <div
-        className={`hidden md:block absolute left-0 right-0 h-32 overflow-hidden z-10 ${
+        className={`hidden md:block absolute left-0 right-0 h-32 overflow-hidden z-10 pointer-events-none ${
           position === 'bottom' ? 'bottom-0' : 'top-0'
         }`}
         style={{
