@@ -51,7 +51,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     rel="noopener noreferrer"
                     ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
-                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center bg-white/10 ${
+                    className={`flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-white/10 ${
                       isCulturia && isHovered
                         ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
                         : isCulturia
@@ -72,7 +72,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   <div
                     ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
-                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center bg-white/10 ${
+                    className={`flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-white/10 ${
                       isCulturia && isHovered
                         ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
                         : isCulturia
@@ -96,12 +96,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm"
+                    className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm"
                   >
                     {project.letter}
                   </a>
                 ) : (
-                  <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
+                  <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
                     {project.letter}
                   </div>
                 )
