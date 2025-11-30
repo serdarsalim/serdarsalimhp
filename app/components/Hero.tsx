@@ -57,28 +57,34 @@ export default function Hero() {
 
           {/* Right side - Text */}
           <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-32">
-            {/* Title */}
-            <h1
-              id="hero-title"
-              className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 select-none cursor-pointer transition-all duration-300"
-              onClick={() => setIsHoveringName(!isHoveringName)}
-            >
-              {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
-            </h1>
+            <div className="space-y-1">
+              {/* Title */}
+              <h1
+                id="hero-title"
+                className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 select-none cursor-pointer transition-all duration-300"
+                onClick={() => setIsHoveringName(!isHoveringName)}
+              >
+                {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
+              </h1>
 
-            {/* Location - casual handwriting style */}
-            <p
-              className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold cursor-pointer select-none transition-all duration-300"
-              style={{ fontFamily: 'var(--font-caveat)' }}
-              onClick={() => setShowOrigin(!showOrigin)}
-            >
-              {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
-            </p>
+              {/* Location - casual handwriting style */}
+              <p
+                className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold cursor-pointer select-none transition-all duration-300"
+                style={{ fontFamily: 'var(--font-caveat)' }}
+                onClick={() => setShowOrigin(!showOrigin)}
+              >
+                {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
+              </p>
+            </div>
 
             {/* Subtitle */}
-            <div className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-              <p className="font-semibold">Builds software that solves problems</p>
-              <p className="font-semibold">Creates content that inspires</p>
+            <div className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+              <p className="font-medium text-gray-900">
+                Builds software that solves problems
+              </p>
+              <p className="font-medium text-gray-900">
+                Creates content that inspires
+              </p>
               <div
                 className="relative cursor-pointer select-none"
                 onClick={() => setIsHoveringQuote(!isHoveringQuote)}
