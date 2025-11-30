@@ -147,17 +147,16 @@ body {
 
 /* Creepy blog button */
 .blog-button {
-  --blog-hue: 223deg;
-  --blog-gray1: hsl(var(--blog-hue) 10% 95%);
-  --blog-gray9: hsl(var(--blog-hue) 10% 15%);
-  --blog-black: hsl(0 0% 0%);
-  --blog-primary3: hsl(var(--blog-hue) 90% 75%);
-  --blog-primary5: hsl(var(--blog-hue) 90% 55%);
-  --blog-primary6: hsl(var(--blog-hue) 90% 45%);
+  --blog-gray1: hsl(0 0% 98%);
+  --blog-gray9: hsl(0 0% 15%);
+  --blog-black: hsl(0 0% 8%);
+  --blog-white: #ffffff;
+  --blog-gray-border: rgba(0, 0, 0, 0.12);
+  --blog-gray-border-strong: rgba(0, 0, 0, 0.2);
   font: 1em/1.5 "Londrina Solid", var(--font-geist-sans), system-ui, sans-serif;
   background-color: var(--blog-black);
   border-radius: 1.25em;
-  color: var(--blog-gray1);
+  color: var(--blog-gray9);
   cursor: pointer;
   letter-spacing: 1px;
   min-width: 9em;
@@ -189,18 +188,19 @@ body {
 }
 
 .blog-button__cover {
-  background-color: var(--blog-primary5);
-  box-shadow: 0 0 0 0.125em var(--blog-black) inset;
-  padding: 0.5em 1em;
-  inset: 0;
-  transform-origin: 1.25em 50%;
-  transition: background-color 0.3s, transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  transform-origin: 1.25em;
+  background-color: #e7effc;
   width: 100%;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s, transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  inset: 0;
+  box-shadow: inset 0 0 0 0.125em #e7effc;
 }
 
 .blog-button__label {
   position: relative;
   z-index: 1;
+  color: var(--blog-gray9);
 }
 
 .blog-button__eyes,
@@ -235,11 +235,11 @@ body {
 }
 
 .blog-button:focus-visible {
-  outline: 0.1875em solid var(--blog-primary3);
+  outline: 0.1875em solid var(--blog-gray-border-strong);
 }
 
 .blog-button:hover .blog-button__cover {
-  background-color: var(--blog-primary6);
+  background-color: hsl(261deg 72% 95%);
 }
 
 .blog-button:focus-visible .blog-button__cover,
