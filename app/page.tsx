@@ -150,14 +150,14 @@ export default function Home() {
           <div className="flex justify-center pt-6 relative z-10">
             <a
               href="#projects"
-              className="group relative flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden uppercase tracking-wide text-sm w-full justify-center md:w-auto cursor-pointer"
+              className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden uppercase tracking-wide text-sm justify-center cursor-pointer"
               style={{ fontFamily: 'var(--font-jetbrains)' }}
               onClick={(event) => {
                 event.preventDefault();
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              <span className="relative flex items-center gap-3 justify-center w-full">
+              <span className="relative flex items-center gap-3 justify-center">
                 <span>My Apps</span>
                 <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />

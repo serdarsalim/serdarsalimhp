@@ -111,7 +111,7 @@ export default function Hero() {
               <div className="pt-6 flex flex-wrap gap-3">
                 <a
                   href="#about"
-                  className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex flex-none items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -124,7 +124,7 @@ export default function Hero() {
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex flex-none items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();

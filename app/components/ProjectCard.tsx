@@ -132,10 +132,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Right Column - Description */}
           <div className="flex items-center">
-            <div className="text-sm md:text-base text-white/85 leading-relaxed space-y-2">
-              {project.shortDescription.split('\n').map((line, index) => (
-                <p key={index}>{line}</p>
-              ))}
+            <div className="text-sm md:text-base text-white/85 leading-relaxed w-full">
+              <ul className="list-disc pl-5 space-y-2 marker:text-white/70">
+                {project.shortDescription.split('\n').map((line, index) => (
+                  <li key={index} className="pl-0">
+                    {line.replace(/^•\s*/, '')}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
