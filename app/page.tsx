@@ -7,6 +7,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
+import BlogButton from './components/BlogButton';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -61,14 +62,13 @@ export default function Home() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8 ml-auto">
-              <a
+              <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
-              >
-                Blog
-              </a>
+                className="text-sm"
+                label="blog"
+              />
               <a
                 href="#contact"
                 className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
@@ -79,14 +79,13 @@ export default function Home() {
 
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
-              <a
+              <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors text-xs font-medium"
-              >
-                Blog
-              </a>
+                className="text-xs"
+                label="blog"
+              />
               <a
                 href="#contact"
                 className="px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors text-xs font-medium"
