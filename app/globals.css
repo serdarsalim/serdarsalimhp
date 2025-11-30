@@ -201,7 +201,7 @@ body {
 
 .blog-button__cover {
   transform-origin: 1.25em;
-  background-color: #d2dcff;
+  background-color: #bb94a5;
   width: calc(100% + 0.9em);
   padding: 0.45em 0.85em;
   transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
@@ -224,6 +224,7 @@ body {
   position: relative;
   z-index: 1;
   color: var(--blog-gray9);
+  font-weight: 600;
 }
 
 .blog-button__eyes,
@@ -261,16 +262,17 @@ body {
   outline: 0.1875em solid var(--blog-gray-border-strong);
 }
 
-.blog-button:hover .blog-button__cover {
+.blog-button:hover .blog-button__cover,
+.blog-button--touch-active .blog-button__cover {
   --blog-hover-angle: -20deg;
   animation: none;
-  box-shadow: inset 0 0 0 2px #ffffff;
+  box-shadow: inset 0 0 0 1px #ffffff;
 }
 
 .blog-button:focus-visible .blog-button__cover {
   --blog-hover-angle: -20deg;
   animation: none;
-  box-shadow: inset 0 0 0 2px #ffffff;
+  box-shadow: inset 0 0 0 1px #ffffff;
 }
 
 .blog-button:active .blog-button__cover {
@@ -301,7 +303,7 @@ body {
   50%,
   90% {
     --blog-auto-angle: -20deg;
-    box-shadow: inset 0 0 0 2px #ffffff;
+    box-shadow: inset 0 0 0 1px #ffffff;
   }
   91%,
   100% {
@@ -318,7 +320,7 @@ body {
   40%,
   70% {
     --blog-auto-angle: -20deg;
-    box-shadow: inset 0 0 0 2px #ffffff;
+    box-shadow: inset 0 0 0 1px #ffffff;
   }
   100% {
     --blog-auto-angle: 0deg;

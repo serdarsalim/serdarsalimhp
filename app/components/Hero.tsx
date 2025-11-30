@@ -58,73 +58,72 @@ export default function Hero() {
           </div>
 
           {/* Right side - Text */}
-          <div className="space-y-4 md:space-y-6 animate-fade-in-up animation-delay-200 text-center md:text-left md:-mt-32">
-            <div className="space-y-1">
-              {/* Title */}
-              <h1
-                id="hero-title"
-                className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white select-none cursor-pointer transition-all duration-300"
-                onClick={() => setIsHoveringName(!isHoveringName)}
-              >
-                {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
-              </h1>
-
-              {/* Location - casual handwriting style */}
-              <p
-                className="text-lg sm:text-xl md:text-2xl text-white/80 font-light cursor-pointer select-none transition-all duration-300"
-                style={{ fontFamily: 'var(--font-caveat)' }}
-                onClick={() => setShowOrigin(!showOrigin)}
-              >
-                {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
-              </p>
-            </div>
-
-            {/* Subtitle */}
-            <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1 font-light" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-              <p className="text-white font-light">
-                Builds software that solves problems
-              </p>
-              <p className="text-white font-light">
-                Creates content that inspires
-              </p>
-              <div
-                className="relative cursor-pointer select-none"
-                onClick={() => setIsHoveringQuote(!isHoveringQuote)}
-              >
-                {/* English - always rendered to maintain layout space */}
-                <p
-                  className={`font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
+          <div className="animate-fade-in-up animation-delay-200 md:-mt-32">
+            <div className="w-full max-w-xl text-left mx-auto md:mx-0 space-y-6">
+              <div className="space-y-2">
+                <h1
+                  id="hero-title"
+                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white select-none cursor-pointer transition-all duration-300"
+                  onClick={() => setIsHoveringName(!isHoveringName)}
                 >
-                  Be in this world as if you are a<br />
-                  stranger or a wayfarer
-                </p>
-                {/* Arabic - absolute positioned overlay */}
+                  {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
+                </h1>
+                {/* Location - casual handwriting style */}
                 <p
-                  className={`absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
-                  style={{ fontFamily: 'var(--font-reem-kufi)' }}
+                  className="mt-0.5 sm:mt-1 text-lg sm:text-xl md:text-2xl text-white/80 font-light cursor-pointer select-none transition-all duration-300"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
+                  onClick={() => setShowOrigin(!showOrigin)}
                 >
-                  كن في الدنيا كأنك غريب أو عابر سبيل
+                  {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
                 </p>
               </div>
-            </div>
 
-            {/* Subtle CTA that matches the design */}
-            <div className="pt-6 flex justify-center md:justify-start">
-              <a
-                href="#about"
-                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
-                style={{ fontFamily: 'var(--font-jetbrains)' }}
-              >
-                <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
-                  <span>About me</span>
-                  <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
-                  </svg>
-                </span>
-              </a>
-            </div>
+              {/* Subtitle */}
+              <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+                <p className="text-white font-semibold">
+                  Builds software that solves problems
+                </p>
+                <p className="text-white font-semibold">
+                  Creates content that inspires
+                </p>
+                <div
+                  className="relative cursor-pointer select-none"
+                  onClick={() => setIsHoveringQuote(!isHoveringQuote)}
+                >
+                  {/* English - always rendered to maintain layout space */}
+                  <p
+                    className={`font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
+                  >
+                    Be in this world as if you are a<br />
+                    stranger or a wayfarer
+                  </p>
+                  {/* Arabic - absolute positioned overlay */}
+                  <p
+                    className={`absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
+                    style={{ fontFamily: 'var(--font-reem-kufi)' }}
+                  >
+                    كن في الدنيا كأنك غريب أو عابر سبيل
+                  </p>
+                </div>
+              </div>
 
+              {/* Subtle CTA that matches the design */}
+              <div className="pt-6 flex">
+                <a
+                  href="#about"
+                  className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  style={{ fontFamily: 'var(--font-jetbrains)' }}
+                >
+                  <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
+                  <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                    <span>About me</span>
+                    <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

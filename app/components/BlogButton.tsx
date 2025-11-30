@@ -11,9 +11,10 @@ interface EyeCoords {
   y: number;
 }
 
-export default function BlogButton({ label = 'Blog', className = '', onMouseMove, onTouchMove, ...rest }: BlogButtonProps) {
+export default function BlogButton({ label = 'Blog', className = '', onMouseMove, onTouchMove, onTouchStart, onTouchEnd, onTouchCancel, ...rest }: BlogButtonProps) {
   const eyesRef = useRef<HTMLSpanElement>(null);
   const [eyeCoords, setEyeCoords] = useState<EyeCoords>({ x: 0, y: 0 });
+  const [isTouchActive, setIsTouchActive] = useState(false);
 
   const handleEyeMovement = (event: MouseEvent<HTMLAnchorElement> | TouchEvent<HTMLAnchorElement>) => {
     const point = 'touches' in event ? event.touches[0] : event;
@@ -46,7 +47,7 @@ export default function BlogButton({ label = 'Blog', className = '', onMouseMove
   return (
     <a
       {...rest}
-      className={`blog-button inline-flex ${className}`.trim()}
+      className={`blog-button inline-flex${isTouchActive ? ' blog-button--touch-active' : ''} ${className}`.trim()}
       onMouseMove={(event) => {
         handleEyeMovement(event);
         onMouseMove?.(event);
@@ -54,6 +55,18 @@ export default function BlogButton({ label = 'Blog', className = '', onMouseMove
       onTouchMove={(event) => {
         handleEyeMovement(event);
         onTouchMove?.(event);
+      }}
+      onTouchStart={(event) => {
+        setIsTouchActive(true);
+        onTouchStart?.(event);
+      }}
+      onTouchEnd={(event) => {
+        setIsTouchActive(false);
+        onTouchEnd?.(event);
+      }}
+      onTouchCancel={(event) => {
+        setIsTouchActive(false);
+        onTouchCancel?.(event);
       }}
     >
       <span className="blog-button__eyes" ref={eyesRef}>

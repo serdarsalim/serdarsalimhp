@@ -30,14 +30,14 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#d2dcff] border-b border-[#aebef5]">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#bb94a5] border-b border-[#bba4b5]">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
               {/* Logo - always visible, scrolls to top */}
               <a
                 href="#hero-section"
-                className="select-none cursor-pointer"
+                className={`select-none cursor-pointer transition-opacity duration-300 ${showNavBrand ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -53,7 +53,7 @@ export default function Home() {
               {/* Name - only visible when scrolled down, flips on click */}
               {showNavBrand && (
                 <span
-                  className="text-lg md:text-xl font-extrabold tracking-tight text-gray-900 transition-all duration-300 cursor-pointer select-none"
+                  className="text-lg md:text-xl font-extrabold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
                   onClick={() => setIsNavHovered(!isNavHovered)}
                 >
                   {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
