@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
+import Landscape from './components/Landscape';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -205,6 +206,9 @@ export default function Home() {
 
       {/* Contact Section */}
       <Contact />
+
+      {/* Landscape Section */}
+      <Landscape />
 
       {/* Footer */}
       <footer className="py-8 md:py-12 bg-gradient-to-b from-purple-100 to-purple-50 border-t border-purple-200/50">

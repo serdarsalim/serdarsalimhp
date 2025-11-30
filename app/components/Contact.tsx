@@ -12,7 +12,7 @@ export default function Contact() {
           </h2>
         </div>
 
-        <div className="p-6 md:p-12 bg-white border border-gray-200 rounded-xl md:rounded-2xl mx-auto">
+        <div className="p-6 md:p-12 bg-white border border-gray-200 rounded-xl md:rounded-2xl mx-auto flex flex-col gap-8 md:gap-10">
           <div className="flex flex-col md:grid md:grid-cols-3 gap-5 md:gap-8">
             {/* Email */}
             <a
@@ -50,6 +50,10 @@ export default function Contact() {
               </svg>
               <span className="font-medium text-sm md:text-base">TikTok</span>
             </a>
+          </div>
+          <div className="pt-6 border-t border-gray-100 text-center text-gray-500 text-xs md:text-sm space-y-1">
+            <p>© {new Date().getFullYear()} Serdar Salim Domurcuk</p>
+            <p>All rights reserved, some lefts unreserved.</p>
           </div>
         </div>
       </div>
