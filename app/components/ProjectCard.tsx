@@ -35,8 +35,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const isCulturia = project.id === 'culturia';
 
   return (
-    <div className="group relative overflow-hidden rounded-xl md:rounded-2xl bg-white border border-gray-200 hover:border-purple-300 transition-all duration-500">
-      <div className="p-3 pr-4 md:pr-6">
+    <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-white/10 backdrop-blur-xl shadow-[0_25px_60px_rgba(95,39,87,0.35)] transition-all duration-500">
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
+      <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-4 md:gap-6">
           {/* Left Column - Logo, Title, Links */}
           <div className="flex flex-col md:min-w-[220px]">
@@ -50,7 +51,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     rel="noopener noreferrer"
                     ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
-                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
+                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center bg-white/10 ${
                       isCulturia && isHovered
                         ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
                         : isCulturia
@@ -71,7 +72,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   <div
                     ref={logoRef as any}
                     onMouseEnter={() => isCulturia && setIsHovered(true)}
-                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
+                    className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center bg-white/10 ${
                       isCulturia && isHovered
                         ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
                         : isCulturia
@@ -113,16 +114,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg md:text-xl font-semibold text-gray-900 hover:text-purple-600 mb-1 inline-block transition-colors"
+                    className="text-lg md:text-xl font-semibold text-white hover:text-purple-200 mb-1 inline-block transition-colors"
                   >
                     {project.name}
                   </a>
                 ) : (
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-1">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-1">
                     {project.name}
                   </h3>
                 )}
-                <p className="text-xs md:text-sm text-gray-500">
+                <p className="text-xs md:text-sm text-white/70">
                   {project.category} · {project.year}
                 </p>
               </div>
@@ -131,7 +132,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Right Column - Description */}
           <div className="flex items-center">
-            <div className="text-sm md:text-base text-gray-600 leading-relaxed space-y-2">
+            <div className="text-sm md:text-base text-white/85 leading-relaxed space-y-2">
               {project.shortDescription.split('\n').map((line, index) => (
                 <p key={index}>{line}</p>
               ))}

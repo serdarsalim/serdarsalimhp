@@ -90,28 +90,27 @@ export default function Home() {
       <Hero />
 
       {/* About Section */}
-      <section id="about" className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
-        {/* Video Background */}
+      <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/stars.mp4"
+          src="/185366-875417525_small.mp4"
           autoPlay
           muted
           loop
           playsInline
           aria-hidden="true"
-          style={{ filter: 'blur(0px)' }}
         />
-
-        {/* Blue Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/75 via-indigo-900/70 to-blue-800/75"></div>
+        <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24">
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 md:mb-8 text-center" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)' }}>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
+          <h2 className="text-2xl md:text-4xl font-bold text-white text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             About Me
           </h2>
-          <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
+          <div className="rounded-3xl border border-white/25 bg-white/10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
+            <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
+              <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
             <p>
               I'm Serdar Salim. I build tools that solve problems and create content about a purposeful life. After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
             </p>
@@ -130,7 +129,7 @@ export default function Home() {
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-400 hover:text-purple-300 font-medium underline"
+                className="text-white font-semibold underline hover:text-white/80 transition-colors"
               >
                 blog
               </a>
@@ -139,28 +138,13 @@ export default function Home() {
                 href="https://tiktok.com/@salimspoke"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-400 hover:text-purple-300 font-medium underline"
+                className="text-white font-semibold underline hover:text-white/80 transition-colors"
               >
                 TikTok
               </a>
               .
             </p>
-
-            {/* View my work button */}
-            <div className="pt-8 flex justify-center">
-              <a
-                href="#projects"
-                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-medium bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
-                style={{ fontFamily: 'var(--font-jetbrains)' }}
-              >
-                <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
-                  <span>View my apps</span>
-                  <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
-                  </svg>
-                </span>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -172,14 +156,21 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="relative pt-24 pb-12 md:pt-24 md:pb-24 bg-gradient-to-b from-sky-100 to-blue-50 scroll-mt-0"
+        className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
+        style={{
+          backgroundImage: 'url(/normalsunset.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       >
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="relative max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-10 md:mb-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               Apps I Developed
             </h2>
-            <p className="text-sm md:text-base text-gray-600" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+            <p className="text-sm md:text-base text-white/80" style={{ fontFamily: 'var(--font-jetbrains)' }}>
               free to use
             </p>
           </div>

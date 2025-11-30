@@ -26,7 +26,14 @@ export default function Experience() {
   ];
 
   return (
-    <section className="relative py-16 md:py-32 bg-gradient-to-b from-[#c484b7] via-[#d86da0] to-[#5b1a49] text-white">
+    <section
+      className="relative py-16 md:py-32 text-white"
+      style={{
+        backgroundImage: 'url(/crazysunset.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
       <div className="max-w-4xl mx-auto px-4 md:px-6">

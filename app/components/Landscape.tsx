@@ -13,8 +13,8 @@ export default function Landscape() {
   return (
     <div key={key} className={styles.landscape} onClick={handleClick}>
       <div className={styles['connect-card']}>
+        <h2 className={styles['connect-title']}>Let's Connect</h2>
         <div className={styles['connect-card-content']}>
-          <h2 className={styles['connect-title']}>Let's Connect</h2>
           <div className={styles['connect-links']}>
             <a href="mailto:contact@serdarsalim.com" className={styles['connect-link']}>
               <span>contact@serdarsalim.com</span>
