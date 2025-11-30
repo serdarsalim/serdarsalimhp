@@ -204,9 +204,6 @@ export default function Home() {
       {/* Experience Section */}
       <Experience />
 
-      {/* Contact Section */}
-      <Contact />
-
       {/* Landscape Section */}
       <Landscape />
     </div>

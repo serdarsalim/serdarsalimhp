@@ -13,6 +13,9 @@ export default function Landscape() {
   return (
     <div key={key} className={styles.landscape} onClick={handleClick}>
       <h2 className={styles['connect-header']}>Let's Connect</h2>
+      <a href="mailto:contact@serdarsalim.com" className={styles['connect-email']}>contact@serdarsalim.com</a>
+      <a href="https://linkedin.com/in/domurcuk" target="_blank" rel="noopener noreferrer" className={styles['connect-linkedin']}>LinkedIn</a>
+      <a href="https://tiktok.com/@salimspoke" target="_blank" rel="noopener noreferrer" className={styles['connect-tiktok']}>TikTok</a>
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
