@@ -28,7 +28,7 @@ export default function Hero() {
       </div>
 
       {/* Light sky gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-sky-300/90 via-blue-300/80 to-indigo-500/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-indigo-700/90 via-indigo-600/80 to-slate-900/80" />
       <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
 
       {/* Subtle layered atmosphere with clouds effect */}
@@ -61,7 +61,7 @@ export default function Hero() {
               {/* Title */}
               <h1
                 id="hero-title"
-                className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 select-none cursor-pointer transition-all duration-300"
+                className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white select-none cursor-pointer transition-all duration-300"
                 onClick={() => setIsHoveringName(!isHoveringName)}
               >
                 {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
@@ -69,7 +69,7 @@ export default function Hero() {
 
               {/* Location - casual handwriting style */}
               <p
-                className="text-lg sm:text-xl md:text-2xl text-gray-600 font-semibold cursor-pointer select-none transition-all duration-300"
+                className="text-lg sm:text-xl md:text-2xl text-white/80 font-light cursor-pointer select-none transition-all duration-300"
                 style={{ fontFamily: 'var(--font-caveat)' }}
                 onClick={() => setShowOrigin(!showOrigin)}
               >
@@ -78,11 +78,11 @@ export default function Hero() {
             </div>
 
             {/* Subtitle */}
-            <div className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-              <p className="font-medium text-gray-900">
+            <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1 font-light" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+              <p className="text-white font-light">
                 Builds software that solves problems
               </p>
-              <p className="font-medium text-gray-900">
+              <p className="text-white font-light">
                 Creates content that inspires
               </p>
               <div
@@ -110,7 +110,7 @@ export default function Hero() {
             <div className="pt-6 flex justify-center md:justify-start">
               <a
                 href="#about"
-                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-gray-900 font-medium bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                 style={{ fontFamily: 'var(--font-jetbrains)' }}
               >
                 <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
