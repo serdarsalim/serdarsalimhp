@@ -81,10 +81,10 @@ export default function Hero() {
               {/* Subtitle */}
               <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
                 <p className="text-white font-semibold">
-                  Builds software that solves problems
+                  Builds web apps that make life easier
                 </p>
                 <p className="text-white font-semibold">
-                  Creates content that inspires
+                  Creates content for personal growth
                 </p>
                 <div
                   className="relative cursor-pointer select-none"
