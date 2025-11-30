@@ -32,6 +32,21 @@
   overflow: hidden;
 }
 
+.connect-header {
+  position: absolute;
+  top: 10vh;
+  right: 5vw;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.5);
+}
+
 .mountain {
   border-radius: 180% 80% 0% 0%/60vmin 60vmin 0% 0%;
   width: 40vmin;

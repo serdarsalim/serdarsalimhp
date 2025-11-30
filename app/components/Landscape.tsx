@@ -12,6 +12,7 @@ export default function Landscape() {
 
   return (
     <div key={key} className={styles.landscape} onClick={handleClick}>
+      <h2 className={styles['connect-header']}>Let's Connect</h2>
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
