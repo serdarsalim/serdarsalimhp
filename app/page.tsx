@@ -62,39 +62,23 @@ export default function Home() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8 ml-auto">
-              <a
-                href="#contact"
-                className="text-base lowercase tracking-[0.1em]"
-                style={{ fontFamily: '"Londrina Solid", var(--font-geist-sans), system-ui, sans-serif', color: 'hsl(0 0% 15%)' }}
-              >
-                contact
-              </a>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm"
-                label="blog"
+                label="Blog"
               />
             </div>
 
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
-              {!showNavBrand && (
-                <a
-                  href="#contact"
-                  className="text-sm lowercase tracking-[0.1em]"
-                  style={{ fontFamily: '"Londrina Solid", var(--font-geist-sans), system-ui, sans-serif', color: 'hsl(0 0% 15%)' }}
-                >
-                  contact
-                </a>
-              )}
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs"
-                label="blog"
+                label="Blog"
               />
             </div>
           </div>
