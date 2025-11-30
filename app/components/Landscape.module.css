@@ -41,8 +41,9 @@
   position: absolute;
   top: 5vh;
   right: auto;
-  left: max(25vw, 8rem);
-  width: min(360px, 80vw);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(360px, 90vw);
   padding: clamp(1.5rem, 3vw, 2rem);
   border-radius: 32px;
   background: rgba(10, 8, 30, 0.25);
@@ -95,6 +96,7 @@
   letter-spacing: 0.04em;
   white-space: nowrap;
   color: inherit;
+  text-align: center;
 }
 
 .connect-subtitle {
@@ -107,12 +109,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  align-items: center;
 }
 
 .connect-link {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 0.75rem;
   text-decoration: none;
   color: inherit;
@@ -123,6 +126,12 @@
 
 .connect-link:hover {
   color: rgba(255, 255, 255, 0.7);
+}
+
+.connect-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

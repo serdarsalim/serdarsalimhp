@@ -17,6 +17,9 @@ export default function Landscape() {
         <div className={styles['connect-card-content']}>
           <div className={styles['connect-links']}>
             <a href="mailto:contact@serdarsalim.com" className={styles['connect-link']}>
+              <svg className={styles['connect-icon']} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l8.21 5.14a2 2 0 002.16 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
               <span>contact@serdarsalim.com</span>
             </a>
             <a
@@ -25,6 +28,9 @@ export default function Landscape() {
               rel="noopener noreferrer"
               className={styles['connect-link']}
             >
+              <svg className={styles['connect-icon']} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+              </svg>
               <span>LinkedIn</span>
             </a>
             <a
@@ -33,6 +39,9 @@ export default function Landscape() {
               rel="noopener noreferrer"
               className={styles['connect-link']}
             >
+              <svg className={styles['connect-icon']} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+              </svg>
               <span>TikTok</span>
             </a>
           </div>
