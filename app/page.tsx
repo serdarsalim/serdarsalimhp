@@ -29,8 +29,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-purple-50/80 backdrop-blur-md border-b border-purple-200">
-        <div className="max-w-7xl mx-auto px-3 md:px-5 py-3">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#e7effc] border-b border-purple-200">
+        <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
               {/* Logo - always visible, scrolls to top */}
