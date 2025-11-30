@@ -1,7 +1,5 @@
 'use client';
 
-import IslamicPattern from './IslamicPattern';
-
 export default function Experience() {
   const experiences = [
     {
@@ -28,22 +26,28 @@ export default function Experience() {
   ];
 
   return (
-    <section className="relative py-16 md:py-32 bg-gradient-to-b from-indigo-50 to-blue-100">
+    <section className="relative py-16 md:py-32 bg-gradient-to-b from-[#c484b7] via-[#d86da0] to-[#5b1a49] text-white">
+      <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">Experience</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Experience</h2>
           <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, index) => (
-              <div key={index} className="border-l-2 border-gray-200 pl-4 md:pl-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
+              <div
+                key={index}
+                className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+              >
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
+                <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{exp.role}</h3>
-                    <p className="text-sm md:text-base text-gray-600">{exp.company}</p>
+                    <h3 className="text-lg md:text-xl font-semibold text-white">{exp.role}</h3>
+                    <p className="text-sm md:text-base text-white/80">{exp.company}</p>
                   </div>
-                  <span className="text-xs md:text-sm text-gray-500 mt-1 md:mt-0">{exp.period}</span>
+                  <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
                 </div>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">{exp.description}</p>
+                <p className="relative text-sm md:text-base text-white/90 leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
@@ -51,26 +55,28 @@ export default function Experience() {
 
         {/* Education */}
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12">Education</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Education</h2>
           <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
-              <div key={index} className="border-l-2 border-gray-200 pl-4 md:pl-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
+              <div
+                key={index}
+                className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+              >
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
+                <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{edu.degree}</h3>
-                    <p className="text-sm md:text-base text-gray-600">{edu.school}</p>
+                    <h3 className="text-lg md:text-xl font-semibold text-white">{edu.degree}</h3>
+                    <p className="text-sm md:text-base text-white/80">{edu.school}</p>
                   </div>
-                  <span className="text-xs md:text-sm text-gray-500 mt-1 md:mt-0">{edu.period}</span>
+                  <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
                 </div>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">{edu.description}</p>
+                <p className="relative text-sm md:text-base text-white/90 leading-relaxed">{edu.description}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Subtle Islamic pattern - fades upward */}
-      <IslamicPattern position="bottom" variant={1} />
     </section>
   );
 }

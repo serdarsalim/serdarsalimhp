@@ -12,10 +12,32 @@ export default function Landscape() {
 
   return (
     <div key={key} className={styles.landscape} onClick={handleClick}>
-      <h2 className={styles['connect-header']}>Let's Connect</h2>
-      <a href="mailto:contact@serdarsalim.com" className={styles['connect-email']}>contact@serdarsalim.com</a>
-      <a href="https://linkedin.com/in/domurcuk" target="_blank" rel="noopener noreferrer" className={styles['connect-linkedin']}>LinkedIn</a>
-      <a href="https://tiktok.com/@salimspoke" target="_blank" rel="noopener noreferrer" className={styles['connect-tiktok']}>TikTok</a>
+      <div className={styles['connect-card']}>
+        <div className={styles['connect-card-content']}>
+          <h2 className={styles['connect-title']}>Let's Connect</h2>
+          <div className={styles['connect-links']}>
+            <a href="mailto:contact@serdarsalim.com" className={styles['connect-link']}>
+              <span>contact@serdarsalim.com</span>
+            </a>
+            <a
+              href="https://linkedin.com/in/domurcuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles['connect-link']}
+            >
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href="https://tiktok.com/@salimspoke"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles['connect-link']}
+            >
+              <span>TikTok</span>
+            </a>
+          </div>
+        </div>
+      </div>
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
