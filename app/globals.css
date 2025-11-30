@@ -145,6 +145,18 @@ body {
   }
 }
 
+@property --blog-auto-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --blog-hover-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* Creepy blog button */
 .blog-button {
   --blog-gray1: hsl(0 0% 98%);
@@ -192,9 +204,18 @@ body {
   background-color: #e7effc;
   width: 100%;
   padding: 0.5em 1em;
-  transition: background-color 0.3s, transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
   inset: 0;
   box-shadow: inset 0 0 0 0.125em #e7effc;
+  --blog-auto-angle: 0deg;
+  --blog-hover-angle: 0deg;
+  transform: rotate(calc(var(--blog-auto-angle) + var(--blog-hover-angle)));
+  animation:
+    blog-cover-peek-initial 2s ease-in-out forwards,
+    blog-cover-peek 20s ease-in-out infinite;
+  animation-delay: 0s, 10s;
+  animation-fill-mode: forwards, both;
+  transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .blog-button__label {
@@ -240,16 +261,15 @@ body {
 
 .blog-button:hover .blog-button__cover {
   background-color: hsl(261deg 72% 95%);
+  --blog-hover-angle: -12deg;
 }
 
-.blog-button:focus-visible .blog-button__cover,
-.blog-button:hover .blog-button__cover {
-  transform: rotate(-12deg);
-  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1.65);
+.blog-button:focus-visible .blog-button__cover {
+  --blog-hover-angle: -12deg;
 }
 
 .blog-button:active .blog-button__cover {
-  transform: rotate(0);
+  --blog-hover-angle: 0deg;
   transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -264,5 +284,33 @@ body {
   96% {
     animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
     height: 0;
+  }
+}
+
+@keyframes blog-cover-peek {
+  0%,
+  49% {
+    --blog-auto-angle: 0deg;
+  }
+  50%,
+  90% {
+    --blog-auto-angle: -12deg;
+  }
+  91%,
+  100% {
+    --blog-auto-angle: 0deg;
+  }
+}
+
+@keyframes blog-cover-peek-initial {
+  0% {
+    --blog-auto-angle: 0deg;
+  }
+  40%,
+  70% {
+    --blog-auto-angle: -12deg;
+  }
+  100% {
+    --blog-auto-angle: 0deg;
   }
 }

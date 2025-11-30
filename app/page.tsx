@@ -80,13 +80,15 @@ export default function Home() {
 
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
-              <a
-                href="#contact"
-                className="text-sm lowercase tracking-[0.1em]"
-                style={{ fontFamily: '"Londrina Solid", var(--font-geist-sans), system-ui, sans-serif', color: 'hsl(0 0% 15%)' }}
-              >
-                contact
-              </a>
+              {!showNavBrand && (
+                <a
+                  href="#contact"
+                  className="text-sm lowercase tracking-[0.1em]"
+                  style={{ fontFamily: '"Londrina Solid", var(--font-geist-sans), system-ui, sans-serif', color: 'hsl(0 0% 15%)' }}
+                >
+                  contact
+                </a>
+              )}
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
