@@ -136,11 +136,9 @@
 
 @media (max-width: 768px) {
   .connect-card {
-    top: 6vh;
-    left: 50%;
-    transform: translateX(-50%);
-    right: auto;
-    width: min(90vw, 360px);
+    top: 5vh;
+    width: min(80vw, 320px);
+    padding: 1.1rem;
   }
 }
 
@@ -331,7 +329,7 @@
   border-radius: 50%;
   width: 20vmin;
   height: 20vmin;
-  left: calc(60% - 10vmin);
+  left: calc(70% - 10vmin);
   top: -20vmin;
   transform: translate3d(0, 0, 0);
   animation: set 30s forwards;
@@ -433,7 +431,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: radial-gradient(circle at 60% 100%, var(--s2), transparent);
+  background: radial-gradient(circle at 70% 100%, var(--s2), transparent);
   animation: fade-reverse 20s forwards;
   mix-blend-mode: color-burn;
 }
@@ -451,7 +449,7 @@
 
 .sun-container-reflection {
   top: 50%;
-  background: radial-gradient(circle at 60% 0%, var(--s2), transparent);
+  background: radial-gradient(circle at 70% 0%, var(--s2), transparent);
 }
 
 .sun-container-reflection .sun {
@@ -468,7 +466,7 @@
   height: 0.5vmin;
   width: 20vmin;
   background: white;
-  left: 20%;
+  left: 40%;
   right: 0;
   margin: auto;
   top: calc(50% + 1vmin);
