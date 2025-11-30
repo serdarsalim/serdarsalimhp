@@ -21,9 +21,6 @@ export default function Landscape() {
       </div>
       <div className={styles.cloud}></div>
       <div className={`${styles.cloud} ${styles['cloud-1']}`}></div>
-      <div className={`${styles['sun-container']} ${styles['sun-container-reflection']}`}>
-        <div className={styles.sun}></div>
-      </div>
       <div className={styles.light}></div>
       <div className={`${styles.light} ${styles['light-1']}`}></div>
       <div className={`${styles.light} ${styles['light-2']}`}></div>
