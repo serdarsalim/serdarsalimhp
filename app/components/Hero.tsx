@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
+import SwimFish from './SwimFish';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -501,7 +502,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   }));
 
   return (
-    <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <>
+      <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Subtle space video anchored at bottom with fade upward */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
         <video
@@ -527,6 +529,15 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-200 to-transparent opacity-70" />
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-indigo-500/60 to-transparent opacity-60" />
+      </div>
+
+      {/* Floating fish accent */}
+      <div className="pointer-events-none absolute inset-0 z-[5] overflow-hidden">
+        <div className="curious-fish-orbit">
+          <div className="curious-fish-body">
+            <SwimFish className="w-28 md:w-40 h-auto opacity-90" />
+          </div>
+        </div>
       </div>
 
       {/* Content */}
@@ -874,6 +885,63 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {/* Subtle Islamic pattern - fades upward */}
       <IslamicPattern position="bottom" variant={1} />
     </section>
+    <style jsx>{`
+      :global(.curious-fish-orbit) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        animation: curiousFishRoam 28s ease-in-out infinite;
+      }
+
+      :global(.curious-fish-body) {
+        transform-origin: center;
+        animation: curiousFishTilt 8s ease-in-out infinite;
+        filter: drop-shadow(0 35px 45px rgba(15, 23, 42, 0.35));
+      }
+
+      @keyframes curiousFishRoam {
+        0% {
+          transform: translate3d(70vw, 12vh, 0) scale(0.85);
+        }
+        20% {
+          transform: translate3d(55vw, 30vh, 0) scale(0.95);
+        }
+        40% {
+          transform: translate3d(20vw, 40vh, 0) scale(1.05);
+        }
+        60% {
+          transform: translate3d(35vw, 75vh, 0) scale(0.92);
+        }
+        80% {
+          transform: translate3d(78vw, 60vh, 0) scale(1.08);
+        }
+        100% {
+          transform: translate3d(70vw, 12vh, 0) scale(0.85);
+        }
+      }
+
+      @keyframes curiousFishTilt {
+        0% {
+          transform: translateY(0) rotate(-4deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(3deg);
+        }
+        100% {
+          transform: translateY(0) rotate(-4deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        :global(.curious-fish-orbit),
+        :global(.curious-fish-body) {
+          animation: none;
+        }
+      }
+    `}</style>
+    </>
   );
 });
 

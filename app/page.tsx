@@ -64,13 +64,6 @@ export default function Home() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-4 ml-auto">
-              <button
-                type="button"
-                onClick={() => heroRef.current?.openCurious()}
-                className="px-3 py-1.5 rounded-full border border-white/40 text-white/90 text-xs tracking-[0.25em] uppercase hover:bg-white/15 transition"
-              >
-                Curious?
-              </button>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
@@ -82,13 +75,6 @@ export default function Home() {
 
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
-              <button
-                type="button"
-                onClick={() => heroRef.current?.openCurious()}
-                className="px-2.5 py-1 rounded-full border border-white/40 text-white text-[10px] tracking-[0.25em] uppercase hover:bg-white/15 transition"
-              >
-                Curious?
-              </button>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
