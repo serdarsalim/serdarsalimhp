@@ -568,12 +568,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       </div>
 
       {/* Floating fish accent */}
-      <div className="absolute inset-0 z-[50] overflow-hidden">
+      <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none">
         <button
           type="button"
           className="curious-fish-orbit"
           aria-label="Open Curious quiz"
           onClick={handleCuriousClick}
+          style={{ pointerEvents: 'auto' }}
         >
           <span className="curious-fish-bob">
             <span className="curious-fish-body" ref={fishEyeRef}>
@@ -932,7 +933,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       :global(.curious-fish-orbit) {
         position: absolute;
         animation: curiousFishRoam 26s ease-in-out infinite;
-        pointer-events: auto;
         touch-action: manipulation;
         background: transparent;
         border: none;

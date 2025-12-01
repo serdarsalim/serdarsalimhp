@@ -15,8 +15,8 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 const SwimFish = ({ glow = true, eyeOffset, ...props }: SwimFishProps) => {
   const offsetX = clamp(eyeOffset?.x ?? 0, -1, 1);
   const offsetY = clamp(eyeOffset?.y ?? 0, -1, 1);
-  const pupilCx = 60 + offsetX * 3.5;
-  const pupilCy = 52 + offsetY * 2.5;
+  const pupilCx = 55 + offsetX * 4;
+  const pupilCy = 49 + offsetY * 3;
   return (
   <svg viewBox="0 0 220 100" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <defs>
@@ -73,15 +73,17 @@ const SwimFish = ({ glow = true, eyeOffset, ...props }: SwimFishProps) => {
         opacity="0.7"
       />
 
-      {/* Eye white with shadow */}
-      <circle cx="55" cy="50" r="11" fill="#0f172a" opacity="0.12" />
-      <circle cx="55" cy="49" r="9" fill="#ffffff" opacity="0.98" />
+      {/* Eye socket shadow */}
+      <circle cx="55" cy="50" r="11" fill="#0f172a" opacity="0.15" />
+
+      {/* Eye white */}
+      <circle cx="55" cy="49" r="9" fill="#ffffff" />
 
       {/* Pupil with tracking */}
-      <circle cx={pupilCx} cy={pupilCy} r="4" fill="#0f172a" />
+      <circle cx={pupilCx} cy={pupilCy} r="3.5" fill="#0f172a" />
 
       {/* Eye shine */}
-      <circle cx={pupilCx - 1.3} cy={pupilCy - 1.2} r="1.5" fill="#e0f2fe" opacity="0.95" />
+      <circle cx={pupilCx - 1.2} cy={pupilCy - 1.2} r="1.3" fill="#e0f2fe" opacity="0.9" />
 
       {/* Simple cute smile */}
       <path
