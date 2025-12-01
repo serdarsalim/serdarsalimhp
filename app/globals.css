@@ -223,7 +223,7 @@ body {
 .blog-button__label {
   position: relative;
   z-index: 1;
-  color: var(--blog-gray9);
+  color: #fff;
   font-weight: 600;
 }
 

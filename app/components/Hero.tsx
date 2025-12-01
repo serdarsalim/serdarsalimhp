@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 import { countryOptions } from '../data/countries';
 
@@ -15,12 +15,21 @@ export default function Hero() {
   const [answerChoice, setAnswerChoice] = useState<'yes' | 'no' | null>(null);
   const [userCountry, setUserCountry] = useState('');
   const [countryInput, setCountryInput] = useState('');
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isSubmittingResponse, setIsSubmittingResponse] = useState(false);
+  const [hasSubmittedResponse, setHasSubmittedResponse] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [submissionMessage, setSubmissionMessage] = useState<string | null>(null);
 
   const resetCuriousFlow = () => {
     setCuriousStep('question');
     setAnswerChoice(null);
     setUserCountry('');
     setCountryInput('');
+    setSubmissionError(null);
+    setHasSubmittedResponse(false);
+    setIsSubmittingResponse(false);
+    setSubmissionMessage(null);
   };
 
   const closeCuriousModal = () => {
@@ -41,22 +50,63 @@ export default function Hero() {
   const getNormalizedCountry = (input: string) => {
     const normalized = input.trim().toLowerCase();
     if (!normalized) return undefined;
-    return countryOptions.find((country) => country.name.toLowerCase() === normalized)?.name;
+    return countryOptions.find((country) => country.name.toLowerCase() === normalized);
   };
 
   const trimmedCountryInput = countryInput.trim();
   const suggestedCountry =
     trimmedCountryInput.length > 0
-      ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedCountryInput.toLowerCase()))?.name ?? ''
-      : '';
+      ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedCountryInput.toLowerCase()))
+      : undefined;
   const displaySuggestion =
-    suggestedCountry && suggestedCountry.toLowerCase() !== trimmedCountryInput.toLowerCase() ? suggestedCountry : '';
-  const resolvedCountry = getNormalizedCountry(countryInput) ?? suggestedCountry;
-  const isCountryValid = Boolean(resolvedCountry);
+    suggestedCountry && suggestedCountry.name.toLowerCase() !== trimmedCountryInput.toLowerCase() ? suggestedCountry.name : '';
+  const resolvedCountryOption = getNormalizedCountry(countryInput) ?? suggestedCountry;
+  const isCountryRecognized = Boolean(resolvedCountryOption);
+  const canSubmitResponse = Boolean(isCountryRecognized && answerChoice && sessionId && !isSubmittingResponse);
 
-  const handleCountrySubmit = () => {
-    if (!resolvedCountry) return;
-    setUserCountry(resolvedCountry);
+  const handleCountrySubmit = async () => {
+    if (!resolvedCountryOption || !answerChoice || !sessionId || isSubmittingResponse) return;
+
+    setIsSubmittingResponse(true);
+    setSubmissionError(null);
+    setSubmissionMessage(null);
+
+    let didSave = false;
+    let message: string | null = null;
+
+    try {
+      const response = await fetch('/api/curious-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId,
+          countryCode: resolvedCountryOption.code,
+          choice: answerChoice,
+        }),
+      });
+
+      if (response.ok) {
+        didSave = true;
+        message = 'Thanks for sharing.';
+      } else if (response.status === 409) {
+        didSave = true;
+        message = 'Looks like you already answered earlier from this device.';
+      } else {
+        const data = await response.json().catch(() => null);
+        setSubmissionError(data?.message ?? 'Unable to save your response right now. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Failed to submit curious response', error);
+      setSubmissionError('Unable to save your response right now. Please try again later.');
+    } finally {
+      setIsSubmittingResponse(false);
+    }
+
+    setSubmissionMessage(message);
+    setHasSubmittedResponse(didSave);
+    setUserCountry(resolvedCountryOption.name);
     setCuriousStep('result');
   };
 
@@ -64,6 +114,19 @@ export default function Hero() {
     answerChoice === 'yes'
       ? "It's a common myth that depression is purely the result of a chemical imbalance. Brain chemistry plays a role, but current research shows depression is multifaceted—shaped by biology, psychology, environment, trauma, and lifestyle. Effective care usually blends medical, therapeutic, spiritual, and social support."
       : 'Right instinct—science has moved beyond the old “chemical imbalance” slogan. Depression reflects a complex interaction of biology, lived experiences, stressors, and even community support. Holistic treatment plans that mix therapy, healthy routines, faith, and medical care when needed tend to help most.';
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const storageKey = 'curious-session-id';
+    let storedSession = window.localStorage.getItem(storageKey);
+
+    if (!storedSession) {
+      storedSession = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+      window.localStorage.setItem(storageKey, storedSession);
+    }
+
+    setSessionId(storedSession);
+  }, []);
 
   return (
     <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -267,13 +330,8 @@ export default function Hero() {
                   <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
                 </div>
                 <p className="text-base md:text-lg font-semibold">Where are you joining from?</p>
-                <div className="flex justify-center">
+                <div className="space-y-3 flex flex-col items-center min-h-[120px]">
                   <div className="relative w-full max-w-[260px]">
-                    {displaySuggestion && (
-                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 py-2.5 text-white/35 text-sm md:text-base">
-                        {displaySuggestion}
-                      </span>
-                    )}
                     <input
                       type="text"
                       placeholder="Start typing your country..."
@@ -281,48 +339,67 @@ export default function Hero() {
                       value={countryInput}
                       onChange={(event) => setCountryInput(event.target.value)}
                       onKeyDown={(event) => {
-                        if (event.key === 'Enter' && isCountryValid) {
+                        if (event.key === 'Enter' && canSubmitResponse) {
                           event.preventDefault();
                           handleCountrySubmit();
                         }
                       }}
                     />
                   </div>
+                  {displaySuggestion && (
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
+                      onClick={() => setCountryInput(displaySuggestion)}
+                    >
+                      {displaySuggestion}
+                    </button>
+                  )}
                 </div>
+                <p className="text-[11px] text-white/70 max-w-sm mx-auto text-center leading-relaxed">
+                  By clicking “See the answer” you consent to us storing this response with your session ID, country, and answer for anonymous stats. We don&apos;t collect account info or anything personally identifying.
+                </p>
                 <button
                   type="button"
                   onClick={handleCountrySubmit}
-                  disabled={!isCountryValid}
+                  disabled={!canSubmitResponse}
                   className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  See the answer
+                  {isSubmittingResponse ? 'Saving...' : 'See the answer'}
                 </button>
+                {submissionError && (
+                  <p className="text-xs text-red-200 text-center">
+                    {submissionError}
+                  </p>
+                )}
               </div>
             )}
 
             {curiousStep === 'result' && (
               <div className="space-y-4">
-                <p className="text-base md:text-lg font-semibold">
-                  Here&apos;s what science says:
-                </p>
                 <p className="text-sm md:text-base leading-relaxed text-white/90">{answerText}</p>
-                {userCountry && (
-                  <p className="text-xs text-white/75">
-                    Since you&apos;re in {userCountry}, consider reaching out to local mental-health professionals, trusted community members, or faith-based counselors for context-aware guidance.
+                {submissionMessage && (
+                  <p className="text-xs text-white/75 text-center">
+                    {submissionMessage}
                   </p>
                 )}
-                <div className="flex flex-wrap gap-3 pt-1">
+                {submissionError && (
+                  <p className="text-xs text-red-200 text-center">
+                    {submissionError}
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-3 pt-4 justify-center">
                   <button
                     type="button"
                     onClick={closeCuriousModal}
-                    className="flex-1 min-w-[130px] px-4 py-2.5 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                    className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     onClick={handleCuriousClick}
-                    className="flex-1 min-w-[130px] px-4 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                    className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
                   >
                     Ask again
                   </button>
