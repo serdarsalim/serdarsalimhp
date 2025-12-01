@@ -170,6 +170,7 @@ export default function Hero() {
   const [storedCountry, setStoredCountry] = useState<CountryOption | null>(null);
   const [stats, setStats] = useState({ answered: 0, correct: 0 });
   const [showSummary, setShowSummary] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
 
@@ -238,6 +239,47 @@ export default function Hero() {
 
   const handleRestartQuiz = () => {
     resetQuiz();
+  };
+
+  const shareResult = async () => {
+    if (typeof window === 'undefined') return;
+    const url = 'https://serdarsalim.com/common-misconceptions';
+    const score = scorePercentage !== null ? `${scorePercentage}%` : null;
+    const title = 'Common Misconceptions Quiz';
+    const text = score ? `I scored ${score} on Serdar’s Common Misconceptions quiz.` : 'Explore the Common Misconceptions quiz by Serdar.';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+      } catch {
+        // ignore share cancellation
+      }
+    } else {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+  };
+
+  const shareTo = (platform: 'twitter' | 'linkedin' | 'copy') => {
+    if (typeof window === 'undefined') return;
+    const url = 'https://serdarsalim.com/common-misconceptions';
+    const score = scorePercentage !== null ? `${scorePercentage}%` : null;
+    const text = score ? `I scored ${score} on Serdar’s Common Misconceptions quiz.` : 'Explore the Common Misconceptions quiz by Serdar.';
+
+    if (platform === 'copy') {
+      navigator.clipboard?.writeText(url);
+      setShowShareMenu(false);
+      return;
+    }
+
+    const encodedText = encodeURIComponent(text);
+    const encodedUrl = encodeURIComponent(url);
+
+    if (platform === 'twitter') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`, '_blank');
+    } else if (platform === 'linkedin') {
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`, '_blank');
+    }
+    setShowShareMenu(false);
   };
 
   const handleSkipQuestion = () => {
@@ -599,12 +641,29 @@ export default function Hero() {
       </div>
 
       {isCuriousOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8" onClick={() => setShowShareMenu(false)}>
           <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeCuriousModal} />
           <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col h-[600px] md:h-[620px]">
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-white/70">Curious?</p>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={(event) => { event.stopPropagation(); setShowShareMenu((prev) => !prev); }}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/30 hover:bg-white/30 transition"
+                  aria-label="Share curious quiz"
+                >
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 6l-4-4m0 0L8 6m4-4v18" />
+                  </svg>
+                </button>
+                {showShareMenu && (
+                  <div className="absolute left-0 top-12 bg-white/20 border border-white/30 rounded-2xl backdrop-blur px-3 py-2 space-y-2 text-xs" onClick={(event) => event.stopPropagation()}>
+                    <button onClick={() => shareTo('twitter')} className="block text-left w-full hover:text-white">Twitter</button>
+                    <button onClick={() => shareTo('linkedin')} className="block text-left w-full hover:text-white">LinkedIn</button>
+                    <button onClick={() => shareTo('copy')} className="block text-left w-full hover:text-white">Copy link</button>
+                  </div>
+                )}
               </div>
               <button
                 type="button"
@@ -761,13 +820,22 @@ export default function Hero() {
                 </button>
                 {quizComplete ? (
                   showSummary ? (
-                    <button
-                      type="button"
-                      onClick={handleRestartQuiz}
-                      className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
-                    >
-                      Restart
-                    </button>
+                    <>
+                      <button
+                        type="button"
+                        onClick={shareResult}
+                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                      >
+                        Share
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleRestartQuiz}
+                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                      >
+                        Restart
+                      </button>
+                    </>
                   ) : (
                     <button
                       type="button"
