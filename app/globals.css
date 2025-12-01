@@ -165,7 +165,7 @@ body {
   --blog-white: #ffffff;
   --blog-gray-border: rgba(0, 0, 0, 0.12);
   --blog-gray-border-strong: rgba(0, 0, 0, 0.2);
-  font: 1em/1.5 "Londrina Solid", var(--font-geist-sans), system-ui, sans-serif;
+  font: 1em/1.5 var(--font-jetbrains), system-ui, sans-serif;
   background-color: var(--blog-black);
   border-radius: 1.25em;
   color: var(--blog-gray9);
@@ -202,6 +202,7 @@ body {
 .blog-button__cover {
   transform-origin: 1.25em;
   background-color: #bb94a5;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   width: calc(100% + 0.9em);
   padding: 0.45em 0.85em;
   transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);

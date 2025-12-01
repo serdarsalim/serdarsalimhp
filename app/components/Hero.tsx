@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 import { countryOptions, type CountryOption } from '../data/countries';
 
@@ -153,7 +153,11 @@ const scoreTiers = [
   },
 ];
 
-export default function Hero() {
+export type HeroHandle = {
+  openCurious: () => void;
+};
+
+const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const [showOrigin, setShowOrigin] = useState(false);
@@ -488,6 +492,13 @@ export default function Hero() {
       ignore = true;
     };
   }, [storedCountry]);
+
+  useImperativeHandle(ref, () => ({
+    openCurious: () => {
+      setShowShareMenu(false);
+      handleCuriousClick();
+    },
+  }));
 
   return (
     <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -864,4 +875,6 @@ export default function Hero() {
       <IslamicPattern position="bottom" variant={1} />
     </section>
   );
-}
+});
+
+export default Hero;

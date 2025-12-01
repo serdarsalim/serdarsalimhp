@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Hero from './components/Hero';
+import { useEffect, useRef, useState } from 'react';
+import Hero, { HeroHandle } from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
@@ -13,6 +13,7 @@ import Landscape from './components/Landscape';
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
+  const heroRef = useRef<HeroHandle>(null);
 
   useEffect(() => {
     const heroTitle = document.getElementById('hero-title');
@@ -62,7 +63,14 @@ export default function Home() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8 ml-auto">
+            <div className="hidden md:flex items-center gap-4 ml-auto">
+              <button
+                type="button"
+                onClick={() => heroRef.current?.openCurious()}
+                className="px-3 py-1.5 rounded-full border border-white/40 text-white/90 text-xs tracking-[0.25em] uppercase hover:bg-white/15 transition"
+              >
+                Curious?
+              </button>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
@@ -74,6 +82,13 @@ export default function Home() {
 
             {/* Mobile Menu - Simplified */}
             <div className="md:hidden flex items-center gap-3 ml-auto">
+              <button
+                type="button"
+                onClick={() => heroRef.current?.openCurious()}
+                className="px-2.5 py-1 rounded-full border border-white/40 text-white text-[10px] tracking-[0.25em] uppercase hover:bg-white/15 transition"
+              >
+                Curious?
+              </button>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
@@ -87,7 +102,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <Hero />
+      <Hero ref={heroRef} />
 
       {/* About Section */}
       <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">

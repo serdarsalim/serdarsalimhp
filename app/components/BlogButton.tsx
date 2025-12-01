@@ -78,7 +78,9 @@ export default function BlogButton({ label = 'Blog', className = '', onMouseMove
         </span>
       </span>
       <span className="blog-button__cover">
-        <span className="blog-button__label">{label}</span>
+        <span className="blog-button__label" style={{ fontFamily: 'var(--font-jetbrains)', letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.7rem' }}>
+          {label}
+        </span>
       </span>
     </a>
   );
