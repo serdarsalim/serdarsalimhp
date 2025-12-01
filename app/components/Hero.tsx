@@ -165,23 +165,23 @@ export default function Hero() {
               </div>
 
               {/* Subtle CTA that matches the design */}
-              <div className="pt-6 flex flex-wrap gap-3">
+              <div className="pt-6 flex gap-2 w-full flex-nowrap">
                 <a
                   href="#about"
-                  className="group relative inline-flex flex-none items-center gap-3 px-4 py-3 rounded-xl text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex flex-1 min-w-0 justify-center items-center gap-2 px-2.5 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>About me</span>
-                    <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                     </svg>
                   </span>
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex flex-none items-center gap-3 px-4 py-3 rounded-xl text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex flex-1 min-w-0 justify-center items-center gap-2 px-2.5 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();
@@ -189,23 +189,23 @@ export default function Hero() {
                   }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>Apps</span>
-                    <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                     </svg>
                   </span>
                 </a>
                 <button
                   type="button"
-                  className="group relative inline-flex flex-none items-center gap-3 px-4 py-3 rounded-xl text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex flex-1 min-w-0 justify-center items-center gap-2 px-2.5 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={handleCuriousClick}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/10 via-white/20 to-purple-200/10 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-base md:text-lg font-semibold flex items-center gap-3 uppercase tracking-wide">
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>Curious?</span>
-                    <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19V5m0 0l-6 6m6-6l6 6" />
                     </svg>
                   </span>
