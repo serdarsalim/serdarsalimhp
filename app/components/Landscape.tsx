@@ -6,7 +6,7 @@ import type { HeroHandle } from './Hero';
 import styles from './Landscape.module.css';
 
 interface LandscapeProps {
-  heroRef: React.RefObject<HeroHandle>;
+  heroRef: React.RefObject<HeroHandle | null>;
 }
 
 export default function Landscape({ heroRef }: LandscapeProps) {
