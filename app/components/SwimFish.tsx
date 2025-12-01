@@ -4,9 +4,20 @@ import type { SVGProps } from 'react';
 
 export type SwimFishProps = SVGProps<SVGSVGElement> & {
   glow?: boolean;
+  eyeOffset?: {
+    x: number;
+    y: number;
+  };
 };
 
-const SwimFish = ({ glow = true, ...props }: SwimFishProps) => (
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const SwimFish = ({ glow = true, eyeOffset, ...props }: SwimFishProps) => {
+  const offsetX = clamp(eyeOffset?.x ?? 0, -1, 1);
+  const offsetY = clamp(eyeOffset?.y ?? 0, -1, 1);
+  const pupilCx = 66 + offsetX * 4;
+  const pupilCy = 56 + offsetY * 3;
+  return (
   <svg viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <defs>
       <linearGradient id="swimFishBodyGradient" x1="20" y1="60" x2="220" y2="60" gradientUnits="userSpaceOnUse">
@@ -47,9 +58,10 @@ const SwimFish = ({ glow = true, ...props }: SwimFishProps) => (
         fill="url(#swimFishFinGradient)"
         opacity="0.65"
       />
-      <ellipse cx="70" cy="60" rx="12" ry="8" fill="#0f172a" opacity="0.4" />
-      <circle cx="64" cy="56" r="8" fill="#0f172a" />
-      <circle cx="62" cy="54" r="3" fill="#f1f5f9" />
+      <ellipse cx="70" cy="60" rx="12" ry="8" fill="#0f172a" opacity="0.35" />
+      <circle cx="64" cy="56" r="9" fill="#f8fafc" />
+      <circle cx={pupilCx} cy={pupilCy} r="4.2" fill="#0f172a" />
+      <circle cx={pupilCx - 1.5} cy={pupilCy - 1.2} r="1.2" fill="#e0f2fe" opacity="0.85" />
       <path
         d="M76 74c6 4 18 6 30 6s24-2 30-6"
         stroke="#fdf4ff"
@@ -59,6 +71,7 @@ const SwimFish = ({ glow = true, ...props }: SwimFishProps) => (
       />
     </g>
   </svg>
-);
+  );
+};
 
 export default SwimFish;
