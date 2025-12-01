@@ -39,16 +39,16 @@ const curiousQuestions: CuriousQuestion[] = [
   },
   {
     id: 'five-senses',
-    prompt: 'Do humans only have five senses?',
-    correctAnswer: 'no',
-    explanation: 'Balance, movement, hunger, thirst, temperature, pain—those are senses too. We’re rocking closer to twenty.',
+    prompt: 'Do humans have more than five senses?',
+    correctAnswer: 'yes',
+    explanation: 'Beyond the classic five we have balance, movement, hunger, thirst, temperature, pain and more—closer to twenty senses in total.',
     image: '/quiz/brain.png',
   },
   {
     id: 'goldfish-memory',
-    prompt: 'Do goldfish only remember for three seconds?',
-    correctAnswer: 'no',
-    explanation: 'Goldfish can remember tricks and mazes for months. They’re not geniuses, but they’re not totally forgetful either.',
+    prompt: 'Can goldfish remember for more than 3 seconds?',
+    correctAnswer: 'yes',
+    explanation: 'They can remember tricks and mazes for months. They’re not geniuses, but they’re far from totally forgetful.',
     image: '/quiz/fish.png',
   },
   {
@@ -60,15 +60,15 @@ const curiousQuestions: CuriousQuestion[] = [
   },
   {
     id: 'caffeine-dehydrates',
-    prompt: 'Does caffeine dehydrate you?',
-    correctAnswer: 'no',
-    explanation: 'Coffee can make you pee more, but the water in the drink replaces what you lose. You stay net hydrated.',
+    prompt: 'Can you drink coffee without dehydrating yourself?',
+    correctAnswer: 'yes',
+    explanation: 'Coffee has a mild diuretic effect, but the water in the cup more than replaces what you lose—net hydration stays positive.',
     image: '/quiz/caffeine.png',
   },
   {
     id: 'scientific-proof',
-    prompt: 'Is science about proving things once and for all?',
-    correctAnswer: 'no',
+    prompt: 'Science can not prove things once and for all?',
+    correctAnswer: 'yes',
     explanation: 'Science updates when better evidence shows up. Proof is for math—science deals in strongest explanations, not forever answers.',
     image: '/quiz/brain.png',
   },
@@ -81,8 +81,8 @@ const curiousQuestions: CuriousQuestion[] = [
   },
   {
     id: 'ten-percent-brain',
-    prompt: 'Do we only use ten percent of our brain?',
-    correctAnswer: 'no',
+    prompt: 'Do humans use more than 10% of their brain?',
+    correctAnswer: 'yes',
     explanation: 'Every region handles something important. During different tasks some areas idle, but across a day you use the whole network.',
     image: '/quiz/brain.png',
   },
@@ -95,9 +95,9 @@ const curiousQuestions: CuriousQuestion[] = [
   },
   {
     id: 'sushi-raw-fish',
-    prompt: 'Does sushi mean raw fish?',
-    correctAnswer: 'no',
-    explanation: 'Sushi refers to rice seasoned with vinegar. It can be topped with veggies, egg, or fish. “Sashimi” is the raw-fish word.',
+    prompt: 'Does sushi literally refer to sour rice?',
+    correctAnswer: 'yes',
+    explanation: 'Sushi means vinegared rice. It can be topped with veggies, egg, or fish. “Sashimi” is the word that just means raw slices.',
     image: '/quiz/sushi.png',
   },
   {
@@ -133,6 +133,7 @@ const curiousQuestions: CuriousQuestion[] = [
 const COUNTRY_STORAGE_KEY = 'curious-country';
 const QUESTION_STORAGE_KEY = 'curious-question-index';
 const SCORE_STORAGE_KEY = 'curious-score';
+const SESSION_STORAGE_KEY = 'curious-session-id';
 
 const scoreTiers = [
   {
@@ -217,6 +218,10 @@ export default function Hero() {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(QUESTION_STORAGE_KEY, '0');
       window.localStorage.removeItem(SCORE_STORAGE_KEY);
+      const newSessionId =
+        typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+      window.localStorage.setItem(SESSION_STORAGE_KEY, newSessionId);
+      setSessionId(newSessionId);
     }
   };
 
@@ -366,12 +371,11 @@ export default function Hero() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const storageKey = 'curious-session-id';
-    let storedSession = window.localStorage.getItem(storageKey);
+    let storedSession = window.localStorage.getItem(SESSION_STORAGE_KEY);
 
     if (!storedSession) {
       storedSession = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
-      window.localStorage.setItem(storageKey, storedSession);
+      window.localStorage.setItem(SESSION_STORAGE_KEY, storedSession);
     }
 
     setSessionId(storedSession);
