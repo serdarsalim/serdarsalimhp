@@ -332,7 +332,7 @@
   left: calc(70% - 10vmin);
   top: -20vmin;
   transform: translate3d(0, 0, 0);
-  animation: set 30s forwards;
+  animation: set 120s forwards;
   box-shadow: 0 0 10px white;
 }
 
@@ -346,7 +346,7 @@
   transform-origin: bottom center;
   transform: rotate(4deg);
   box-shadow: inset -1px 0 0 var(--s2), -6vmin 3vmin 0 0, 80vmin 0 0 0;
-  animation: verticalise 20s forwards;
+  animation: verticalise 120s forwards;
 }
 
 .reed-1 {
@@ -355,7 +355,7 @@
   height: 50vmin;
   bottom: -5vmin;
   transform: rotate(-2deg);
-  animation: verticalise-1 20s forwards;
+  animation: verticalise-1 120s forwards;
   box-shadow: inset -1px 0 0 var(--s1), 6vmin 13vmin 0 0 var(--s1),
     80vmin 10vmin 0 0 var(--v3);
 }
@@ -432,7 +432,7 @@
   top: 0;
   bottom: 0;
   background: radial-gradient(circle at 70% 100%, var(--s2), transparent);
-  animation: fade-reverse 20s forwards;
+  animation: fade-reverse 120s forwards;
   mix-blend-mode: color-burn;
 }
 
@@ -459,7 +459,7 @@
   opacity: 0;
   top: 0;
   transform: translate3d(0, 50vmin, 0);
-  animation: set-reflection 30s forwards;
+  animation: set-reflection 120s forwards;
 }
 
 .light {
@@ -470,7 +470,7 @@
   right: 0;
   margin: auto;
   top: calc(50% + 1vmin);
-  animation: light 30s forwards;
+  animation: light 120s forwards;
   opacity: 0;
   transform: scaleX(0.1) translate3d(0%, 0, 0);
   border-radius: 0.25vh;
@@ -553,7 +553,7 @@
   border-radius: 50%;
   bottom: 5vmin;
   left: 70%;
-  animation: splash 9s forwards;
+  animation: splash 120s forwards;
   transform: scale(0);
 }
 

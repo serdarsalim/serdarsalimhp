@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import SwimFish from './SwimFish';
 import type { HeroHandle } from './Hero';
 import styles from './Landscape.module.css';
@@ -10,14 +10,9 @@ interface LandscapeProps {
 }
 
 export default function Landscape({ heroRef }: LandscapeProps) {
-  const [key, setKey] = useState(0);
   const [fishEyeOffset, setFishEyeOffset] = useState({ x: 0, y: 0 });
   const fishEyeRef = useRef<HTMLDivElement | null>(null);
   const landscapeRef = useRef<HTMLDivElement | null>(null);
-
-  const handleClick = () => {
-    setKey(prev => prev + 1);
-  };
 
   const handleFishClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -58,7 +53,7 @@ export default function Landscape({ heroRef }: LandscapeProps) {
   }, []);
 
   return (
-    <div key={key} ref={landscapeRef} className={styles.landscape} onClick={handleClick}>
+    <div ref={landscapeRef} className={styles.landscape}>
       <div className={styles['connect-card']}>
         <h2 className={styles['connect-title']}>Let's Connect</h2>
         <div className={styles['connect-card-content']}>
