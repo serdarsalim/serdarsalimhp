@@ -131,6 +131,26 @@ const curiousQuestions: CuriousQuestion[] = [
 ];
 
 const COUNTRY_STORAGE_KEY = 'curious-country';
+const QUESTION_STORAGE_KEY = 'curious-question-index';
+const SCORE_STORAGE_KEY = 'curious-score';
+
+const scoreTiers = [
+  {
+    label: 'Myth Buster',
+    description: 'You crush myths for breakfast.',
+    min: 80,
+  },
+  {
+    label: 'Curious Skeptic',
+    description: 'You’re circling the truth—keep digging.',
+    min: 51,
+  },
+  {
+    label: 'Conspiracy Theorist',
+    description: 'Time to fact-check your feed.',
+    min: 0,
+  },
+];
 
 export default function Hero() {
   const [isHoveringName, setIsHoveringName] = useState(false);
@@ -147,6 +167,8 @@ export default function Hero() {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionMessage, setSubmissionMessage] = useState<string | null>(null);
   const [storedCountry, setStoredCountry] = useState<CountryOption | null>(null);
+  const [stats, setStats] = useState({ answered: 0, correct: 0 });
+  const [showSummary, setShowSummary] = useState(false);
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
 
@@ -154,13 +176,14 @@ export default function Hero() {
     setCuriousStep('question');
     if (!options?.preserveCountry) {
       setAnswerChoice(null);
-    }
-    if (!options?.preserveCountry) {
       setUserCountry('');
       setStoredCountry(null);
       setCountryInput('');
-    } else if (storedCountry) {
-      setCountryInput(storedCountry.name);
+    } else {
+      setAnswerChoice(null);
+      if (storedCountry) {
+        setCountryInput(storedCountry.name);
+      }
     }
     setSubmissionError(null);
     setIsSubmittingResponse(false);
@@ -173,20 +196,43 @@ export default function Hero() {
   };
 
   const goToNextQuestion = () => {
-    setQuestionIndex((prev) => (prev + 1) % totalQuestions);
+    setQuestionIndex((prev) => {
+      const next = (prev + 1) % totalQuestions;
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(QUESTION_STORAGE_KEY, String(next));
+      }
+      return next;
+    });
     resetCuriousFlow({ preserveCountry: true });
     setAnswerChoice(null);
+    setShowSummary(false);
+  };
+
+  const resetQuiz = () => {
+    resetCuriousFlow({ preserveCountry: true });
+    setStats({ answered: 0, correct: 0 });
+    setQuestionIndex(0);
+    setAnswerChoice(null);
+    setShowSummary(false);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(QUESTION_STORAGE_KEY, '0');
+      window.localStorage.removeItem(SCORE_STORAGE_KEY);
+    }
   };
 
   const handleCuriousClick = () => {
     resetCuriousFlow({ preserveCountry: true });
-    setQuestionIndex(0);
     setAnswerChoice(null);
+    setShowSummary(false);
     setIsCuriousOpen(true);
   };
 
   const handleAskMore = () => {
     goToNextQuestion();
+  };
+
+  const handleRestartQuiz = () => {
+    resetQuiz();
   };
 
   const handleSkipQuestion = () => {
@@ -221,12 +267,14 @@ export default function Hero() {
   const submitAnswer = async (countryOption: CountryOption, chosen?: CuriousChoice) => {
     const choiceToUse = chosen ?? answerChoice;
     if (!choiceToUse || !sessionId || isSubmittingResponse) return;
+    const isAnswerCorrectNow = choiceToUse === currentQuestion.correctAnswer;
 
     setIsSubmittingResponse(true);
     setSubmissionError(null);
     setSubmissionMessage(null);
 
     let message: string | null = null;
+    let didRecord = false;
 
     try {
       const response = await fetch('/api/curious-response', {
@@ -244,8 +292,9 @@ export default function Hero() {
 
       if (response.ok) {
         message = 'Thanks for sharing.';
+        didRecord = true;
       } else if (response.status === 409) {
-        message = 'Looks like you already answered earlier from this device.';
+        message = null;
       } else {
         const data = await response.json().catch(() => null);
         setSubmissionError(data?.message ?? 'Unable to save your response right now. Please try again later.');
@@ -259,6 +308,13 @@ export default function Hero() {
 
     setSubmissionMessage(message);
     rememberCountry(countryOption);
+    if (didRecord) {
+      updateStats(isAnswerCorrectNow);
+      if (typeof window !== 'undefined') {
+        const nextIndex = (questionIndex + 1) % totalQuestions;
+        window.localStorage.setItem(QUESTION_STORAGE_KEY, String(nextIndex));
+      }
+    }
     setCuriousStep('result');
   };
 
@@ -269,6 +325,24 @@ export default function Hero() {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify({ code: countryOption.code }));
     }
+  };
+
+  const updateStats = (didGetCorrect: boolean) => {
+    setStats((prev) => {
+      const updated = {
+        answered: prev.answered + 1,
+        correct: prev.correct + (didGetCorrect ? 1 : 0),
+      };
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(SCORE_STORAGE_KEY, JSON.stringify(updated));
+      }
+      return updated;
+    });
+  };
+
+  const handleCountrySelection = (countryOption: CountryOption) => {
+    setCountryInput(countryOption.name);
+    submitAnswer(countryOption);
   };
 
   const isAnswerCorrect = answerChoice ? answerChoice === currentQuestion.correctAnswer : null;
@@ -282,6 +356,13 @@ export default function Hero() {
             : 'bg-rose-500/15 text-rose-200 border border-rose-300/40',
           text: currentQuestion.explanation,
         };
+  const isOnFinalQuestion = questionIndex === totalQuestions - 1;
+  const quizComplete = isOnFinalQuestion && curiousStep === 'result';
+  const scorePercentage = quizComplete ? Math.round((stats.correct / totalQuestions) * 100) : null;
+  const tier =
+    scorePercentage !== null
+      ? scoreTiers.find((candidate) => scorePercentage >= candidate.min) ?? scoreTiers[scoreTiers.length - 1]
+      : null;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -298,20 +379,69 @@ export default function Hero() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const storedIndex = window.localStorage.getItem(QUESTION_STORAGE_KEY);
+    if (storedIndex) {
+      const parsed = Number(storedIndex);
+      if (!Number.isNaN(parsed)) {
+        setQuestionIndex(parsed % totalQuestions);
+      }
+    }
+
     const stored = window.localStorage.getItem(COUNTRY_STORAGE_KEY);
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as { code: string };
       const match = countryOptions.find((country) => country.code === parsed.code);
       if (match) {
-        setStoredCountry(match);
-        setCountryInput(match.name);
-        setUserCountry(match.name);
+        rememberCountry(match);
       }
     } catch {
       window.localStorage.removeItem(COUNTRY_STORAGE_KEY);
     }
+
+    const storedScore = window.localStorage.getItem(SCORE_STORAGE_KEY);
+    if (storedScore) {
+      try {
+        const parsedScore = JSON.parse(storedScore) as { answered: number; correct: number };
+        if (
+          typeof parsedScore.answered === 'number' &&
+          typeof parsedScore.correct === 'number' &&
+          parsedScore.answered >= 0 &&
+          parsedScore.correct >= 0
+        ) {
+          setStats(parsedScore);
+        }
+      } catch {
+        window.localStorage.removeItem(SCORE_STORAGE_KEY);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (storedCountry) return;
+    let ignore = false;
+
+    const fetchGeoCountry = async () => {
+      try {
+        const response = await fetch('/api/geo');
+        if (!response.ok) return;
+        const data = await response.json();
+        if (ignore || !data?.country) return;
+        const match = countryOptions.find((country) => country.code === data.country.code);
+        if (match) {
+          rememberCountry(match);
+        }
+      } catch {
+        // ignore geo failures
+      }
+    };
+
+    fetchGeoCountry();
+
+    return () => {
+      ignore = true;
+    };
+  }, [storedCountry]);
 
   return (
     <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -467,7 +597,7 @@ export default function Hero() {
       {isCuriousOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
           <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeCuriousModal} />
-          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 space-y-6">
+          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col h-[600px] md:h-[620px]">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.3em] text-white/70">Curious?</p>
@@ -483,127 +613,167 @@ export default function Hero() {
                 </svg>
               </button>
             </div>
-
-            {curiousStep === 'question' && (
-              <div className="space-y-4 text-center">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="flex justify-center">
-                    <img src={currentQuestion.image ?? '/quiz/depression.png'} alt="Curious illustration" className="w-36 md:w-48 drop-shadow-2xl" />
+            <div className="flex-1 overflow-y-auto pt-6">
+              {curiousStep === 'question' && (
+                <div className="space-y-4 text-center">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex justify-center">
+                      <img src={currentQuestion.image ?? '/quiz/depression.png'} alt="Curious illustration" className="w-36 md:w-48 drop-shadow-2xl" />
+                    </div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                      Question {questionIndex + 1} / {totalQuestions}
+                    </p>
                   </div>
-                  <p className="text-xs uppercase tracking-[0.3em] text-white/70">
-                    Question {questionIndex + 1} / {totalQuestions}
-                  </p>
-                </div>
-                <p className="pb-4 text-lg md:text-xl font-semibold leading-relaxed">{currentQuestion.prompt}</p>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  <button
-                    type="button"
-                    onClick={() => handleAnswerSelection('yes')}
-                    className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleAnswerSelection('no')}
-                    className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
-                  >
-                    No
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSkipQuestion}
-                    className="min-w-[88px] px-3 py-2.5 rounded-2xl border border-white/40 text-white/80 hover:bg-white/10 transition font-semibold uppercase tracking-wide"
-                  >
-                    Skip
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {curiousStep === 'location' && (
-              <div className="space-y-4 text-center">
-                <div className="flex justify-center">
-                  <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
-                </div>
-                <p className="text-base md:text-lg font-semibold">Where are you joining from?</p>
-                <div className="space-y-3 flex flex-col items-center min-h-[120px]">
-                  <div className="relative w-full max-w-[260px]">
-                    <input
-                      type="text"
-                      placeholder="Start typing your country..."
-                      className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
-                      value={countryInput}
-                      onChange={(event) => setCountryInput(event.target.value)}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
-                          event.preventDefault();
-                          submitAnswer(resolvedCountryOption);
-                        }
-                      }}
-                    />
-                  </div>
-                  {displaySuggestion && (
+                  <p className="pb-4 text-lg md:text-xl font-semibold leading-relaxed">{currentQuestion.prompt}</p>
+                  <div className="flex flex-wrap gap-3 justify-center">
                     <button
                       type="button"
-                      className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
-                      onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
+                      onClick={() => handleAnswerSelection('yes')}
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
                     >
-                      {displaySuggestion}
+                      Yes
                     </button>
-                  )}
+                    <button
+                      type="button"
+                      onClick={() => handleAnswerSelection('no')}
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
+                    >
+                      No
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSkipQuestion}
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl border border-white/40 text-white/80 hover:bg-white/10 transition font-semibold uppercase tracking-wide"
+                    >
+                      Skip
+                    </button>
+                  </div>
                 </div>
-                <p className="text-[11px] text-white/70 max-w-sm mx-auto text-center leading-relaxed">
-                  By clicking “See the answer” you consent to us storing this response with your session ID, country, and answer for anonymous stats. We don&apos;t collect account info or anything personally identifying.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
-                  disabled={!canSubmitResponse}
-                  className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmittingResponse ? 'Saving...' : 'See the answer'}
-                </button>
-                {submissionError && (
-                  <p className="text-xs text-red-200 text-center">
-                    {submissionError}
-                  </p>
-                )}
-              </div>
-            )}
+              )}
 
-            {curiousStep === 'result' && (
-              <div className="space-y-4">
-                {answerDetails && (
-                  <>
-                    <div className="flex justify-center">
-                      <span className={`px-4 py-1 rounded-full text-xs uppercase tracking-[0.25em] ${answerDetails.badgeClass}`}>
-                        {answerDetails.label}
-                      </span>
+              {curiousStep === 'location' && (
+                <div className="space-y-4 text-center">
+                  <div className="flex justify-center">
+                    <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
+                  </div>
+                  <p className="text-base md:text-lg font-semibold">Where are you joining from?</p>
+                  <div className="space-y-3 flex flex-col items-center min-h-[120px]">
+                    <div className="relative w-full max-w-[260px]">
+                      <input
+                        type="text"
+                        placeholder="Start typing your country..."
+                        className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
+                        value={countryInput}
+                        onChange={(event) => setCountryInput(event.target.value)}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
+                            event.preventDefault();
+                            submitAnswer(resolvedCountryOption);
+                          }
+                        }}
+                      />
                     </div>
-                    <p className="text-sm md:text-base leading-relaxed text-white/90 text-center">
-                      {answerDetails.text}
-                    </p>
-                  </>
-                )}
-                {submissionMessage && (
-                  <p className="text-xs text-white/75 text-center">
-                    {submissionMessage}
+                    {displaySuggestion && (
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
+                        onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
+                      >
+                        {displaySuggestion}
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-white/70 max-w-sm mx-auto text-center leading-relaxed">
+                    By clicking “See the answer” you consent to us storing this response with your session ID, country, and answer for anonymous stats. We don&apos;t collect account info or anything personally identifying.
                   </p>
-                )}
-                {submissionError && (
-                  <p className="text-xs text-red-200 text-center">
-                    {submissionError}
-                  </p>
-                )}
-                <div className="flex flex-wrap gap-3 pt-4 justify-center">
                   <button
                     type="button"
-                    onClick={closeCuriousModal}
-                    className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                    onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
+                    disabled={!canSubmitResponse}
+                    className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Close
+                    {isSubmittingResponse ? 'Saving...' : 'See the answer'}
                   </button>
+                  {submissionError && (
+                    <p className="text-xs text-red-200 text-center">
+                      {submissionError}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {curiousStep === 'result' && (
+                <div className="flex flex-col flex-1 justify-center space-y-4">
+                  {quizComplete && showSummary && scorePercentage !== null && tier ? (
+                    <div className="space-y-4 text-center">
+                      <p className="text-[11px] uppercase tracking-[0.25em] text-white/70">You finished all {totalQuestions} myths</p>
+                      <p className="text-4xl font-bold text-white">{scorePercentage}%</p>
+                      <p className="text-sm uppercase tracking-[0.3em] text-white/80">{tier.label}</p>
+                      <p className="text-xs text-white/70">{tier.description} ({stats.correct}/{stats.answered} correct)</p>
+                    </div>
+                  ) : (
+                    answerDetails && (
+                      <div className="space-y-4">
+                        <div className="flex justify-center">
+                          <img
+                            src={currentQuestion.image ?? '/quiz/depression.png'}
+                            alt="Curious result"
+                            className="w-32 md:w-40 drop-shadow-2xl"
+                          />
+                        </div>
+                        <div className="flex justify-center">
+                          <span className={`px-4 py-1 rounded-full text-xs uppercase tracking-[0.25em] ${answerDetails.badgeClass}`}>
+                            {answerDetails.label}
+                          </span>
+                        </div>
+                        <p className="text-sm md:text-base leading-relaxed text-white/90 text-center">
+                          {answerDetails.text}
+                        </p>
+                      </div>
+                    )
+                  )}
+
+                  {submissionMessage && (
+                    <p className="text-xs text-white/75 text-center">
+                      {submissionMessage}
+                    </p>
+                  )}
+                  {submissionError && (
+                    <p className="text-xs text-red-200 text-center">
+                      {submissionError}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+            {curiousStep === 'result' && (
+              <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap gap-3 justify-center">
+                <button
+                  type="button"
+                  onClick={closeCuriousModal}
+                  className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                >
+                  Close
+                </button>
+                {quizComplete ? (
+                  showSummary ? (
+                    <button
+                      type="button"
+                      onClick={handleRestartQuiz}
+                      className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                    >
+                      Restart
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setShowSummary(true)}
+                      className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                    >
+                      Score
+                    </button>
+                  )
+                ) : (
                   <button
                     type="button"
                     onClick={handleAskMore}
@@ -611,7 +781,7 @@ export default function Hero() {
                   >
                     Ask more
                   </button>
-                </div>
+                )}
               </div>
             )}
           </div>
