@@ -962,22 +962,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
       @keyframes curiousFishRoam {
         0% {
-          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) scale(0.85);
+          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) rotate(-15deg) scale(0.85);
         }
         20% {
-          transform: translate3d(58vw, 35vh, 0) translate(-50%, -50%) scale(0.95);
+          transform: translate3d(58vw, 35vh, 0) translate(-50%, -50%) rotate(-25deg) scale(0.95);
         }
         40% {
-          transform: translate3d(25vw, 42vh, 0) translate(-50%, -50%) scale(1.05);
+          transform: translate3d(25vw, 42vh, 0) translate(-50%, -50%) rotate(5deg) scale(1.05);
         }
         60% {
-          transform: translate3d(38vw, 78vh, 0) translate(-50%, -50%) scale(0.92);
+          transform: translate3d(38vw, 78vh, 0) translate(-50%, -50%) rotate(20deg) scale(0.92);
         }
         80% {
-          transform: translate3d(80vw, 62vh, 0) translate(-50%, -50%) scale(1.08);
+          transform: translate3d(80vw, 62vh, 0) translate(-50%, -50%) rotate(-5deg) scale(1.08);
         }
         100% {
-          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) scale(0.85);
+          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) rotate(-15deg) scale(0.85);
         }
       }
 
