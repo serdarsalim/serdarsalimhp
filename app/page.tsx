@@ -215,7 +215,7 @@ export default function Home() {
       <Experience />
 
       {/* Landscape Section */}
-      <Landscape />
+      <Landscape heroRef={heroRef} />
     </div>
   );
 }

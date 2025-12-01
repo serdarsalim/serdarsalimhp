@@ -2,7 +2,6 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import SwimFish from './SwimFish';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -176,9 +175,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [stats, setStats] = useState({ answered: 0, correct: 0 });
   const [showSummary, setShowSummary] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
-  const heroSectionRef = useRef<HTMLElement | null>(null);
-  const fishEyeRef = useRef<HTMLDivElement | null>(null);
-  const [fishEyeOffset, setFishEyeOffset] = useState({ x: 0, y: 0 });
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
 
@@ -497,39 +493,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [storedCountry]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const heroEl = heroSectionRef.current;
-    if (!heroEl) return;
-
-    const handlePointerMove = (event: PointerEvent) => {
-      const fishRect = fishEyeRef.current?.getBoundingClientRect();
-      if (!fishRect) return;
-
-      const centerX = fishRect.left + fishRect.width / 2;
-      const centerY = fishRect.top + fishRect.height / 2;
-      const dx = event.clientX - centerX;
-      const dy = event.clientY - centerY;
-      const maxX = Math.max(fishRect.width, 60);
-      const maxY = Math.max(fishRect.height, 40);
-
-      setFishEyeOffset({
-        x: Math.max(-1, Math.min(1, dx / maxX)),
-        y: Math.max(-1, Math.min(1, dy / maxY)),
-      });
-    };
-
-    const resetEye = () => setFishEyeOffset({ x: 0, y: 0 });
-
-    heroEl.addEventListener('pointermove', handlePointerMove);
-    heroEl.addEventListener('pointerleave', resetEye);
-
-    return () => {
-      heroEl.removeEventListener('pointermove', handlePointerMove);
-      heroEl.removeEventListener('pointerleave', resetEye);
-    };
-  }, []);
-
   useImperativeHandle(ref, () => ({
     openCurious: () => {
       setShowShareMenu(false);
@@ -539,7 +502,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
   return (
     <>
-      <section ref={heroSectionRef} id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Subtle space video anchored at bottom with fade upward */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
         <video
@@ -565,23 +528,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-200 to-transparent opacity-70" />
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-indigo-500/60 to-transparent opacity-60" />
-      </div>
-
-      {/* Floating fish accent */}
-      <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none">
-        <button
-          type="button"
-          className="curious-fish-orbit"
-          aria-label="Open Curious quiz"
-          onClick={handleCuriousClick}
-          style={{ pointerEvents: 'auto' }}
-        >
-          <span className="curious-fish-bob">
-            <span className="curious-fish-body" ref={fishEyeRef}>
-              <SwimFish className="w-20 md:w-28 h-auto opacity-90" eyeOffset={fishEyeOffset} />
-            </span>
-          </span>
-        </button>
       </div>
 
       {/* Content */}
@@ -915,96 +861,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {/* Subtle Islamic pattern - fades upward */}
       <IslamicPattern position="bottom" variant={1} />
     </section>
-    <style jsx>{`
-      :global(.curious-fish-orbit) {
-        position: absolute;
-        animation: curiousFishRoam 26s ease-in-out infinite;
-        touch-action: manipulation;
-        background: transparent;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        line-height: 0;
-      }
-
-      :global(.curious-fish-bob) {
-        animation: curiousFishFloat 11s ease-in-out infinite;
-        display: inline-block;
-        position: relative;
-      }
-
-      :global(.curious-fish-body) {
-        transform-origin: center;
-        animation: curiousFishTilt 9s ease-in-out infinite;
-        filter: drop-shadow(0 32px 42px rgba(15, 23, 42, 0.4));
-        display: inline-block;
-        pointer-events: auto;
-      }
-
-      :global(.curious-fish-body svg) {
-        display: block;
-        pointer-events: auto;
-      }
-
-      @keyframes curiousFishRoam {
-        0% {
-          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) rotate(-15deg) scale(0.85);
-        }
-        20% {
-          transform: translate3d(58vw, 35vh, 0) translate(-50%, -50%) rotate(-25deg) scale(0.95);
-        }
-        40% {
-          transform: translate3d(25vw, 42vh, 0) translate(-50%, -50%) rotate(5deg) scale(1.05);
-        }
-        60% {
-          transform: translate3d(38vw, 78vh, 0) translate(-50%, -50%) rotate(20deg) scale(0.92);
-        }
-        80% {
-          transform: translate3d(80vw, 62vh, 0) translate(-50%, -50%) rotate(-5deg) scale(1.08);
-        }
-        100% {
-          transform: translate3d(75vw, 15vh, 0) translate(-50%, -50%) rotate(-15deg) scale(0.85);
-        }
-      }
-
-      @keyframes curiousFishFloat {
-        0% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-        100% {
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes curiousFishTilt {
-        0% {
-          transform: rotate(-6deg);
-        }
-        50% {
-          transform: rotate(4deg);
-        }
-        100% {
-          transform: rotate(-6deg);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :global(.curious-fish-orbit) {
-          animation: none;
-          transform: translate3d(65vw, 35vh, 0) scale(0.95);
-        }
-        :global(.curious-fish-bob) {
-          animation: none;
-          transform: translate(-50%, -50%);
-        }
-        :global(.curious-fish-body) {
-          animation: none;
-        }
-      }
-    `}</style>
     </>
   );
 });
