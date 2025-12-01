@@ -2,9 +2,135 @@
 
 import { useEffect, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import { countryOptions } from '../data/countries';
+import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
+type CuriousChoice = 'yes' | 'no';
+
+interface CuriousQuestion {
+  id: string;
+  prompt: string;
+  correctAnswer: CuriousChoice;
+  explanation: string;
+  image?: string;
+}
+
+const curiousQuestions: CuriousQuestion[] = [
+  {
+    id: 'five-second-rule',
+    prompt: 'Does the 5-second rule keep dropped food safe?',
+    correctAnswer: 'no',
+    explanation: 'Germs don’t care about a stopwatch. If the floor is dirty they hop on instantly, even if you scoop the snack up fast.',
+    image: '/quiz/food.png',
+  },
+  {
+    id: 'banana-tree',
+    prompt: 'Do bananas grow on trees?',
+    correctAnswer: 'no',
+    explanation: 'Bananas grow on massive herbs that just look like trees. They’re more like giant grass than actual wood.',
+    image: '/quiz/banana.png',
+  },
+  {
+    id: 'lose-heat',
+    prompt: 'Do adults lose most of their body heat through their head?',
+    correctAnswer: 'no',
+    explanation: 'That only applies to babies or if every other body part is bundled up. Heat escapes from whatever skin you expose.',
+    image: '/quiz/heat.png',
+  },
+  {
+    id: 'five-senses',
+    prompt: 'Do humans only have five senses?',
+    correctAnswer: 'no',
+    explanation: 'Balance, movement, hunger, thirst, temperature, pain—those are senses too. We’re rocking closer to twenty.',
+    image: '/quiz/brain.png',
+  },
+  {
+    id: 'goldfish-memory',
+    prompt: 'Do goldfish only remember for three seconds?',
+    correctAnswer: 'no',
+    explanation: 'Goldfish can remember tricks and mazes for months. They’re not geniuses, but they’re not totally forgetful either.',
+    image: '/quiz/fish.png',
+  },
+  {
+    id: 'shaving-thickens-hair',
+    prompt: 'Does shaving make hair grow back thicker?',
+    correctAnswer: 'no',
+    explanation: 'Shaving cuts hair blunt so it feels stubbier, but it doesn’t change the root. The new growth is the same as before.',
+    image: '/quiz/shaving.png',
+  },
+  {
+    id: 'caffeine-dehydrates',
+    prompt: 'Does caffeine dehydrate you?',
+    correctAnswer: 'no',
+    explanation: 'Coffee can make you pee more, but the water in the drink replaces what you lose. You stay net hydrated.',
+    image: '/quiz/caffeine.png',
+  },
+  {
+    id: 'scientific-proof',
+    prompt: 'Is science about proving things once and for all?',
+    correctAnswer: 'no',
+    explanation: 'Science updates when better evidence shows up. Proof is for math—science deals in strongest explanations, not forever answers.',
+    image: '/quiz/brain.png',
+  },
+  {
+    id: 'left-right-brain',
+    prompt: 'Are people “left-brained” or “right-brained”?',
+    correctAnswer: 'no',
+    explanation: 'Both hemispheres team up for logic and creativity. You don’t unlock art mode or spreadsheet mode on just one side.',
+    image: '/quiz/brain.png',
+  },
+  {
+    id: 'ten-percent-brain',
+    prompt: 'Do we only use ten percent of our brain?',
+    correctAnswer: 'no',
+    explanation: 'Every region handles something important. During different tasks some areas idle, but across a day you use the whole network.',
+    image: '/quiz/brain.png',
+  },
+  {
+    id: 'jihad',
+    prompt: 'Does “jihad” literally mean “holy war”?',
+    correctAnswer: 'no',
+    explanation: 'It translates to “struggle” or “striving.” People twisted it into “holy war,” but that’s not the original meaning.',
+    image: '/quiz/islam.png',
+  },
+  {
+    id: 'sushi-raw-fish',
+    prompt: 'Does sushi mean raw fish?',
+    correctAnswer: 'no',
+    explanation: 'Sushi refers to rice seasoned with vinegar. It can be topped with veggies, egg, or fish. “Sashimi” is the raw-fish word.',
+    image: '/quiz/sushi.png',
+  },
+  {
+    id: 'jesus-december-25',
+    prompt: 'Was Jesus definitely born on December 25th?',
+    correctAnswer: 'no',
+    explanation: 'The date was chosen centuries later, probably to line up with winter festivals. The actual birthday is unknown.',
+    image: '/quiz/jesus.png',
+  },
+  {
+    id: 'refreezing-meat',
+    prompt: 'Is it safe to refreeze raw meat that thawed in the fridge?',
+    correctAnswer: 'yes',
+    explanation: 'If it thawed slowly in the fridge, the bacteria never exploded. You can refreeze it—quality might dip, but safety is fine.',
+    image: '/quiz/meat.png',
+  },
+  {
+    id: 'msg-headaches',
+    prompt: 'Does MSG automatically give you headaches?',
+    correctAnswer: 'no',
+    explanation: 'Most people feel nothing. A few migraine-prone folks are sensitive, but MSG itself isn’t the universal villain.',
+    image: '/quiz/msg.png',
+  },
+  {
+    id: 'eight-glasses',
+    prompt: 'Do you need exactly eight glasses of water a day?',
+    correctAnswer: 'no',
+    explanation: 'Your fluid needs come from water, juice, coffee, foods, everything. Drink when you’re thirsty and you’re good.',
+    image: '/quiz/water.png',
+  },
+];
+
+const COUNTRY_STORAGE_KEY = 'curious-country';
 
 export default function Hero() {
   const [isHoveringName, setIsHoveringName] = useState(false);
@@ -12,39 +138,68 @@ export default function Hero() {
   const [showOrigin, setShowOrigin] = useState(false);
   const [isCuriousOpen, setIsCuriousOpen] = useState(false);
   const [curiousStep, setCuriousStep] = useState<CuriousStep>('question');
-  const [answerChoice, setAnswerChoice] = useState<'yes' | 'no' | null>(null);
+  const [answerChoice, setAnswerChoice] = useState<CuriousChoice | null>(null);
   const [userCountry, setUserCountry] = useState('');
   const [countryInput, setCountryInput] = useState('');
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [isSubmittingResponse, setIsSubmittingResponse] = useState(false);
-  const [hasSubmittedResponse, setHasSubmittedResponse] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionMessage, setSubmissionMessage] = useState<string | null>(null);
+  const [storedCountry, setStoredCountry] = useState<CountryOption | null>(null);
+  const totalQuestions = curiousQuestions.length;
+  const currentQuestion = curiousQuestions[questionIndex];
 
-  const resetCuriousFlow = () => {
+  const resetCuriousFlow = (options?: { preserveCountry?: boolean }) => {
     setCuriousStep('question');
-    setAnswerChoice(null);
-    setUserCountry('');
-    setCountryInput('');
+    if (!options?.preserveCountry) {
+      setAnswerChoice(null);
+    }
+    if (!options?.preserveCountry) {
+      setUserCountry('');
+      setStoredCountry(null);
+      setCountryInput('');
+    } else if (storedCountry) {
+      setCountryInput(storedCountry.name);
+    }
     setSubmissionError(null);
-    setHasSubmittedResponse(false);
     setIsSubmittingResponse(false);
     setSubmissionMessage(null);
   };
 
   const closeCuriousModal = () => {
     setIsCuriousOpen(false);
-    resetCuriousFlow();
+    resetCuriousFlow({ preserveCountry: true });
+  };
+
+  const goToNextQuestion = () => {
+    setQuestionIndex((prev) => (prev + 1) % totalQuestions);
+    resetCuriousFlow({ preserveCountry: true });
+    setAnswerChoice(null);
   };
 
   const handleCuriousClick = () => {
-    resetCuriousFlow();
+    resetCuriousFlow({ preserveCountry: true });
+    setQuestionIndex(0);
+    setAnswerChoice(null);
     setIsCuriousOpen(true);
   };
 
-  const handleAnswerSelection = (choice: 'yes' | 'no') => {
+  const handleAskMore = () => {
+    goToNextQuestion();
+  };
+
+  const handleSkipQuestion = () => {
+    goToNextQuestion();
+  };
+
+  const handleAnswerSelection = (choice: CuriousChoice) => {
     setAnswerChoice(choice);
-    setCuriousStep('location');
+    if (storedCountry) {
+      submitAnswer(storedCountry, choice);
+    } else {
+      setCuriousStep('location');
+    }
   };
 
   const getNormalizedCountry = (input: string) => {
@@ -58,20 +213,19 @@ export default function Hero() {
     trimmedCountryInput.length > 0
       ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedCountryInput.toLowerCase()))
       : undefined;
-  const displaySuggestion =
-    suggestedCountry && suggestedCountry.name.toLowerCase() !== trimmedCountryInput.toLowerCase() ? suggestedCountry.name : '';
   const resolvedCountryOption = getNormalizedCountry(countryInput) ?? suggestedCountry;
+  const displaySuggestion = resolvedCountryOption?.name ?? '';
   const isCountryRecognized = Boolean(resolvedCountryOption);
   const canSubmitResponse = Boolean(isCountryRecognized && answerChoice && sessionId && !isSubmittingResponse);
 
-  const handleCountrySubmit = async () => {
-    if (!resolvedCountryOption || !answerChoice || !sessionId || isSubmittingResponse) return;
+  const submitAnswer = async (countryOption: CountryOption, chosen?: CuriousChoice) => {
+    const choiceToUse = chosen ?? answerChoice;
+    if (!choiceToUse || !sessionId || isSubmittingResponse) return;
 
     setIsSubmittingResponse(true);
     setSubmissionError(null);
     setSubmissionMessage(null);
 
-    let didSave = false;
     let message: string | null = null;
 
     try {
@@ -82,16 +236,15 @@ export default function Hero() {
         },
         body: JSON.stringify({
           sessionId,
-          countryCode: resolvedCountryOption.code,
-          choice: answerChoice,
+          countryCode: countryOption.code,
+          choice: choiceToUse,
+          questionId: currentQuestion.id,
         }),
       });
 
       if (response.ok) {
-        didSave = true;
         message = 'Thanks for sharing.';
       } else if (response.status === 409) {
-        didSave = true;
         message = 'Looks like you already answered earlier from this device.';
       } else {
         const data = await response.json().catch(() => null);
@@ -105,15 +258,30 @@ export default function Hero() {
     }
 
     setSubmissionMessage(message);
-    setHasSubmittedResponse(didSave);
-    setUserCountry(resolvedCountryOption.name);
+    rememberCountry(countryOption);
     setCuriousStep('result');
   };
 
-  const answerText =
-    answerChoice === 'yes'
-      ? "It's a common myth that depression is purely the result of a chemical imbalance. Brain chemistry plays a role, but current research shows depression is multifaceted—shaped by biology, psychology, environment, trauma, and lifestyle. Effective care usually blends medical, therapeutic, spiritual, and social support."
-      : 'Right instinct—science has moved beyond the old “chemical imbalance” slogan. Depression reflects a complex interaction of biology, lived experiences, stressors, and even community support. Holistic treatment plans that mix therapy, healthy routines, faith, and medical care when needed tend to help most.';
+  const rememberCountry = (countryOption: CountryOption) => {
+    setStoredCountry(countryOption);
+    setUserCountry(countryOption.name);
+    setCountryInput(countryOption.name);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify({ code: countryOption.code }));
+    }
+  };
+
+  const isAnswerCorrect = answerChoice ? answerChoice === currentQuestion.correctAnswer : null;
+  const answerDetails =
+    isAnswerCorrect === null
+      ? null
+      : {
+          label: isAnswerCorrect ? 'Correct Answer' : 'Wrong Answer',
+          badgeClass: isAnswerCorrect
+            ? 'bg-emerald-500/15 text-emerald-200 border border-emerald-300/40'
+            : 'bg-rose-500/15 text-rose-200 border border-rose-300/40',
+          text: currentQuestion.explanation,
+        };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -126,6 +294,23 @@ export default function Hero() {
     }
 
     setSessionId(storedSession);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem(COUNTRY_STORAGE_KEY);
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as { code: string };
+      const match = countryOptions.find((country) => country.code === parsed.code);
+      if (match) {
+        setStoredCountry(match);
+        setCountryInput(match.name);
+        setUserCountry(match.name);
+      }
+    } catch {
+      window.localStorage.removeItem(COUNTRY_STORAGE_KEY);
+    }
   }, []);
 
   return (
@@ -281,7 +466,7 @@ export default function Hero() {
 
       {isCuriousOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeCuriousModal} />
+          <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeCuriousModal} />
           <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 space-y-6">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -301,10 +486,15 @@ export default function Hero() {
 
             {curiousStep === 'question' && (
               <div className="space-y-4 text-center">
-                <div className="flex justify-center">
-                  <img src="/quiz/depression.png" alt="Depression illustration" className="w-36 md:w-48 drop-shadow-2xl" />
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex justify-center">
+                    <img src={currentQuestion.image ?? '/quiz/depression.png'} alt="Curious illustration" className="w-36 md:w-48 drop-shadow-2xl" />
+                  </div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                    Question {questionIndex + 1} / {totalQuestions}
+                  </p>
                 </div>
-                <p className="pb-4 text-lg md:text-xl font-semibold leading-relaxed">Is depression caused by a chemical imbalance?</p>
+                <p className="pb-4 text-lg md:text-xl font-semibold leading-relaxed">{currentQuestion.prompt}</p>
                 <div className="flex flex-wrap gap-3 justify-center">
                   <button
                     type="button"
@@ -319,6 +509,13 @@ export default function Hero() {
                     className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
                   >
                     No
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSkipQuestion}
+                    className="min-w-[88px] px-3 py-2.5 rounded-2xl border border-white/40 text-white/80 hover:bg-white/10 transition font-semibold uppercase tracking-wide"
+                  >
+                    Skip
                   </button>
                 </div>
               </div>
@@ -339,9 +536,9 @@ export default function Hero() {
                       value={countryInput}
                       onChange={(event) => setCountryInput(event.target.value)}
                       onKeyDown={(event) => {
-                        if (event.key === 'Enter' && canSubmitResponse) {
+                        if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
                           event.preventDefault();
-                          handleCountrySubmit();
+                          submitAnswer(resolvedCountryOption);
                         }
                       }}
                     />
@@ -350,7 +547,7 @@ export default function Hero() {
                     <button
                       type="button"
                       className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
-                      onClick={() => setCountryInput(displaySuggestion)}
+                      onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
                     >
                       {displaySuggestion}
                     </button>
@@ -361,7 +558,7 @@ export default function Hero() {
                 </p>
                 <button
                   type="button"
-                  onClick={handleCountrySubmit}
+                  onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
                   disabled={!canSubmitResponse}
                   className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -377,7 +574,18 @@ export default function Hero() {
 
             {curiousStep === 'result' && (
               <div className="space-y-4">
-                <p className="text-sm md:text-base leading-relaxed text-white/90">{answerText}</p>
+                {answerDetails && (
+                  <>
+                    <div className="flex justify-center">
+                      <span className={`px-4 py-1 rounded-full text-xs uppercase tracking-[0.25em] ${answerDetails.badgeClass}`}>
+                        {answerDetails.label}
+                      </span>
+                    </div>
+                    <p className="text-sm md:text-base leading-relaxed text-white/90 text-center">
+                      {answerDetails.text}
+                    </p>
+                  </>
+                )}
                 {submissionMessage && (
                   <p className="text-xs text-white/75 text-center">
                     {submissionMessage}
@@ -398,10 +606,10 @@ export default function Hero() {
                   </button>
                   <button
                     type="button"
-                    onClick={handleCuriousClick}
+                    onClick={handleAskMore}
                     className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
                   >
-                    Ask again
+                    Ask more
                   </button>
                 </div>
               </div>
