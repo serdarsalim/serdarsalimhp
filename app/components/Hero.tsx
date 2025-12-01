@@ -577,7 +577,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         >
           <span className="curious-fish-bob">
             <span className="curious-fish-body" ref={fishEyeRef}>
-              <SwimFish className="w-28 md:w-40 h-auto opacity-90" eyeOffset={fishEyeOffset} />
+              <SwimFish className="w-20 md:w-28 h-auto opacity-90" eyeOffset={fishEyeOffset} />
             </span>
           </span>
         </button>
