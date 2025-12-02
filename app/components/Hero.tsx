@@ -664,7 +664,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="space-y-2">
                 <h1
                   id="hero-title"
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white select-none cursor-pointer transition-all duration-300"
+                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white/90 select-none cursor-pointer transition-all duration-300"
                   onClick={() => setIsHoveringName(!isHoveringName)}
                 >
                   {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
@@ -681,10 +681,10 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
               {/* Subtitle */}
               <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-                <p className="text-white font-semibold">
+                <p className="text-white/90 font-semibold">
                   Builds web apps for everyday problems
                 </p>
-                <p className="text-white font-semibold">
+                <p className="text-white/90 font-semibold">
                   Shares his thoughts on tech, Islam, and life
                 </p>
                 <div
@@ -712,7 +712,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
                 <a
                   href="#about"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white/90 font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -725,7 +725,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white/90 font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();
