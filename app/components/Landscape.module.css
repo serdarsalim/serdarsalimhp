@@ -37,6 +37,15 @@
   overflow: hidden;
 }
 
+.landscape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .connect-card {
   position: absolute;
   top: 5vh;
@@ -350,7 +359,7 @@
   width: 20vmin;
   height: 20vmin;
   left: calc(70% - 10vmin);
-  top: -20vmin;
+  top: 5vmin;
   transform: translate3d(0, 0, 0);
   animation: set 120s forwards;
   box-shadow: 0 0 10px white;

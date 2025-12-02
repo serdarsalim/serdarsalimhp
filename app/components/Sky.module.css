@@ -1,0 +1,57 @@
+:root {
+  --v1: #be91c6;
+  --s1: #fea798;
+  --cloud: #fea798;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--v1), var(--s1), var(--v1));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.3;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.25;
+  filter: blur(1px);
+  animation-delay: 0s;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.2;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}

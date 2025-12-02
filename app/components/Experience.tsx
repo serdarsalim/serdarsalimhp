@@ -1,5 +1,7 @@
 'use client';
 
+import Sky from './Sky';
+
 export default function Experience() {
   const experiences = [
     {
@@ -26,19 +28,10 @@ export default function Experience() {
   ];
 
   return (
-    <section
-      className="relative py-16 md:py-32 text-white"
-      style={{
-        backgroundImage: 'url(/normalsunset0.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
-      <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
-      <div className="absolute inset-x-0 top-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
+    <section className="relative py-16 md:py-32 text-white overflow-hidden">
+      <Sky />
+      <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
+      <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Experience</h2>
@@ -46,9 +39,9 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
               >
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
+                <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold text-white">{exp.role}</h3>
@@ -69,9 +62,9 @@ export default function Experience() {
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
               >
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
+                <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold text-white">{edu.degree}</h3>
