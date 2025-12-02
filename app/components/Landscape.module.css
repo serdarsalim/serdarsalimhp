@@ -23,7 +23,7 @@
 }
 
 .front {
-  z-index: 1;
+  z-index: 11;
   bottom: 0;
   left: 0;
   right: 0;
@@ -359,23 +359,23 @@
 .reed {
   height: 40vmin;
   width: 0.5vmin;
-  bottom: 0;
+  bottom: -5vmin;
   left: 10vmin;
   color: var(--v4);
   background: currentColor;
   transform-origin: bottom center;
-  transform: rotate(4deg);
+  transform: rotate(2deg);
   box-shadow: inset -1px 0 0 var(--s2), -6vmin 3vmin 0 0, 80vmin 0 0 0;
-  animation: verticalise 120s forwards;
+  animation: verticalise 8s ease-in-out infinite;
 }
 
 .reed-1 {
   color: var(--s2);
   left: 15vmin;
   height: 50vmin;
-  bottom: -5vmin;
-  transform: rotate(-2deg);
-  animation: verticalise-1 120s forwards;
+  bottom: -10vmin;
+  transform: rotate(-1deg);
+  animation: verticalise-1 10s ease-in-out infinite;
   box-shadow: inset -1px 0 0 var(--s1), 6vmin 13vmin 0 0 var(--s1),
     80vmin 10vmin 0 0 var(--v3);
 }
@@ -392,26 +392,20 @@
 }
 
 @keyframes verticalise {
-  0%,
-  10% {
-    transform: rotate(4deg);
+  0%, 100% {
+    transform: rotate(2deg);
   }
-  30%,
-  70%,
-  100% {
-    transform: rotate(0);
+  50% {
+    transform: rotate(-1deg);
   }
 }
 
 @keyframes verticalise-1 {
-  0%,
-  10% {
-    transform: rotate(-2deg);
+  0%, 100% {
+    transform: rotate(-0.5deg);
   }
-  45%,
-  70%,
-  100% {
-    transform: rotate(0) translateY(-6vmin);
+  50% {
+    transform: rotate(0.5deg);
   }
 }
 
@@ -573,7 +567,7 @@
   border-radius: 50%;
   bottom: 5vmin;
   left: 70%;
-  animation: splash 120s forwards;
+  animation: splash 3s ease-out infinite;
   transform: scale(0);
 }
 
@@ -592,9 +586,12 @@
 }
 
 @keyframes splash {
-  50%,
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
   100% {
-    transform: scale(1);
+    transform: scale(2);
     opacity: 0;
   }
 }
