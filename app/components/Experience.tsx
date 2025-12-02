@@ -30,7 +30,8 @@ export default function Experience() {
   return (
     <section className="relative py-16 md:py-32 text-white overflow-hidden">
       <Sky />
-      <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
+      <div className="absolute inset-0 bg-black/30 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
+
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">
