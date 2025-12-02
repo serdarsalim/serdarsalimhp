@@ -612,7 +612,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       <Sky />
 
       {/* Subtle space video anchored at bottom with fade upward */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden" style={{ zIndex: 1 }}>
+      <div className="absolute inset-x-0 bottom-0 h-1/3 overflow-hidden" style={{ zIndex: 1 }}>
         <video
           className="w-full h-full object-cover pointer-events-none opacity-70"
           src="/universe.mp4"
@@ -622,16 +622,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           playsInline
           aria-hidden="true"
           style={{
-            maskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
+            maskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
           }}
         />
         {/* Overlay for the video */}
         <div
           className="absolute inset-0 bg-black/40 pointer-events-none"
           style={{
-            maskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
+            maskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
           }}
         />
       </div>
@@ -651,7 +651,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-                  filter: 'none',
+                  filter: 'brightness(0.7)',
                   mixBlendMode: 'normal',
                 }}
               />

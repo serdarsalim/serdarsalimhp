@@ -201,7 +201,7 @@ body {
 
 .blog-button__cover {
   transform-origin: 1.25em;
-  background-color: #bb94a5;
+  background-color: #3b1895;
   width: calc(100% + 0.9em);
   padding: 0.45em 0.85em;
   transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
