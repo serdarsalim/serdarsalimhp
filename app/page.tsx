@@ -109,7 +109,7 @@ export default function Home() {
             About Me
           </h2>
           <div className="rounded-3xl border border-white/25 bg-white/10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
+            <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
               <p>
@@ -183,7 +183,7 @@ export default function Home() {
         }}
       >
         <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">

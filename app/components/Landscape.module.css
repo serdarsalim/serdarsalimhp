@@ -632,8 +632,18 @@
   cursor: pointer;
   transition: background 0.25s ease;
   font-size: 2rem; /* Make the emoji larger */
+  animation: chickSway 6s ease-in-out infinite;
 }
 
 .productivity-button:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes chickSway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
 }
