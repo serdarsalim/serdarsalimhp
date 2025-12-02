@@ -29,12 +29,14 @@ export default function Experience() {
     <section
       className="relative py-16 md:py-32 text-white"
       style={{
-        backgroundImage: 'url(/crazysunset.jpg)',
+        backgroundImage: 'url(/normalsunset0.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
       <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
+      <div className="absolute inset-x-0 top-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}

@@ -92,16 +92,15 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-        <video
+        <img
           className="absolute inset-0 w-full h-full object-cover"
-          src="/185366-875417525_small.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
+          src="/normalsunset0.jpg"
+          alt=""
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
@@ -168,7 +167,10 @@ export default function Home() {
         }}
       >
         <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/55 via-black/25 to-transparent pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
+        <div className="absolute inset-x-0 top-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">

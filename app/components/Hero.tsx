@@ -679,10 +679,10 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               {/* Subtitle */}
               <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
                 <p className="text-white font-semibold">
-                  Builds web apps that make life easier
+                  Builds web apps for everyday problems
                 </p>
                 <p className="text-white font-semibold">
-                  Creates content for personal growth
+                  Shares his thoughts on tech, Islam, and life
                 </p>
                 <div
                   className="relative cursor-pointer select-none"
