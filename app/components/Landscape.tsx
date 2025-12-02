@@ -89,6 +89,9 @@ export default function Landscape({ heroRef }: LandscapeProps) {
           </div>
         </div>
       </div>
+      <button type="button" className={styles['productivity-button']} onClick={() => heroRef.current?.openToolbox()}>
+        <span>🐥</span>
+      </button>
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
@@ -109,10 +112,10 @@ export default function Landscape({ heroRef }: LandscapeProps) {
       <div className={styles.water}></div>
 
       {/* Fish swimming in the pond */}
-      <div className="absolute inset-0 z-10 overflow-hidden">
+      <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
         <button
           type="button"
-          className="pond-fish-orbit"
+          className="pond-fish-orbit pointer-events-auto"
           aria-label="Open Curious quiz"
           onClick={handleFishClick}
         >

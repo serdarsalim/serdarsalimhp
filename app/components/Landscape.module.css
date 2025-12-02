@@ -128,6 +128,18 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.toolbox-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.toolbox-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
 .connect-icon {
   width: 1.2rem;
   height: 1.2rem;
@@ -601,4 +613,22 @@
 
 .delay-6 {
   animation-delay: 6s;
+}
+.productivity-button {
+  position: absolute;
+  bottom: 55vh;
+  left: 5vw;
+  z-index: 3;
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  font-size: 2rem; /* Make the emoji larger */
+}
+
+.productivity-button:hover {
+  background: rgba(255, 255, 255, 0.1);
 }

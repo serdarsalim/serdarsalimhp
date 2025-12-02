@@ -153,8 +153,89 @@ const scoreTiers = [
   },
 ];
 
+const toolboxCategories = {
+  productivity: [
+    {
+      name: 'uBlock Origin Lite',
+      type: 'Content shield',
+      description: 'Keeps trackers and loud ads away without heavy CPU usage—perfect for deep work sessions.',
+      url: 'https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh',
+    },
+    {
+      name: 'Undistracted',
+      type: 'Focus filter',
+      description: 'Hides feeds and notifications on social sites so I only check messages with intent.',
+      url: 'https://chromewebstore.google.com/detail/undistracted-hide-faceboo/pjjgklgkfeoeiebjogplpnibpfnffkng',
+    },
+    {
+      name: 'Channel Blocker',
+      type: 'YouTube filter',
+      description: 'Mutes entire YouTube channels or search phrases so my recommendations stay intentional.',
+      url: 'https://chromewebstore.google.com/detail/channel-blocker/nfkmalbckemmklibjddenhnofgnfcdfp',
+    },
+    {
+      name: 'Text Blaze',
+      type: 'Text automation',
+      description: 'Chrome-native text snippets and AI-powered workflows—fast replies without sounding robotic.',
+      url: 'https://blaze.today/',
+    },
+  ],
+  inspiration: [
+    {
+      name: 'Safina Society',
+      type: 'YouTube',
+      description: 'Talks that uplift and enrich Muslim life with practical fiqh and spirituality.',
+      url: 'https://www.youtube.com/@SafinaSociety',
+    },
+    {
+      name: 'Yasir Qadhi',
+      type: 'YouTube',
+      description: 'Dr. Yasir Qadhi’s official channel—lectures, Tafsir series, and timely reflections.',
+      url: 'https://www.youtube.com/@YasirQadhi',
+    },
+    {
+      name: 'The Thinking Muslim',
+      type: 'Podcast',
+      description: 'Interviews with Muslim thinkers exploring global issues through an Islamic lens.',
+      url: 'https://www.youtube.com/@TheThinkingMuslim',
+    },
+    {
+      name: 'Yaqeen Institute',
+      type: 'YouTube',
+      description: 'Islam that inspires faith, grounds it with intellect, and creates a world of doers who are tranquil, confident, and purpose-driven.',
+      url: 'https://www.youtube.com/@yaqeeninstituteofficial/',
+    },
+  ],
+      creativity: [
+      {
+        name: 'ChatGPT',
+        type: 'AI co-pilot',
+        description: 'Ideation, outlining, and creative drafts with GPT-4o—my second brain for content.',
+        url: 'https://chatgpt.com/',
+      },
+      {
+        name: 'Claude',
+        type: 'AI writing',
+        description: 'Anthropic’s Claude for long-form reasoning and safer ideation sessions.',
+        url: 'https://claude.ai/',
+      },
+      {
+        name: 'Supabase',
+        type: 'Backend',
+        description: 'Postgres + auth + storage in one place for rapid prototyping.',
+        url: 'https://supabase.com/',
+      },
+      {
+        name: 'VS Code',
+        type: 'Editor',
+        description: 'Custom themed editor with Copilot, GitLens, and the typing feel I love.',
+        url: 'https://code.visualstudio.com/',
+      },
+    ],} as const;
+
 export type HeroHandle = {
   openCurious: () => void;
+  openToolbox: () => void;
 };
 
 const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
@@ -175,6 +256,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [stats, setStats] = useState({ answered: 0, correct: 0 });
   const [showSummary, setShowSummary] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const [isToolboxOpen, setIsToolboxOpen] = useState(false);
+  const [toolboxTab, setToolboxTab] = useState<'productivity' | 'inspiration' | 'creativity'>('productivity');
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
 
@@ -235,6 +318,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     setAnswerChoice(null);
     setShowSummary(false);
     setIsCuriousOpen(true);
+  };
+
+  const openToolbox = () => {
+    setShowShareMenu(false);
+    setToolboxTab('productivity');
+    setIsToolboxOpen(true);
+  };
+
+  const closeToolbox = () => {
+    setIsToolboxOpen(false);
   };
 
   const handleAskMore = () => {
@@ -493,10 +586,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [storedCountry]);
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = isCuriousOpen || isToolboxOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isCuriousOpen, isToolboxOpen]);
+
   useImperativeHandle(ref, () => ({
     openCurious: () => {
       setShowShareMenu(false);
       handleCuriousClick();
+    },
+    openToolbox: () => {
+      openToolbox();
     },
   }));
 
@@ -601,23 +706,23 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               </div>
 
               {/* Subtle CTA that matches the design */}
-              <div className="pt-3 md:pt-6 flex gap-2 w-full">
+              <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
                 <a
                   href="#about"
-                  className="group relative inline-flex justify-center items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-1.5 uppercase tracking-wide whitespace-nowrap">
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>About me</span>
-                    <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                     </svg>
                   </span>
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex justify-center items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();
@@ -625,9 +730,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-1.5 uppercase tracking-wide whitespace-nowrap">
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>Apps</span>
-                    <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                     </svg>
                   </span>
@@ -858,9 +963,90 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         </div>
       )}
 
+      {isToolboxOpen && (
+        <div className="fixed inset-0 z-40 flex items-start justify-center px-4 py-12">
+          <div className="absolute inset-0 bg-[#04000b]/85 backdrop-blur-sm" onClick={closeToolbox} />
+          <div className="toolbox-modal relative z-10 mt-12 w-full max-w-[880px] rounded-[32px] border border-white/20 bg-white/10 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.6)] p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <p className="text-sm uppercase tracking-wider text-white/70">Things worth sharing</p>
+              </div>
+              <button
+                type="button"
+                onClick={closeToolbox}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/25 hover:bg-white/25 transition"
+                aria-label="Close toolbox"
+              >
+                <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <div className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-1">
+                {[
+                  { id: 'inspiration' as const, label: 'Inspire' },
+                  { id: 'creativity' as const, label: 'Create' },
+                  { id: 'productivity' as const, label: 'Focus' },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-[0.3em] transition ${
+                      toolboxTab === tab.id ? 'bg-white text-[#4c2372]' : 'text-white/70'
+                    }`}
+                    onClick={() => setToolboxTab(tab.id)}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="grid gap-3 md:gap-4 md:grid-cols-2">
+              {toolboxCategories[toolboxTab].map((tool) => (
+                <a
+                  key={tool.name}
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-white/20 bg-white/5 p-4 flex flex-col gap-2 hover:bg-white/10 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-lg font-semibold">{tool.name}</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">{tool.type}</p>
+                    </div>
+                    <span className="text-[11px] font-medium text-white/70 group-hover:text-white transition-colors">
+                      Visit →
+                    </span>
+                  </div>
+                  <p className="text-sm text-white/80 leading-relaxed">{tool.description}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Subtle Islamic pattern - fades upward */}
       <IslamicPattern position="bottom" variant={1} />
     </section>
+    <style jsx>{`
+      :global(.toolbox-modal) {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+      }
+      :global(.toolbox-modal::-webkit-scrollbar) {
+        width: 6px;
+      }
+      :global(.toolbox-modal::-webkit-scrollbar-track) {
+        background: transparent;
+      }
+      :global(.toolbox-modal::-webkit-scrollbar-thumb) {
+        background: rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+      }
+    `}</style>
     </>
   );
 });
