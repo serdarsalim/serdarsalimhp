@@ -46,11 +46,11 @@
   width: min(360px, 90vw);
   padding: clamp(1.5rem, 3vw, 2rem);
   border-radius: 32px;
-  background: rgba(10, 8, 30, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 25px 70px rgba(27, 18, 66, 0.45);
-  backdrop-filter: blur(30px);
-  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  overflow: visible;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -62,8 +62,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-  opacity: 0.5;
+  background: transparent;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -97,6 +97,7 @@
   white-space: nowrap;
   color: inherit;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .connect-subtitle {
@@ -112,6 +113,12 @@
   align-items: center;
 }
 
+.connect-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .connect-link {
   display: flex;
   align-items: center;
@@ -122,6 +129,7 @@
   padding: 0.25rem 0;
   font-weight: 500;
   transition: color 0.25s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .connect-link:hover {

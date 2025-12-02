@@ -194,7 +194,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:max-w-4xl md:mx-auto">
+          <div className="grid gap-6 md:max-w-5xl md:mx-auto">
             {projects.map((project, index) => (
               <div
                 key={project.id}
