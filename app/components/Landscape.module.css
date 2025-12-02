@@ -40,7 +40,7 @@
 
 .connect-card {
   position: absolute;
-  top: 5vh;
+  top: 15vh;
   right: auto;
   left: 50%;
   transform: translateX(-50%);
@@ -157,7 +157,7 @@
 
 @media (max-width: 768px) {
   .connect-card {
-    top: 5vh;
+    top: 15vh;
     width: min(80vw, 320px);
     padding: 1.1rem;
   }
@@ -348,12 +348,22 @@
 .sun {
   background: white;
   border-radius: 50%;
-  width: 20vmin;
-  height: 20vmin;
-  left: calc(70% - 10vmin);
-  top: 50vh;
-  transform: translate3d(0, 0, 0);
-  box-shadow: 0 0 10px white;
+  width: 12vmin;
+  height: 12vmin;
+  left: calc(80% - 6vmin);
+  top: 12vh;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(255, 255, 255, 0.4);
+  animation: moonDrift 180s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes moonDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(5vmin, -2vmin, 0);
+  }
 }
 
 .reed {
