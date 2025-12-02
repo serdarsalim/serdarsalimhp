@@ -113,16 +113,18 @@ export default function Home() {
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
               <p>
-                Hi wanderer! I build tools that solve problems and create content about a purposeful life. After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
+                I build web apps for everyday use and create content about a purposeful life. 
               </p>
             <p>
-              I was born in Türkiye and migrated to Austria with the hope of a better future. There, I was expected to integrate into society as an immigrant by staying quiet and keeping the system running. I refused.
+              I was born in Turkiye and migrated to Austria with the hope of a better future. There, I was expected to integrate into society as an immigrant by staying quiet and keeping the system running. This didn't suit me.
             </p>
             <p>
-              I became the first in my family to graduate university, moving to Ireland to manage projects at Twitter. During that time, I traveled to more than 50 countries before leaving corporate life in 2023.
+              I became the first in my family to graduate university, moved to Ireland to manage projects at a global tech company. This enabled me to see the world by traveling more than 50 countries. 
             </p>
+            After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
             <p>
-              Now married and raising a daughter, I am building a future here in Malaysia, where our lifestyle aligns with our Islamic values.
+              </p><p>
+              Now married and raising a daughter, I am building a future, where our lifestyle aligns with our Islamic values.
             </p>
             <p className="pt-2">
               Read more on my{' '}
