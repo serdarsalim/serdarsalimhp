@@ -113,19 +113,19 @@ export default function Home() {
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
               <p>
-                I build web apps for everyday use and create content about a purposeful life. 
+                I build web apps for everyday use and share my perspective about a purposeful life. 
               </p>
             <p>
-              I was born in Turkiye and migrated to Austria with the hope of a better future. There, I was expected to integrate into society as an immigrant by staying quiet and keeping the system running. This didn't suit me.
+              My family immigrated from Türkiye to Austria when I was a child. Growing up with a migration background, I had one goal: Choose where I live not because of circumstances, but because of my own free will.
             </p>
             <p>
-              I became the first in my family to graduate university, moved to Ireland to manage projects at a global tech company. This enabled me to see the world by traveling more than 50 countries. 
+              I became the first in my family to graduate university, moved to Ireland to manage projects at a global tech company, led international teams.
             </p>
-            After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have officially settled in Malaysia.
-            <p>
-              </p><p>
-              Now married and raising a daughter, I am building a future, where our lifestyle aligns with our Islamic values.
-            </p>
+            After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have now made malaysia home.
+              I'm married and raising a daughter. 
+              
+              <p></p>My goal now? To contribute to a future where Muslims are the innovators, not the immigrants.
+          <p>  </p>
             <p className="pt-2">
               Read more on my{' '}
               <a
