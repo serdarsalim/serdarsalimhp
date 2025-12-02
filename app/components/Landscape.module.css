@@ -31,19 +31,11 @@
 
 .landscape {
   height: 100vh;
-  background-image: linear-gradient(var(--v1), var(--s1), var(--v1));
+  background-image: linear-gradient(var(--v2), var(--v3), var(--v4));
   position: relative;
   z-index: 1;
   overflow: hidden;
-}
-
-.landscape::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  z-index: 1;
+  filter: brightness(0.6);
 }
 
 .connect-card {
@@ -359,9 +351,8 @@
   width: 20vmin;
   height: 20vmin;
   left: calc(70% - 10vmin);
-  top: 5vmin;
+  top: 50vh;
   transform: translate3d(0, 0, 0);
-  animation: set 120s forwards;
   box-shadow: 0 0 10px white;
 }
 

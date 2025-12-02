@@ -1,5 +1,8 @@
 :root {
   --v1: #be91c6;
+  --v2: #8a65cc;
+  --v3: #5e30d9;
+  --v4: #3b1895;
   --s1: #fea798;
   --cloud: #fea798;
 }
@@ -7,9 +10,10 @@
 .sky {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(var(--v1), var(--s1), var(--v1));
+  background-image: linear-gradient(var(--v2), var(--v3), var(--v4));
   overflow: hidden;
   pointer-events: none;
+  filter: brightness(0.6);
 }
 
 .cloud {

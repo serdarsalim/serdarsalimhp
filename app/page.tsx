@@ -9,6 +9,7 @@ import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
 import Landscape from './components/Landscape';
+import Sky from './components/Sky';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -91,23 +92,16 @@ export default function Home() {
       <Hero ref={heroRef} />
 
       {/* About Section */}
-      <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-        <img
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/normalsunset0.jpg"
-          alt=""
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
+      <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <Sky />
+        <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
           <h2 className="text-2xl md:text-4xl font-bold text-white text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             About Me
           </h2>
-          <div className="rounded-3xl border border-white/25 bg-white/10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
+          <div className="rounded-3xl border border-white/25 bg-black/40 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-lg text-white leading-relaxed">
@@ -160,17 +154,9 @@ export default function Home() {
       <section
         id="projects"
         className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
-        style={{
-          backgroundImage: 'url(/normalsunset.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
       >
-        <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
-        <div className="absolute inset-x-0 top-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)' }} />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black via-black/50 to-transparent pointer-events-none backdrop-blur-[2px]" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 backdrop-blur-sm pointer-events-none" aria-hidden="true" style={{ maskImage: 'linear-gradient(to top, black, transparent)' }} />
+        <Sky />
+        <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
           <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">

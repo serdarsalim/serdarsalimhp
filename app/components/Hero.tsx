@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
+import Sky from './Sky';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -608,10 +609,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <Sky />
+
       {/* Subtle space video anchored at bottom with fade upward */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden" style={{ zIndex: 1 }}>
         <video
-          className="w-full h-full object-cover pointer-events-none"
+          className="w-full h-full object-cover pointer-events-none opacity-70"
           src="/universe.mp4"
           autoPlay
           muted
@@ -619,21 +622,21 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           playsInline
           aria-hidden="true"
           style={{
-            maskImage: 'linear-gradient(to top, black 30%, black 30%, transparent 70%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 30%, black 30%, transparent 70%, transparent 100%)',
+            maskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
+          }}
+        />
+        {/* Overlay for the video */}
+        <div
+          className="absolute inset-0 bg-black/40 pointer-events-none"
+          style={{
+            maskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 75%, transparent 100%)',
           }}
         />
       </div>
 
-      {/* Light sky gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-[#cc5f5f]/95 via-[#b83b7b]/90 to-[#4c2372]/85" />
-      <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
-
-      {/* Subtle layered atmosphere with clouds effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-200 to-transparent opacity-70" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-linear-to-t from-indigo-500/60 to-transparent opacity-60" />
-      </div>
+      <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 2 }} />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">

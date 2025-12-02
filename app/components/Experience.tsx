@@ -49,14 +49,14 @@ export default function Experience() {
                   </div>
                   <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
                 </div>
-                <p className="relative text-sm md:text-base text-white/90 leading-relaxed">{exp.description}</p>
+                <p className="relative text-sm md:text-base text-white leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Education */}
-        <div>
+        <div className="education-sunset">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Education</h2>
           <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
@@ -72,7 +72,7 @@ export default function Experience() {
                   </div>
                   <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
                 </div>
-                <p className="relative text-sm md:text-base text-white/90 leading-relaxed">{edu.description}</p>
+                <p className="relative text-sm md:text-base text-white leading-relaxed">{edu.description}</p>
               </div>
             ))}
           </div>
@@ -82,3 +82,4 @@ export default function Experience() {
     </section>
   );
 }
+

@@ -35,7 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const isCulturia = project.id === 'culturia';
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-white/10 backdrop-blur-xl shadow-[0_25px_60px_rgba(95,39,87,0.35)] transition-all duration-500">
+    <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(95,39,87,0.35)] transition-all duration-500">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
       <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">
@@ -132,7 +132,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Right Column - Description */}
           <div className="flex items-center">
-            <div className="text-sm md:text-base text-white/85 leading-relaxed w-full">
+            <div className="text-sm md:text-base text-white leading-relaxed w-full">
               <ul className="list-disc pl-5 space-y-2 marker:text-white/70">
                 {project.shortDescription.split('\n').map((line, index) => (
                   <li key={index} className="pl-0">
