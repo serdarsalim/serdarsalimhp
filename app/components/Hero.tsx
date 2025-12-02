@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import Sky from './Sky';
+import SkyNoStars from './SkyNoStars';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -609,7 +609,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Sky />
+      <SkyNoStars />
 
       {/* Subtle space video anchored at bottom with fade upward */}
       <div className="absolute inset-x-0 bottom-0 h-1/3 overflow-hidden" style={{ zIndex: 1 }}>
