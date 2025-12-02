@@ -38,9 +38,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-white/10 backdrop-blur-xl shadow-[0_25px_60px_rgba(95,39,87,0.35)] transition-all duration-500">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
       <div className="relative p-3 pr-4 md:pr-6">
-        <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">
           {/* Left Column - Logo, Title, Links */}
-          <div className="flex flex-col md:min-w-[220px]">
+          <div className="flex flex-col md:min-w-[180px]">
             <div className="flex flex-row md:flex-col items-center md:items-center gap-3 md:gap-3 mb-4 text-left md:text-center">
               {/* Logo */}
               {project.image ? (
