@@ -8,11 +8,11 @@ export const projects: Project[] = [
     image: '/yummii_logo.png',
     shortDescription:
       '• Helps you create a weekly personal cooking plan\n' +
-      '• Add add new recipes for private use or for community\n' +
+      '• Add new recipes for private use or for community\n' +
       '• You can share meal plans with family members',
     fullDescription:
       '• Helps you create a weekly personal cooking plan\n' +
-      '• Add add new recipes for private use or for community\n' +
+      '• Add new recipes for private use or for community\n' +
       '• You can share meal plans with family members',
     techStack: ['Next.js', 'PostgreSQL', 'Tailwind CSS', 'Clerk'],
     year: '2025',
@@ -25,8 +25,8 @@ export const projects: Project[] = [
     name: 'Culturia',
     letter: 'C',
     image: '/culturia.png',
-    shortDescription: '• Find country specific videos from a curated world map \n• Explore music, comedy, talks, and daily-life clips \n• Create bookmark lists by country and topic',
-    fullDescription: '• Find country specific videos from a curated world map\n• Explore music, comedy, talks, and daily-life clips\n• Create bookmark lists by country and topic',
+    shortDescription: '• Find country-specific videos from a curated world map \n• Explore music, comedy, talks, and daily-life clips \n• Create bookmark lists by country and topic',
+    fullDescription: '• Find country-specific videos from a curated world map\n• Explore music, comedy, talks, and daily-life clips\n• Create bookmark lists by country and topic',
     techStack: ['React', 'TypeScript', 'Three.js', 'YouTube API', 'Mapbox'],
     year: '2025',
     category: 'Web App',
