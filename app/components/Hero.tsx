@@ -666,7 +666,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 {/* Location - casual handwriting style */}
                 <p
                   className="mt-0.5 sm:mt-1 text-lg sm:text-xl md:text-2xl text-white font-light cursor-pointer select-none transition-all duration-300"
-                  style={{ fontFamily: 'var(--font-caveat)' }}
+                  style={{ fontFamily: 'var(--font-caveat)', textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
                   onClick={() => setShowOrigin(!showOrigin)}
                 >
                   {showOrigin ? 'From Türkiye 🇹🇷' : 'Based in Malaysia 🇲🇾'}
@@ -675,10 +675,10 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
               {/* Subtitle */}
               <div className="text-sm sm:text-base md:text-lg text-white leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-                <p className="text-white font-semibold">
+                <p className="text-white font-semibold" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>
                   Builds web apps for everyday problems
                 </p>
-                <p className="text-white font-semibold">
+                <p className="text-white font-semibold" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>
                   Shares his thoughts on tech, Islam, and life
                 </p>
                 <div
@@ -688,6 +688,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   {/* English - always rendered to maintain layout space */}
                   <p
                     className={`text-white font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
                   >
                     Be in this world as if you are a<br />
                     stranger or a wayfarer
@@ -695,7 +696,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   {/* Arabic - absolute positioned overlay */}
                   <p
                     className={`text-white absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
-                    style={{ fontFamily: 'var(--font-reem-kufi)' }}
+                    style={{ fontFamily: 'var(--font-reem-kufi)', textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
                   >
                     كن في الدنيا كأنك غريب أو عابر سبيل
                   </p>
@@ -706,7 +707,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
                 <a
                   href="#about"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -719,7 +720,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();
@@ -963,7 +964,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {isToolboxOpen && (
         <div className="fixed inset-0 z-40 flex items-start justify-center px-4 py-12">
           <div className="absolute inset-0 bg-[#04000b]/85 backdrop-blur-sm" onClick={closeToolbox} />
-          <div className="toolbox-modal relative z-10 mt-12 w-full max-w-[880px] rounded-[32px] border border-white/20 bg-white/10 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.6)] p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+          <div className="toolbox-modal relative z-10 mt-12 w-full max-w-[880px] rounded-4xl border border-white/20 bg-white/10 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.6)] p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <p className="text-sm uppercase tracking-wider text-white/70">Things worth sharing</p>
