@@ -35,7 +35,6 @@
   position: relative;
   z-index: 1;
   overflow: hidden;
-  filter: brightness(0.6);
 }
 
 .connect-card {
@@ -96,7 +95,7 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  color: inherit;
+  color: #ffffff !important;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -126,15 +125,15 @@
   justify-content: center;
   gap: 0.75rem;
   text-decoration: none;
-  color: inherit;
+  color: #ffffff !important;
   padding: 0.25rem 0;
   font-weight: 500;
-  transition: color 0.25s ease;
+  transition: opacity 0.25s ease;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .connect-link:hover {
-  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.8;
 }
 
 .toolbox-button {

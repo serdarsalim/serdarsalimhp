@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import SkyNoStars from './SkyNoStars';
+import SkyMorning from './SkyMorning';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -609,7 +609,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <SkyNoStars />
+      <SkyMorning />
 
       {/* Subtle space video anchored at bottom with fade upward */}
       <div className="absolute inset-x-0 bottom-0 h-1/3 overflow-hidden" style={{ zIndex: 1 }}>
@@ -622,21 +622,19 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           playsInline
           aria-hidden="true"
           style={{
-            maskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
+            maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
           }}
         />
         {/* Overlay for the video */}
         <div
-          className="absolute inset-0 bg-black/40 pointer-events-none"
+          className="absolute inset-0 bg-black/10 pointer-events-none"
           style={{
-            maskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.15) 85%, transparent 100%)',
+            maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
           }}
         />
       </div>
-
-      <div className="absolute inset-0 bg-black/25 pointer-events-none" aria-hidden="true" style={{ zIndex: 2 }} />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
@@ -651,7 +649,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-                  filter: 'brightness(0.7)',
+                  filter: 'brightness(1)',
                   mixBlendMode: 'normal',
                 }}
               />
