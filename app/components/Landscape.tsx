@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import SwimFish from './SwimFish';
+import SwimTurtle from './SwimTurtle';
 import type { HeroHandle } from './Hero';
 import styles from './Landscape.module.css';
 
@@ -11,7 +12,9 @@ interface LandscapeProps {
 
 export default function Landscape({ heroRef }: LandscapeProps) {
   const [fishEyeOffset, setFishEyeOffset] = useState({ x: 0, y: 0 });
+  const [turtleEyeOffset, setTurtleEyeOffset] = useState({ x: 0, y: 0 });
   const fishEyeRef = useRef<HTMLDivElement | null>(null);
+  const turtleEyeRef = useRef<HTMLDivElement | null>(null);
   const landscapeRef = useRef<HTMLDivElement | null>(null);
 
   const handleFishClick = (e: React.MouseEvent) => {
@@ -26,22 +29,40 @@ export default function Landscape({ heroRef }: LandscapeProps) {
 
     const handlePointerMove = (event: PointerEvent) => {
       const fishRect = fishEyeRef.current?.getBoundingClientRect();
-      if (!fishRect) return;
+      if (fishRect) {
+        const centerX = fishRect.left + fishRect.width / 2;
+        const centerY = fishRect.top + fishRect.height / 2;
+        const dx = event.clientX - centerX;
+        const dy = event.clientY - centerY;
+        const maxX = Math.max(fishRect.width, 60);
+        const maxY = Math.max(fishRect.height, 40);
 
-      const centerX = fishRect.left + fishRect.width / 2;
-      const centerY = fishRect.top + fishRect.height / 2;
-      const dx = event.clientX - centerX;
-      const dy = event.clientY - centerY;
-      const maxX = Math.max(fishRect.width, 60);
-      const maxY = Math.max(fishRect.height, 40);
+        setFishEyeOffset({
+          x: Math.max(-1, Math.min(1, dx / maxX)),
+          y: Math.max(-1, Math.min(1, dy / maxY)),
+        });
+      }
 
-      setFishEyeOffset({
-        x: Math.max(-1, Math.min(1, dx / maxX)),
-        y: Math.max(-1, Math.min(1, dy / maxY)),
-      });
+      const turtleRect = turtleEyeRef.current?.getBoundingClientRect();
+      if (turtleRect) {
+        const centerX = turtleRect.left + turtleRect.width / 2;
+        const centerY = turtleRect.top + turtleRect.height / 2;
+        const dx = event.clientX - centerX;
+        const dy = event.clientY - centerY;
+        const maxX = Math.max(turtleRect.width, 60);
+        const maxY = Math.max(turtleRect.height, 40);
+
+        setTurtleEyeOffset({
+          x: Math.max(-1, Math.min(1, dx / maxX)),
+          y: Math.max(-1, Math.min(1, dy / maxY)),
+        });
+      }
     };
 
-    const resetEye = () => setFishEyeOffset({ x: 0, y: 0 });
+    const resetEye = () => {
+      setFishEyeOffset({ x: 0, y: 0 });
+      setTurtleEyeOffset({ x: 0, y: 0 });
+    };
 
     landscapeEl.addEventListener('pointermove', handlePointerMove);
     landscapeEl.addEventListener('pointerleave', resetEye);
@@ -127,6 +148,15 @@ export default function Landscape({ heroRef }: LandscapeProps) {
             </span>
           </span>
         </button>
+
+        {/* Turtle swimming in the pond */}
+        <div className="pond-turtle-orbit pointer-events-auto">
+          <span className="pond-turtle-bob">
+            <span className="pond-turtle-body" ref={turtleEyeRef}>
+              <SwimTurtle className="w-12 md:w-16 h-auto opacity-90" eyeOffset={turtleEyeOffset} />
+            </span>
+          </span>
+        </div>
       </div>
 
       <div className={styles.splash}></div>
@@ -228,6 +258,76 @@ export default function Landscape({ heroRef }: LandscapeProps) {
           }
         }
 
+        .pond-turtle-orbit {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+          display: block;
+          animation: pondTurtleSwim 28s ease-in-out infinite;
+          animation-delay: -8s;
+        }
+
+        .pond-turtle-bob {
+          animation: pondTurtleBob 4s ease-in-out infinite;
+          display: inline-block;
+          position: relative;
+        }
+
+        .pond-turtle-body {
+          transform-origin: center;
+          animation: pondTurtleTilt 5s ease-in-out infinite;
+          filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.25));
+          display: inline-block;
+        }
+
+        .pond-turtle-body svg {
+          display: block;
+        }
+
+        @keyframes pondTurtleSwim {
+          0% {
+            transform: translate3d(65vw, 68vh, 0) translate(-50%, -50%) rotate(-10deg) scale(0.9);
+          }
+          25% {
+            transform: translate3d(42vw, 73vh, 0) translate(-50%, -50%) rotate(8deg) scale(1);
+          }
+          50% {
+            transform: translate3d(20vw, 66vh, 0) translate(-50%, -50%) rotate(-12deg) scale(0.85);
+          }
+          75% {
+            transform: translate3d(40vw, 70vh, 0) translate(-50%, -50%) rotate(6deg) scale(0.95);
+          }
+          100% {
+            transform: translate3d(65vw, 68vh, 0) translate(-50%, -50%) rotate(-10deg) scale(0.9);
+          }
+        }
+
+        @keyframes pondTurtleBob {
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-4px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pondTurtleTilt {
+          0% {
+            transform: rotate(-2deg);
+          }
+          50% {
+            transform: rotate(2deg);
+          }
+          100% {
+            transform: rotate(-2deg);
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .pond-fish-orbit {
             animation: none;
@@ -237,6 +337,16 @@ export default function Landscape({ heroRef }: LandscapeProps) {
             animation: none;
           }
           .pond-fish-body {
+            animation: none;
+          }
+          .pond-turtle-orbit {
+            animation: none;
+            transform: translate(30%, 70%) translate(-50%, -50%);
+          }
+          .pond-turtle-bob {
+            animation: none;
+          }
+          .pond-turtle-body {
             animation: none;
           }
         }
