@@ -1,0 +1,102 @@
+:root {
+  --morning-1: #ffd4a3;  /* soft peach */
+  --morning-2: #ffb4a2;  /* warm coral */
+  --morning-3: #ff9999;  /* soft pink */
+  --morning-4: #ffb6d9;  /* light pink */
+  --cloud-morning: #ffffff;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--morning-2), var(--morning-3), var(--morning-4));
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(0.85);
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud-morning);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.4;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.3;
+  filter: blur(1px);
+  animation-delay: 0;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.25;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: white;
+  border-radius: 50%;
+  top: 15%;
+  left: 80%;
+  opacity: 0;
+  animation: shootingStar 2s ease-out infinite;
+  animation-delay: 5s;
+}
+
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5), transparent);
+  transform-origin: left center;
+}
+
+@keyframes shootingStar {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-300px) translateY(200px);
+  }
+}
+
+.shooting-star-2 {
+  top: 30%;
+  left: 70%;
+  animation-delay: 15s;
+  animation-duration: 1.8s;
+}

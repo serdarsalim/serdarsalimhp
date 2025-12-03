@@ -1,6 +1,6 @@
 'use client';
 
-import Sky from './Sky';
+import SkyMorning from './SkyMorning';
 
 export default function Experience() {
   const experiences = [
@@ -29,8 +29,7 @@ export default function Experience() {
 
   return (
     <section className="relative py-16 md:py-32 text-white overflow-hidden">
-      <Sky />
-      <div className="absolute inset-0 bg-black/30 pointer-events-none" aria-hidden="true" style={{ zIndex: 1 }} />
+      <SkyMorning />
 
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
