@@ -13,13 +13,74 @@ interface LandscapeProps {
 export default function Landscape({ heroRef }: LandscapeProps) {
   const [fishEyeOffset, setFishEyeOffset] = useState({ x: 0, y: 0 });
   const [turtleEyeOffset, setTurtleEyeOffset] = useState({ x: 0, y: 0 });
+  const [isDraggingTurtle, setIsDraggingTurtle] = useState(false);
+  const [turtlePosition, setTurtlePosition] = useState({ x: 0, y: 0 });
+  const [placementCount, setPlacementCount] = useState(0);
+  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
   const fishEyeRef = useRef<HTMLDivElement | null>(null);
   const turtleEyeRef = useRef<HTMLDivElement | null>(null);
   const landscapeRef = useRef<HTMLDivElement | null>(null);
+  const dragOffsetRef = useRef({ x: 0, y: 0 });
+
+  const turtleQuotes = [
+    "Okay, I'll stay here... 🐢",
+    "Can you stop moving me? 😅",
+    "Seriously? Again? 🙄",
+    "I'm not a toy! 😤",
+    "Fine, this spot is nice 🌊",
+  ];
 
   const handleFishClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     heroRef.current?.openCurious();
+  };
+
+  const handleTurtleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!landscapeRef.current) return;
+
+    const landscapeRect = landscapeRef.current.getBoundingClientRect();
+    const turtleRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+
+    // Calculate offset from turtle center to mouse position
+    const turtleCenterX = turtleRect.left + turtleRect.width / 2;
+    const turtleCenterY = turtleRect.top + turtleRect.height / 2;
+
+    dragOffsetRef.current = {
+      x: ((e.clientX - turtleCenterX) / landscapeRect.width) * 100,
+      y: ((e.clientY - turtleCenterY) / landscapeRect.height) * 100,
+    };
+
+    setIsDraggingTurtle(true);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDraggingTurtle || !landscapeRef.current) return;
+
+    const landscapeRect = landscapeRef.current.getBoundingClientRect();
+    const x = ((e.clientX - landscapeRect.left) / landscapeRect.width) * 100 - dragOffsetRef.current.x;
+    const y = ((e.clientY - landscapeRect.top) / landscapeRect.height) * 100 - dragOffsetRef.current.y;
+
+    // Keep turtle in water area when dragging
+    const clampedY = Math.max(60, Math.min(85, y));
+    setTurtlePosition({ x, y: clampedY });
+  };
+
+  const handleMouseUp = () => {
+    setIsDraggingTurtle(false);
+
+    // Increment placement count
+    const newCount = placementCount + 1;
+    setPlacementCount(newCount);
+
+    // Show speech bubble after 3rd placement
+    if (newCount >= 3) {
+      setShowSpeechBubble(true);
+      // Hide after 3 seconds
+      setTimeout(() => setShowSpeechBubble(false), 3000);
+    }
   };
 
   useEffect(() => {
@@ -28,6 +89,7 @@ export default function Landscape({ heroRef }: LandscapeProps) {
     if (!landscapeEl) return;
 
     const handlePointerMove = (event: PointerEvent) => {
+      // Eye tracking for fish
       const fishRect = fishEyeRef.current?.getBoundingClientRect();
       if (fishRect) {
         const centerX = fishRect.left + fishRect.width / 2;
@@ -43,6 +105,7 @@ export default function Landscape({ heroRef }: LandscapeProps) {
         });
       }
 
+      // Eye tracking for turtle
       const turtleRect = turtleEyeRef.current?.getBoundingClientRect();
       if (turtleRect) {
         const centerX = turtleRect.left + turtleRect.width / 2;
@@ -59,19 +122,30 @@ export default function Landscape({ heroRef }: LandscapeProps) {
       }
     };
 
-    const resetEye = () => {
+    const resetState = () => {
       setFishEyeOffset({ x: 0, y: 0 });
       setTurtleEyeOffset({ x: 0, y: 0 });
     };
 
     landscapeEl.addEventListener('pointermove', handlePointerMove);
-    landscapeEl.addEventListener('pointerleave', resetEye);
+    landscapeEl.addEventListener('pointerleave', resetState);
 
     return () => {
       landscapeEl.removeEventListener('pointermove', handlePointerMove);
-      landscapeEl.removeEventListener('pointerleave', resetEye);
+      landscapeEl.removeEventListener('pointerleave', resetState);
     };
   }, []);
+
+  useEffect(() => {
+    if (isDraggingTurtle) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDraggingTurtle]);
 
   return (
     <div ref={landscapeRef} className={styles.landscape}>
@@ -150,12 +224,27 @@ export default function Landscape({ heroRef }: LandscapeProps) {
         </button>
 
         {/* Turtle swimming in the pond */}
-        <div className="pond-turtle-orbit pointer-events-auto">
+        <div
+          className={`pond-turtle-orbit ${isDraggingTurtle ? 'dragging' : ''} ${turtlePosition.x !== 0 || turtlePosition.y !== 0 ? 'positioned' : ''}`}
+          style={(isDraggingTurtle || (turtlePosition.x !== 0 || turtlePosition.y !== 0)) ? {
+            left: `${turtlePosition.x}%`,
+            top: `${turtlePosition.y}%`,
+            animation: 'none'
+          } : {}}
+          onMouseDown={handleTurtleMouseDown}
+        >
           <span className="pond-turtle-bob">
             <span className="pond-turtle-body" ref={turtleEyeRef}>
               <SwimTurtle className="w-12 md:w-16 h-auto opacity-90" eyeOffset={turtleEyeOffset} />
             </span>
           </span>
+
+          {/* Speech bubble */}
+          {showSpeechBubble && (
+            <div className="turtle-speech-bubble">
+              {turtleQuotes[Math.min(placementCount - 3, turtleQuotes.length - 1)]}
+            </div>
+          )}
         </div>
       </div>
 
@@ -262,8 +351,6 @@ export default function Landscape({ heroRef }: LandscapeProps) {
           position: absolute;
           top: 0;
           left: 0;
-          width: 0;
-          height: 0;
           display: block;
           animation: pondTurtleSwim 28s ease-in-out infinite;
           animation-delay: -8s;
@@ -325,6 +412,67 @@ export default function Landscape({ heroRef }: LandscapeProps) {
           }
           100% {
             transform: rotate(-2deg);
+          }
+        }
+
+        .pond-turtle-orbit {
+          cursor: grab;
+          pointer-events: auto;
+        }
+
+        .pond-turtle-orbit.dragging {
+          cursor: grabbing;
+          z-index: 100;
+        }
+
+        .pond-turtle-orbit.positioned {
+          z-index: 100;
+        }
+
+        .pond-turtle-bob {
+          pointer-events: auto;
+        }
+
+        .pond-turtle-body,
+        .pond-turtle-body svg {
+          pointer-events: auto;
+        }
+
+        .turtle-speech-bubble {
+          position: absolute;
+          bottom: 120%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: white;
+          color: #1f2937;
+          padding: 8px 12px;
+          border-radius: 12px;
+          font-size: 14px;
+          white-space: nowrap;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          pointer-events: none;
+          animation: speechBubblePop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          z-index: 1000;
+        }
+
+        .turtle-speech-bubble::after {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 8px solid transparent;
+          border-top-color: white;
+        }
+
+        @keyframes speechBubblePop {
+          0% {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
           }
         }
 
