@@ -26,8 +26,8 @@ export default function Landscape({ heroRef }: LandscapeProps) {
     "Okay, I'll stay here... 🐢",
     "Can you stop moving me? 😅",
     "Seriously? Again? 🙄",
-    "I'm not a toy! 😤",
-    "Fine, this spot is nice 🌊",
+    "Why don't you just mess with the fish? 😤",
+    "My cousin is Donatello, you know! 🐢",
   ];
 
   const handleFishClick = (e: React.MouseEvent) => {
