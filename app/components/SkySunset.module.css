@@ -1,0 +1,59 @@
+:root {
+  --sunrise-1: #4a5f7f;  /* deep blue */
+  --sunrise-2: #7a9cc6;  /* soft blue */
+  --sunrise-3: #ffb380;  /* warm orange */
+  --sunrise-4: #ffd89b;  /* golden yellow */
+  --cloud-sunrise: #ffe4b5;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, var(--sunrise-1), var(--sunrise-2), var(--sunrise-3), var(--sunrise-4));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud-sunrise);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.3;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.25;
+  filter: blur(1px);
+  animation-delay: 0;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.2;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}

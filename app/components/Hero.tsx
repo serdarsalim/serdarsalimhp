@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import SkyMorning from './SkyMorning';
+import SkySunset from './SkySunset';
 import { countryOptions, type CountryOption } from '../data/countries';
 
 type CuriousStep = 'question' | 'location' | 'result';
@@ -609,7 +609,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <SkyMorning />
+      <SkySunset />
 
       {/* Subtle space video anchored at bottom with fade upward */}
       <div className="absolute inset-x-0 bottom-0 h-1/3 overflow-hidden" style={{ zIndex: 1 }}>
@@ -621,14 +621,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           loop
           playsInline
           aria-hidden="true"
-          style={{
-            maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-          }}
-        />
-        {/* Overlay for the video */}
-        <div
-          className="absolute inset-0 bg-black/10 pointer-events-none"
           style={{
             maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
@@ -662,14 +654,18 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="space-y-2">
                 <h1
                   id="hero-title"
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white/90 select-none cursor-pointer transition-all duration-300"
+                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight select-none cursor-pointer transition-all duration-300"
+                  style={{
+                    color: '#ffffff',
+                    textShadow: '-3px 3px 0 #a855f7, -5px 5px 0 #7e22ce'
+                  }}
                   onClick={() => setIsHoveringName(!isHoveringName)}
                 >
                   {isHoveringName ? 'Salim Serdar' : 'Serdar Salim'}
                 </h1>
                 {/* Location - casual handwriting style */}
                 <p
-                  className="mt-0.5 sm:mt-1 text-lg sm:text-xl md:text-2xl text-white/80 font-light cursor-pointer select-none transition-all duration-300"
+                  className="mt-0.5 sm:mt-1 text-lg sm:text-xl md:text-2xl text-white font-light cursor-pointer select-none transition-all duration-300"
                   style={{ fontFamily: 'var(--font-caveat)' }}
                   onClick={() => setShowOrigin(!showOrigin)}
                 >
@@ -678,11 +674,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               </div>
 
               {/* Subtitle */}
-              <div className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-                <p className="text-white/90 font-semibold">
+              <div className="text-sm sm:text-base md:text-lg text-white leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+                <p className="text-white font-semibold">
                   Builds web apps for everyday problems
                 </p>
-                <p className="text-white/90 font-semibold">
+                <p className="text-white font-semibold">
                   Shares his thoughts on tech, Islam, and life
                 </p>
                 <div
@@ -691,14 +687,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 >
                   {/* English - always rendered to maintain layout space */}
                   <p
-                    className={`font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
+                    className={`text-white font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-100' : 'opacity-0'}`}
                   >
                     Be in this world as if you are a<br />
                     stranger or a wayfarer
                   </p>
                   {/* Arabic - absolute positioned overlay */}
                   <p
-                    className={`absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
+                    className={`text-white absolute inset-0 font-semibold transition-opacity duration-300 ${isHoveringQuote ? 'opacity-0' : 'opacity-100'}`}
                     style={{ fontFamily: 'var(--font-reem-kufi)' }}
                   >
                     كن في الدنيا كأنك غريب أو عابر سبيل
@@ -710,7 +706,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
                 <a
                   href="#about"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white/90 font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/10 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/20 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -723,7 +719,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </a>
                 <a
                   href="#projects"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white/90 font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-white/5 backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/15 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                   onClick={(event) => {
                     event.preventDefault();
