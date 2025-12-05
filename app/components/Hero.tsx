@@ -298,6 +298,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [showSerdarAnswer, setShowSerdarAnswer] = useState(false);
   const [curiousStep, setCuriousStep] = useState<CuriousStep>('question');
   const [answerChoice, setAnswerChoice] = useState<CuriousChoice | null>(null);
+  const [curiousAnswer, setCuriousAnswer] = useState('');
+  const [isCuriousAnswerFocused, setIsCuriousAnswerFocused] = useState(false);
   const [userCountry, setUserCountry] = useState('');
   const [countryInput, setCountryInput] = useState('');
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -327,6 +329,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         setCountryInput(storedCountry.name);
       }
     }
+    setCuriousAnswer('');
+    setIsCuriousAnswerFocused(false);
     setSubmissionError(null);
     setIsSubmittingResponse(false);
     setSubmissionMessage(null);
@@ -461,10 +465,32 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const isCountryRecognized = Boolean(resolvedCountryOption);
   const canSubmitResponse = Boolean(isCountryRecognized && answerChoice && sessionId && !isSubmittingResponse);
 
+  const checkIfAnswered = async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
+    if (!sessionId) return false;
+    try {
+      const response = await fetch(`/api/${endpoint}?sessionId=${sessionId}&questionId=${questionId}`);
+      if (response.ok) {
+        const data = await response.json();
+        return data.hasAnswered;
+      }
+    } catch (error) {
+      console.error('Failed to check if answered', error);
+    }
+    return false;
+  };
+
   const submitAnswer = async (countryOption: CountryOption, chosen?: CuriousChoice) => {
     const choiceToUse = chosen ?? answerChoice;
     if (!choiceToUse || !sessionId || isSubmittingResponse) return;
     const isAnswerCorrectNow = choiceToUse === currentQuestion.correctAnswer;
+
+    // Check if already answered
+    const hasAnswered = await checkIfAnswered(currentQuestion.id, 'curious-response');
+    if (hasAnswered) {
+      setSubmissionError('You have already answered this question.');
+      setCuriousStep('result');
+      return;
+    }
 
     setIsSubmittingResponse(true);
     setSubmissionError(null);
@@ -484,6 +510,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           countryCode: countryOption.code,
           choice: choiceToUse,
           questionId: currentQuestion.id,
+          answerText: curiousAnswer.trim() || null,
         }),
       });
 
@@ -648,10 +675,61 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [isCuriousOpen, isToolboxOpen]);
 
-  const handleQuestionSubmit = () => {
+  const handleQuestionSubmit = async () => {
     if (!questionAnswer.trim() || !questionCountry.trim()) return;
-    // TODO: Save to database later
-    setIsQuestionSubmitted(true);
+
+    // Generate sessionId if not exists
+    let currentSessionId = sessionId;
+    if (!currentSessionId) {
+      currentSessionId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+      setSessionId(currentSessionId);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(SESSION_STORAGE_KEY, currentSessionId);
+      }
+    }
+
+    // Check if already answered
+    const hasAnswered = await checkIfAnswered(String(ACTIVE_QUESTION_ID), 'question-response');
+    if (hasAnswered) {
+      setSubmissionError('You have already answered this question.');
+      return;
+    }
+
+    setIsSubmittingResponse(true);
+    setSubmissionError(null);
+
+    try {
+      // Find country code from questionCountry input
+      const countryMatch = countryOptions.find(c => c.name.toLowerCase() === questionCountry.trim().toLowerCase());
+      const countryCode = countryMatch?.code || 'UNKNOWN';
+
+      const response = await fetch('/api/question-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId: currentSessionId,
+          countryCode,
+          questionId: String(ACTIVE_QUESTION_ID),
+          answerText: questionAnswer.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        setIsQuestionSubmitted(true);
+      } else if (response.status === 409) {
+        setSubmissionError('You have already answered this question.');
+      } else {
+        const data = await response.json().catch(() => null);
+        setSubmissionError(data?.message ?? 'Unable to save your response. Please try again.');
+      }
+    } catch (error) {
+      console.error('Failed to submit question response', error);
+      setSubmissionError('Unable to save your response. Please try again.');
+    } finally {
+      setIsSubmittingResponse(false);
+    }
   };
 
   const resetQuestionModal = () => {
@@ -906,44 +984,60 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   <div className="flex justify-center">
                     <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
                   </div>
-                  <p className="text-base md:text-lg font-semibold">Where are you joining from?</p>
-                  <div className="space-y-3 flex flex-col items-center min-h-[120px]">
-                    <div className="relative w-full max-w-[260px]">
-                      <input
-                        type="text"
-                        placeholder="Start typing your country..."
-                        className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
-                        value={countryInput}
-                        onChange={(event) => setCountryInput(event.target.value)}
-                        onKeyDown={(event) => {
-                          if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
-                            event.preventDefault();
-                            submitAnswer(resolvedCountryOption);
-                          }
-                        }}
-                      />
-                    </div>
-                    {displaySuggestion && (
+                  <p className="text-base md:text-lg font-semibold">What do you think?</p>
+                  <p className="text-sm text-white/70">
+                    Share your answer and I'll share the truth
+                  </p>
+
+                  <textarea
+                    placeholder="Type your answer..."
+                    className="w-full px-4 py-3 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70 resize-none"
+                    rows={4}
+                    value={curiousAnswer}
+                    onChange={(e) => setCuriousAnswer(e.target.value)}
+                    onFocus={() => setIsCuriousAnswerFocused(true)}
+                  />
+
+                  {isCuriousAnswerFocused && (
+                    <div className="space-y-3 animate-fade-in-up">
+                      <div className="relative w-full max-w-[260px] mx-auto">
+                        <input
+                          type="text"
+                          placeholder="Your country..."
+                          className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
+                          value={countryInput}
+                          onChange={(event) => setCountryInput(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
+                              event.preventDefault();
+                              submitAnswer(resolvedCountryOption);
+                            }
+                          }}
+                        />
+                      </div>
+                      {displaySuggestion && (
+                        <button
+                          type="button"
+                          className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
+                          onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
+                        >
+                          {displaySuggestion}
+                        </button>
+                      )}
+                      <p className="text-xs text-white/60 text-center">
+                        By submitting, you agree your answer may be shared publicly
+                      </p>
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
-                        onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
+                        onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
+                        disabled={!canSubmitResponse || !curiousAnswer.trim()}
+                        className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
                       >
-                        {displaySuggestion}
+                        {isSubmittingResponse ? 'Saving...' : 'See the answer'}
                       </button>
-                    )}
-                  </div>
-                  <p className="text-[11px] text-white/70 max-w-sm mx-auto text-center leading-relaxed">
-                    By clicking “See the answer” you consent to us storing this response with your session ID, country, and answer for anonymous stats. We don&apos;t collect account info or anything personally identifying.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
-                    disabled={!canSubmitResponse}
-                    className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmittingResponse ? 'Saving...' : 'See the answer'}
-                  </button>
+                    </div>
+                  )}
+
                   {submissionError && (
                     <p className="text-xs text-red-200 text-center">
                       {submissionError}
@@ -1116,7 +1210,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {isQuestionOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
           <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeQuestionModal} />
-          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col max-h-[600px]">
+          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col max-h-[700px] md:max-h-[80vh]">
             <div className="flex items-start justify-between gap-4 mb-6">
               <h3 className="text-lg md:text-xl font-semibold">{activeQuestion.question}</h3>
               <button
@@ -1155,14 +1249,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                         value={questionCountry}
                         onChange={(e) => setQuestionCountry(e.target.value)}
                       />
+                      <p className="text-xs text-white/60 text-center">
+                        By submitting, you agree your answer may be shared publicly
+                      </p>
                       <button
                         type="button"
                         onClick={handleQuestionSubmit}
-                        disabled={!questionAnswer.trim() || !questionCountry.trim()}
+                        disabled={!questionAnswer.trim() || !questionCountry.trim() || isSubmittingResponse}
                         className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
                       >
-                        Submit
+                        {isSubmittingResponse ? 'Saving...' : 'Submit'}
                       </button>
+                      {submissionError && (
+                        <p className="text-xs text-red-200 text-center">
+                          {submissionError}
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>

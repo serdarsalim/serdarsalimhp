@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
     // Check if user has already answered this question (by sessionId OR ipAddress)
     const { data, error } = await supabaseAdmin
-      .from('curious_responses')
+      .from('question_responses')
       .select('id')
       .eq('question_id', questionId)
       .or(`session_id.eq.${sessionId},ip_address.eq.${ipAddress}`)
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { sessionId, countryCode, choice, questionId, answerText } = await request.json();
+    const { sessionId, countryCode, questionId, answerText } = await request.json();
 
     if (!sessionId || typeof sessionId !== 'string') {
       return NextResponse.json({ message: 'Missing sessionId' }, { status: 400 });
@@ -47,12 +47,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Missing countryCode' }, { status: 400 });
     }
 
-    if (choice !== 'yes' && choice !== 'no') {
-      return NextResponse.json({ message: 'Invalid choice' }, { status: 400 });
-    }
-
     if (!questionId || typeof questionId !== 'string') {
       return NextResponse.json({ message: 'Missing questionId' }, { status: 400 });
+    }
+
+    if (!answerText || typeof answerText !== 'string') {
+      return NextResponse.json({ message: 'Missing answerText' }, { status: 400 });
     }
 
     const headers = request.headers;
@@ -60,14 +60,13 @@ export async function POST(request: Request) {
     const ipAddress = forwardedFor.split(',')[0]?.trim() || 'unknown';
     const userAgent = headers.get('user-agent') ?? 'unknown';
 
-    const { error } = await supabaseAdmin.from('curious_responses').insert({
+    const { error } = await supabaseAdmin.from('question_responses').insert({
       session_id: sessionId,
       country_code: countryCode,
-      choice,
       question_id: questionId,
+      answer_text: answerText,
       ip_address: ipAddress,
       user_agent: userAgent,
-      answer_text: answerText || null,
     });
 
     if (error) {
@@ -75,13 +74,13 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: 'Response already recorded' }, { status: 409 });
       }
 
-      console.error('Failed to store curious response:', error);
+      console.error('Failed to store question response:', error);
       return NextResponse.json({ message: 'Failed to save response' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Unexpected error saving curious response', error);
+    console.error('Unexpected error saving question response', error);
     return NextResponse.json({ message: 'Invalid request payload' }, { status: 400 });
   }
 }
