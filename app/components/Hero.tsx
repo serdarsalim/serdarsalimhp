@@ -234,16 +234,68 @@ const toolboxCategories = {
       },
     ],} as const;
 
+const personalQuestions = [
+  {
+    id: 1,
+    question: "Who's the most influential person in your life?",
+    answer: [
+      "The most influential person in my life is my wife. My focus is to continue living a life where family comes first and I do something useful for the community I am a part of.",
+      "In everything I do my wife is there for me and provides me valuable and open feedback without ever giving up on me.",
+      "If you have a person like this in your life never shift your priorities and make other people come first."
+    ]
+  },
+  {
+    id: 2,
+    question: "Where would you be if you hadn't followed your dream?",
+    answer: [
+      "I would be living in Austria as an immigrant and probably ended up becoming a cook. I had dropped out of high school when I was 16 and became a dishwasher. But my dream was always to go to school and travel the world.",
+      "But being an immigrant in Austria who was struggling in the local language, I thought I won't make it. But I took the risk and went to high school again at 18, which I graduated, and went on to college, which I also finished with a degree.",
+      "I was able to travel the world and collect incredible memories."
+    ]
+  },
+  {
+    id: 3,
+    question: "What do you have faith in right now?",
+    answer: [
+      "I have faith in the Muslim Ummah. I always thought the ummah is disunited and we are destined to become immigrant workforce in non-muslim Western countries. I don't believe in this narrative anymore.",
+      "I believe that in our lifetime the transformation will happen that Muslim countries will unite.",
+      "I have faith that one day when a Muslim has been wronged in a country, fellow Muslims around the world will rally in getting this Muslim out of trouble."
+    ]
+  },
+  {
+    id: 4,
+    question: "Do you believe in second chances?",
+    answer: [
+      "Yes, I believe in first, second, third and many chances. There is a Turkish poet called Rumi, who said: \"Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn't matter. Ours is not a caravan of despair. come, even if you have broken your vows a thousand times. Come, yet again , come , come.\"",
+      "I have seen in my lifetime that people changed for the better if they genuinely struggled through hardships.",
+      "So yes, I believe that you can give yourself and others multiple chances, as long as the intention is genuine and the progress is steadfast."
+    ]
+  }
+];
+
+// Change this ID to switch which question is active
+const ACTIVE_QUESTION_ID = 1;
+
 export type HeroHandle = {
   openCurious: () => void;
   openToolbox: () => void;
+  openQuestion: () => void;
 };
 
 const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
+  const activeQuestion = personalQuestions.find(q => q.id === ACTIVE_QUESTION_ID) || personalQuestions[0];
+
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const [showOrigin, setShowOrigin] = useState(false);
+  const [showThoughts, setShowThoughts] = useState(false);
   const [isCuriousOpen, setIsCuriousOpen] = useState(false);
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+  const [questionAnswer, setQuestionAnswer] = useState('');
+  const [questionCountry, setQuestionCountry] = useState('');
+  const [isQuestionFocused, setIsQuestionFocused] = useState(false);
+  const [isQuestionSubmitted, setIsQuestionSubmitted] = useState(false);
+  const [showSerdarAnswer, setShowSerdarAnswer] = useState(false);
   const [curiousStep, setCuriousStep] = useState<CuriousStep>('question');
   const [answerChoice, setAnswerChoice] = useState<CuriousChoice | null>(null);
   const [userCountry, setUserCountry] = useState('');
@@ -596,6 +648,25 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [isCuriousOpen, isToolboxOpen]);
 
+  const handleQuestionSubmit = () => {
+    if (!questionAnswer.trim() || !questionCountry.trim()) return;
+    // TODO: Save to database later
+    setIsQuestionSubmitted(true);
+  };
+
+  const resetQuestionModal = () => {
+    setQuestionAnswer('');
+    setQuestionCountry('');
+    setIsQuestionFocused(false);
+    setIsQuestionSubmitted(false);
+    setShowSerdarAnswer(false);
+  };
+
+  const closeQuestionModal = () => {
+    setIsQuestionOpen(false);
+    resetQuestionModal();
+  };
+
   useImperativeHandle(ref, () => ({
     openCurious: () => {
       setShowShareMenu(false);
@@ -603,6 +674,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     },
     openToolbox: () => {
       openToolbox();
+    },
+    openQuestion: () => {
+      setIsQuestionOpen(true);
     },
   }));
 
@@ -675,11 +749,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
               {/* Subtitle */}
               <div className="text-sm sm:text-base md:text-lg text-white leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
-                <p className="text-white font-semibold" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>
-                  Builds web apps for everyday problems
-                </p>
-                <p className="text-white font-semibold" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>
-                  Shares his thoughts on tech, Islam, and life
+                <p
+                  className="text-white font-semibold cursor-pointer select-none transition-all duration-300"
+                  style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
+                  onClick={() => setShowThoughts(!showThoughts)}
+                >
+                  {showThoughts ? 'Shares his thoughts on tech, Islam, and life' : 'Builds web apps for everyday problems'}
                 </p>
                 <div
                   className="relative cursor-pointer select-none"
@@ -735,6 +810,17 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     </svg>
                   </span>
                 </a>
+                <button
+                  type="button"
+                  onClick={() => setIsQuestionOpen(true)}
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
+                  style={{ fontFamily: 'var(--font-jetbrains)' }}
+                >
+                  <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
+                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
+                    <span>Question</span>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -1021,6 +1107,95 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   <p className="text-sm text-white/80 leading-relaxed">{tool.description}</p>
                 </a>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Question Modal */}
+      {isQuestionOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
+          <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeQuestionModal} />
+          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col max-h-[600px]">
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <h3 className="text-lg md:text-xl font-semibold">{activeQuestion.question}</h3>
+              <button
+                type="button"
+                onClick={closeQuestionModal}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/40 hover:bg-white/30 transition shrink-0"
+                aria-label="Close question modal"
+              >
+                <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto">
+              {!isQuestionSubmitted ? (
+                <div className="space-y-4">
+                  <p className="text-sm text-white/70 text-center">
+                    Share your answer and I'll share mine
+                  </p>
+                  <textarea
+                    placeholder="Type your answer..."
+                    className="w-full px-4 py-3 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70 resize-none"
+                    rows={4}
+                    value={questionAnswer}
+                    onChange={(e) => setQuestionAnswer(e.target.value)}
+                    onFocus={() => setIsQuestionFocused(true)}
+                  />
+
+                  {isQuestionFocused && (
+                    <div className="space-y-3 animate-fade-in-up">
+                      <input
+                        type="text"
+                        placeholder="Your country..."
+                        className="w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
+                        value={questionCountry}
+                        onChange={(e) => setQuestionCountry(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleQuestionSubmit}
+                        disabled={!questionAnswer.trim() || !questionCountry.trim()}
+                        className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-6 text-center">
+                  {!showSerdarAnswer ? (
+                    <>
+                      <p className="text-lg font-semibold">Thanks for sharing!</p>
+                      <button
+                        type="button"
+                        onClick={() => setShowSerdarAnswer(true)}
+                        className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide hover:bg-white/90 transition"
+                      >
+                        See Serdar's answer
+                      </button>
+                    </>
+                  ) : (
+                    <div className="space-y-4 text-left">
+                      <p className="text-sm uppercase tracking-[0.25em] text-white/70 text-center">Serdar's Answer</p>
+                      <div className="rounded-2xl bg-white/10 border border-white/20 p-6 space-y-3">
+                        {activeQuestion.answer.map((paragraph, index) => (
+                          <p
+                            key={index}
+                            className={`text-base leading-relaxed ${index === activeQuestion.answer.length - 1 ? 'font-semibold' : ''}`}
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

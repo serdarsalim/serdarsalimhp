@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#452e58]/95 backdrop-blur-md border-b border-[#5e30d9]/40">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#452e58]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/20 shadow-lg">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
