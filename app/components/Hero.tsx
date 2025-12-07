@@ -315,7 +315,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [storedCountry, setStoredCountry] = useState<CountryOption | null>(null);
   const [questionResponses, setQuestionResponses] = useState<QuestionResponder[]>([]);
   const [isLoadingQuestionResponses, setIsLoadingQuestionResponses] = useState(false);
-  const [hasAnsweredDefaultQuestion, setHasAnsweredDefaultQuestion] = useState(false);
+  const [hasAnsweredDefaultQuestion, setHasAnsweredDefaultQuestion] = useState<boolean | null>(null);
   const [stats, setStats] = useState({ answered: 0, correct: 0 });
   const [showSummary, setShowSummary] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -367,6 +367,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
     return entries;
   }, [activeQuestion, questionResponses]);
+  const isCheckingPreviousAnswer = Boolean(activeQuestion?.is_default && hasAnsweredDefaultQuestion === null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -600,35 +601,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     window.localStorage.setItem(PERSONAL_QUESTION_INDEX_KEY, String(value));
   };
 
-  const moveToNextPersonalQuestion = () => {
-    setPersonalQuestionIndex((prev) => {
-      const next = getNextPersonalQuestionIndex(prev, questionCount);
-      persistPersonalQuestionIndex(next);
-      return next;
-    });
-  };
-
   const persistQuestionProfile = (profile: QuestionProfile) => {
     if (typeof window === 'undefined') return;
     window.localStorage.setItem(QUESTION_PROFILE_NAME_KEY, profile.name);
     window.localStorage.setItem(QUESTION_PROFILE_COUNTRY_CODE_KEY, profile.country.code);
     setQuestionProfile(profile);
-  };
-
-  const findNextUnansweredPersonalQuestion = async (startIndex: number) => {
-    if (questionCount === 0) return 0;
-    const initialIndex = normalizePersonalQuestionIndex(startIndex, questionCount);
-    if (!sessionId) return initialIndex;
-    let currentIndex = initialIndex;
-    for (let attempts = 0; attempts < questionCount; attempts++) {
-      const question = personalQuestions[currentIndex];
-      const hasAnswered = await checkIfAnswered(String(question.id), 'question-response');
-      if (!hasAnswered) {
-        return currentIndex;
-      }
-      currentIndex = getNextPersonalQuestionIndex(currentIndex, questionCount);
-    }
-    return currentIndex;
   };
 
   const submitAnswer = async (countryOption: CountryOption, chosen?: CuriousChoice) => {
@@ -822,7 +799,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   }, [questionCount, personalQuestions]);
   useEffect(() => {
     if (!sessionId || !personalQuestions.length) {
-      setHasAnsweredDefaultQuestion(false);
+      setHasAnsweredDefaultQuestion(null);
       return;
     }
 
@@ -845,42 +822,50 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       ignore = true;
     };
   }, [checkIfAnswered, personalQuestions, sessionId]);
-  useEffect(() => {
-    if (!activeQuestion) {
-      setQuestionResponses([]);
-      setIsLoadingQuestionResponses(false);
-      return;
-    }
+  const loadQuestionResponses = useCallback(
+    async (questionId?: number) => {
+      if (!questionId) {
+        setQuestionResponses([]);
+        setIsLoadingQuestionResponses(false);
+        return;
+      }
 
-    let ignore = false;
-    const loadResponses = async () => {
       setIsLoadingQuestionResponses(true);
       try {
-        const response = await fetch(`/api/question-responses?questionId=${activeQuestion.id}`);
+        const response = await fetch(`/api/question-responses?questionId=${questionId}`);
         if (!response.ok) {
           throw new Error('Unable to load responses.');
         }
         const data = await response.json();
-        if (!ignore) {
+        if (questionId === activeQuestion?.id) {
           setQuestionResponses(Array.isArray(data?.responses) ? data.responses : []);
         }
       } catch (error) {
         console.error('Failed to load question responses', error);
-        if (!ignore) {
+        if (questionId === activeQuestion?.id) {
           setQuestionResponses([]);
         }
       } finally {
-        if (!ignore) {
+        if (questionId === activeQuestion?.id) {
           setIsLoadingQuestionResponses(false);
         }
       }
-    };
+    },
+    [activeQuestion?.id]
+  );
 
-    loadResponses();
-    return () => {
-      ignore = true;
-    };
-  }, [activeQuestion]);
+  useEffect(() => {
+    void loadQuestionResponses(activeQuestion?.id ?? undefined);
+  }, [activeQuestion?.id, loadQuestionResponses]);
+
+  useEffect(() => {
+    if (!activeQuestion?.is_default) return;
+    if (hasAnsweredDefaultQuestion === true) {
+      setIsQuestionSubmitted(true);
+    } else if (hasAnsweredDefaultQuestion === false) {
+      setIsQuestionSubmitted(false);
+    }
+  }, [activeQuestion?.is_default, hasAnsweredDefaultQuestion]);
 
   useEffect(() => {
     if (storedCountry) return;
@@ -942,6 +927,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const handleQuestionSubmit = async (countryOption?: CountryOption) => {
     if (!questionAnswer.trim()) return;
 
+    const currentQuestionId = activeQuestion?.id;
+
     let selectedCountry = countryOption ?? questionProfile?.country ?? selectedQuestionCountry;
     if (!selectedCountry) {
       const countryMatch = countryOptions.find(
@@ -976,7 +963,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     const hasAnswered = await checkIfAnswered(String(activeQuestion.id), 'question-response');
     if (hasAnswered) {
       setSubmissionError('You have already answered this question.');
-      moveToNextPersonalQuestion();
+      setIsQuestionSubmitted(true);
       return;
     }
 
@@ -1003,10 +990,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         if (!questionProfile && resolvedUserName) {
           persistQuestionProfile({ name: resolvedUserName, country: selectedCountry });
         }
-        moveToNextPersonalQuestion();
+        if (currentQuestionId) {
+          await loadQuestionResponses(currentQuestionId);
+        }
       } else if (response.status === 409) {
         setSubmissionError('You have already answered this question.');
-        moveToNextPersonalQuestion();
+        setIsQuestionSubmitted(true);
       } else {
         const data = await response.json().catch(() => null);
         setSubmissionError(data?.message ?? 'Unable to save your response. Please try again.');
@@ -1055,18 +1044,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     setIsQuestionOpen(true);
 
     const defaultIndex = personalQuestions.findIndex((question) => question.is_default);
-    if (hasAnsweredDefaultQuestion && defaultIndex >= 0) {
-      const normalizedDefault = normalizePersonalQuestionIndex(defaultIndex, questionCount);
-      setPersonalQuestionIndex(normalizedDefault);
-      persistPersonalQuestionIndex(normalizedDefault);
-      setIsQuestionSubmitted(true);
-    } else {
-      const nextIndex = await findNextUnansweredPersonalQuestion(personalQuestionIndex);
-      const normalizedIndex = normalizePersonalQuestionIndex(nextIndex, questionCount);
-      setPersonalQuestionIndex(normalizedIndex);
-      persistPersonalQuestionIndex(normalizedIndex);
-      setIsQuestionSubmitted(false);
-    }
+    const normalizedDefault =
+      defaultIndex >= 0
+        ? normalizePersonalQuestionIndex(defaultIndex, questionCount)
+        : normalizePersonalQuestionIndex(personalQuestionIndex, questionCount);
+
+    setPersonalQuestionIndex(normalizedDefault);
+    persistPersonalQuestionIndex(normalizedDefault);
+    setIsQuestionSubmitted(hasAnsweredDefaultQuestion === true);
 
     // Allow animation to complete
     setTimeout(() => {
@@ -1532,9 +1517,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
       {/* Question Modal - Slide-in Panel */}
       {(isQuestionOpen || isQuestionAnimating) && (
-        <div className="fixed inset-x-0 top-0 bottom-0 z-40 px-4 pt-20 pb-8 flex items-center justify-center">
+        <div className="fixed inset-0 z-40 px-2 md:px-4 pt-20 pb-8 flex items-center justify-center">
           <div
-            className="relative overflow-hidden w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-black/40 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
+            className="relative overflow-hidden w-full max-w-full md:max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-black/40 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-5 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
             style={{
               transform: isQuestionOpen ? 'translateY(0)' : 'translateY(100%)',
               opacity: isQuestionOpen ? 1 : 0,
@@ -1561,7 +1546,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              {!isQuestionSubmitted ? (
+              {isCheckingPreviousAnswer ? (
+                <div className="flex h-full flex-col items-center justify-center">
+                  <p className="text-sm text-white/60">Checking your previous answer…</p>
+                </div>
+              ) : !isQuestionSubmitted ? (
                 <div className="space-y-4">
                   <p className="text-sm md:text-base font-semibold text-white/70 text-center tracking-widest">
                     Share yours. See mine.
@@ -1671,13 +1660,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     </div>
                   )}
                 </div>
-      ) : (
+              ) : (
         <div className="space-y-6">
           <div className="grid gap-4">
             {responseList.map((entry) => (
               <article
                 key={entry.id}
-                className="rounded-3xl border border-white/15 bg-transparent p-5 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3"
+                className="rounded-3xl border border-white/15 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3"
               >
                 <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
                   <span className={`font-semibold ${entry.id.startsWith('serdar-') ? 'text-amber-100' : 'text-white/70'}`}>

@@ -15,7 +15,7 @@ export async function GET(request: Request) {
       .select('id, user_name, country_code, answer_text, created_at')
       .eq('question_id', questionId)
       .eq('is_hidden', false)
-      .order('created_at', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(50);
 
     if (error) {
