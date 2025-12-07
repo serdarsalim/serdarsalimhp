@@ -1,9 +1,10 @@
 'use client';
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 import SkySunset from './SkySunset';
 import { countryOptions, type CountryOption } from '../data/countries';
+import type { PersonalQuestion } from '../data/personalQuestions';
 
 type CuriousStep = 'question' | 'location' | 'result';
 type CuriousChoice = 'yes' | 'no';
@@ -234,47 +235,28 @@ const toolboxCategories = {
       },
     ],} as const;
 
-const personalQuestions = [
-  {
-    id: 1,
-    question: "Who's the most influential person in your life?",
-    answer: [
-      "The most influential person in my life is my wife. My focus is to continue living a life where family comes first and I do something useful for the community I am a part of.",
-      "In everything I do my wife is there for me and provides me valuable and open feedback without ever giving up on me.",
-      "If you have a person like this in your life never shift your priorities and make other people come first."
-    ]
-  },
-  {
-    id: 2,
-    question: "Where would you be if you hadn't followed your dream?",
-    answer: [
-      "I would be living in Austria as an immigrant and probably ended up becoming a cook. I had dropped out of high school when I was 16 and became a dishwasher. But my dream was always to go to school and travel the world.",
-      "But being an immigrant in Austria who was struggling in the local language, I thought I won't make it. But I took the risk and went to high school again at 18, which I graduated, and went on to college, which I also finished with a degree.",
-      "I was able to travel the world and collect incredible memories."
-    ]
-  },
-  {
-    id: 3,
-    question: "What do you have faith in right now?",
-    answer: [
-      "I have faith in the Muslim Ummah. I always thought the ummah is disunited and we are destined to become immigrant workforce in non-muslim Western countries. I don't believe in this narrative anymore.",
-      "I believe that in our lifetime the transformation will happen that Muslim countries will unite.",
-      "I have faith that one day when a Muslim has been wronged in a country, fellow Muslims around the world will rally in getting this Muslim out of trouble."
-    ]
-  },
-  {
-    id: 4,
-    question: "Do you believe in second chances?",
-    answer: [
-      "Yes, I believe in first, second, third and many chances. There is a Turkish poet called Rumi, who said: \"Come, come, whoever you are. Wanderer, worshiper, lover of leaving. It doesn't matter. Ours is not a caravan of despair. come, even if you have broken your vows a thousand times. Come, yet again , come , come.\"",
-      "I have seen in my lifetime that people changed for the better if they genuinely struggled through hardships.",
-      "So yes, I believe that you can give yourself and others multiple chances, as long as the intention is genuine and the progress is steadfast."
-    ]
-  }
-];
+const PERSONAL_QUESTION_INDEX_KEY = 'personal-question-index';
+const normalizePersonalQuestionIndex = (value: number, count: number) =>
+  count > 0 ? value % count : 0;
+const getNextPersonalQuestionIndex = (value: number, count: number) =>
+  normalizePersonalQuestionIndex(value + 1, count);
+const QUESTION_PROFILE_NAME_KEY = 'question-modal-name';
+const QUESTION_PROFILE_COUNTRY_CODE_KEY = 'question-modal-country-code';
+const PERSONAL_QUESTIONS_ENDPOINT = '/api/personal-questions';
 
-// Change this ID to switch which question is active
-const ACTIVE_QUESTION_ID = 1;
+const removeDiacritics = (value: string) =>
+  value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const normalizeForMatching = (value: string) => removeDiacritics(value).toLowerCase();
+const COUNTRY_NAME_ALIASES: Record<string, string> = {
+  turkey: 'Türkiye',
+  turkiye: 'Türkiye',
+  türkiye: 'Türkiye',
+};
+
+type QuestionProfile = {
+  name: string;
+  country: CountryOption;
+};
 
 export type HeroHandle = {
   openCurious: () => void;
@@ -283,7 +265,15 @@ export type HeroHandle = {
 };
 
 const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
-  const activeQuestion = personalQuestions.find(q => q.id === ACTIVE_QUESTION_ID) || personalQuestions[0];
+  const [personalQuestions, setPersonalQuestions] = useState<PersonalQuestion[]>([]);
+  const [personalQuestionIndex, setPersonalQuestionIndex] = useState(0);
+  const [questionProfile, setQuestionProfile] = useState<QuestionProfile | null>(null);
+  const questionCount = personalQuestions.length;
+  const normalizedPersonalQuestionIndex = normalizePersonalQuestionIndex(personalQuestionIndex, questionCount);
+  const activeQuestion =
+    personalQuestions.length > 0 ? personalQuestions[normalizedPersonalQuestionIndex] : null;
+  const activeQuestionAnswers = activeQuestion?.answer ?? [];
+  const activeQuestionLastIndex = activeQuestionAnswers.length - 1;
 
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
@@ -296,7 +286,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [questionName, setQuestionName] = useState('');
   const [isQuestionFocused, setIsQuestionFocused] = useState(false);
   const [isQuestionSubmitted, setIsQuestionSubmitted] = useState(false);
-  const [showSerdarAnswer, setShowSerdarAnswer] = useState(false);
   const [curiousStep, setCuriousStep] = useState<CuriousStep>('question');
   const [answerChoice, setAnswerChoice] = useState<CuriousChoice | null>(null);
   const [curiousAnswer, setCuriousAnswer] = useState('');
@@ -317,6 +306,41 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [toolboxTab, setToolboxTab] = useState<'productivity' | 'inspiration' | 'creativity'>('productivity');
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let ignore = false;
+
+    const loadQuestions = async () => {
+      try {
+        const response = await fetch(PERSONAL_QUESTIONS_ENDPOINT);
+        if (!response.ok) {
+          throw new Error('Unable to fetch personal questions.');
+        }
+        const data = await response.json();
+        if (ignore) return;
+        const fetched = Array.isArray(data?.questions) ? data.questions : [];
+        setPersonalQuestions(fetched);
+        setPersonalQuestionIndex((prev) => normalizePersonalQuestionIndex(prev, fetched.length));
+      } catch (error) {
+        console.error(error);
+        if (ignore) return;
+        setPersonalQuestions([]);
+        setPersonalQuestionIndex(0);
+      }
+    };
+
+    const handleUpdate = () => {
+      loadQuestions();
+    };
+
+    loadQuestions();
+    window.addEventListener('personalQuestionsUpdated', handleUpdate);
+    return () => {
+      ignore = true;
+      window.removeEventListener('personalQuestionsUpdated', handleUpdate);
+    };
+  }, []);
 
   const resetCuriousFlow = (options?: { preserveCountry?: boolean }) => {
     setCuriousStep('question');
@@ -452,15 +476,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   };
 
   const getNormalizedCountry = (input: string) => {
-    const normalized = input.trim().toLowerCase();
-    if (!normalized) return undefined;
-    return countryOptions.find((country) => country.name.toLowerCase() === normalized);
+    const trimmed = input.trim();
+    if (!trimmed) return undefined;
+    const normalizedInput = normalizeForMatching(trimmed);
+    const aliasTarget = COUNTRY_NAME_ALIASES[normalizedInput];
+    const targetName = aliasTarget ?? trimmed;
+    const targetNormalized = normalizeForMatching(targetName);
+    return countryOptions.find((country) => normalizeForMatching(country.name) === targetNormalized);
   };
 
   const trimmedCountryInput = countryInput.trim();
+  const normalizedCountryInput = normalizeForMatching(trimmedCountryInput);
   const suggestedCountry =
     trimmedCountryInput.length > 0
-      ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedCountryInput.toLowerCase()))
+      ? countryOptions.find((country) =>
+          normalizeForMatching(country.name).startsWith(normalizedCountryInput)
+        )
       : undefined;
   const resolvedCountryOption = getNormalizedCountry(countryInput) ?? suggestedCountry;
   const displaySuggestion = resolvedCountryOption?.name ?? '';
@@ -469,16 +500,19 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
   // Country suggestion for Question modal
   const trimmedQuestionCountryInput = questionCountry.trim();
+  const normalizedQuestionCountryInput = normalizeForMatching(trimmedQuestionCountryInput);
   const suggestedQuestionCountry =
     trimmedQuestionCountryInput.length > 0
-      ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedQuestionCountryInput.toLowerCase()))
+      ? countryOptions.find((country) =>
+          normalizeForMatching(country.name).startsWith(normalizedQuestionCountryInput)
+        )
       : undefined;
   const resolvedQuestionCountryOption = getNormalizedCountry(questionCountry) ?? suggestedQuestionCountry;
   const displayQuestionSuggestion = resolvedQuestionCountryOption?.name ?? '';
   // Only recognize country when full name matches (case-insensitive)
-  const isQuestionCountryRecognized = Boolean(
-    resolvedQuestionCountryOption &&
-    resolvedQuestionCountryOption.name.toLowerCase() === trimmedQuestionCountryInput.toLowerCase()
+  const isQuestionCountryRecognized = Boolean(resolvedQuestionCountryOption);
+  const canSubmitQuestion = Boolean(
+    questionAnswer.trim() && !isSubmittingResponse && (questionProfile || isQuestionCountryRecognized)
   );
 
   const checkIfAnswered = async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
@@ -493,6 +527,42 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       console.error('Failed to check if answered', error);
     }
     return false;
+  };
+
+  const persistPersonalQuestionIndex = (value: number) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(PERSONAL_QUESTION_INDEX_KEY, String(value));
+  };
+
+  const moveToNextPersonalQuestion = () => {
+    setPersonalQuestionIndex((prev) => {
+      const next = getNextPersonalQuestionIndex(prev, questionCount);
+      persistPersonalQuestionIndex(next);
+      return next;
+    });
+  };
+
+  const persistQuestionProfile = (profile: QuestionProfile) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(QUESTION_PROFILE_NAME_KEY, profile.name);
+    window.localStorage.setItem(QUESTION_PROFILE_COUNTRY_CODE_KEY, profile.country.code);
+    setQuestionProfile(profile);
+  };
+
+  const findNextUnansweredPersonalQuestion = async (startIndex: number) => {
+    if (questionCount === 0) return 0;
+    const initialIndex = normalizePersonalQuestionIndex(startIndex, questionCount);
+    if (!sessionId) return initialIndex;
+    let currentIndex = initialIndex;
+    for (let attempts = 0; attempts < questionCount; attempts++) {
+      const question = personalQuestions[currentIndex];
+      const hasAnswered = await checkIfAnswered(String(question.id), 'question-response');
+      if (!hasAnswered) {
+        return currentIndex;
+      }
+      currentIndex = getNextPersonalQuestionIndex(currentIndex, questionCount);
+    }
+    return currentIndex;
   };
 
   const submitAnswer = async (countryOption: CountryOption, chosen?: CuriousChoice) => {
@@ -618,6 +688,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    const storedQuestionName = window.localStorage.getItem(QUESTION_PROFILE_NAME_KEY);
+    const storedQuestionCountryCode = window.localStorage.getItem(QUESTION_PROFILE_COUNTRY_CODE_KEY);
+    if (storedQuestionName && storedQuestionCountryCode) {
+      const match = countryOptions.find((country) => country.code === storedQuestionCountryCode);
+      if (match) {
+        setQuestionProfile({ name: storedQuestionName, country: match });
+      }
+    }
+
     const storedIndex = window.localStorage.getItem(QUESTION_STORAGE_KEY);
     if (storedIndex) {
       const parsed = Number(storedIndex);
@@ -657,6 +737,17 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const storedPersonalIndex = window.localStorage.getItem(PERSONAL_QUESTION_INDEX_KEY);
+    if (storedPersonalIndex) {
+      const parsedPersonalIndex = Number(storedPersonalIndex);
+      if (!Number.isNaN(parsedPersonalIndex)) {
+        setPersonalQuestionIndex(normalizePersonalQuestionIndex(parsedPersonalIndex, questionCount));
+      }
+    }
+  }, [questionCount]);
+
+  useEffect(() => {
     if (storedCountry) return;
     let ignore = false;
 
@@ -691,8 +782,17 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [isCuriousOpen, isToolboxOpen, isQuestionOpen]);
 
+  useEffect(() => {
+    if (!questionProfile) return;
+    setQuestionName(questionProfile.name);
+    setQuestionCountry(questionProfile.country.name);
+  }, [questionProfile]);
+
   const handleQuestionCountrySelection = (countryOption: CountryOption) => {
     setQuestionCountry(countryOption.name);
+    if (questionProfile) {
+      setQuestionProfile(null);
+    }
     // Auto-submit after country selection
     handleQuestionSubmit(countryOption);
   };
@@ -700,10 +800,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const handleQuestionSubmit = async (countryOption?: CountryOption) => {
     if (!questionAnswer.trim()) return;
 
-    // Get country from parameter or resolve from questionCountry input
-    let selectedCountry = countryOption;
+    let selectedCountry = countryOption ?? questionProfile?.country;
     if (!selectedCountry) {
-      const countryMatch = countryOptions.find(c => c.name.toLowerCase() === questionCountry.trim().toLowerCase());
+      const countryMatch = countryOptions.find(
+        (c) => c.name.toLowerCase() === questionCountry.trim().toLowerCase()
+      );
       if (!countryMatch) {
         setSubmissionError('Please select a valid country.');
         return;
@@ -711,20 +812,29 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       selectedCountry = countryMatch;
     }
 
-    // Generate sessionId if not exists
+    const rawUserName = questionName.trim() || questionProfile?.name;
+    const resolvedUserName = rawUserName ? rawUserName : null;
+
     let currentSessionId = sessionId;
+    if (!activeQuestion) {
+      setSubmissionError('No question available. Please try again later.');
+      return;
+    }
     if (!currentSessionId) {
-      currentSessionId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+      currentSessionId =
+        typeof crypto !== 'undefined' && crypto.randomUUID
+          ? crypto.randomUUID()
+          : Math.random().toString(36).slice(2);
       setSessionId(currentSessionId);
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(SESSION_STORAGE_KEY, currentSessionId);
       }
     }
 
-    // Check if already answered
-    const hasAnswered = await checkIfAnswered(String(ACTIVE_QUESTION_ID), 'question-response');
+    const hasAnswered = await checkIfAnswered(String(activeQuestion.id), 'question-response');
     if (hasAnswered) {
       setSubmissionError('You have already answered this question.');
+      moveToNextPersonalQuestion();
       return;
     }
 
@@ -740,16 +850,21 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         body: JSON.stringify({
           sessionId: currentSessionId,
           countryCode: selectedCountry.code,
-          questionId: String(ACTIVE_QUESTION_ID),
+          questionId: String(activeQuestion.id),
           answerText: questionAnswer.trim(),
-          userName: questionName.trim() || null,
+          userName: resolvedUserName,
         }),
       });
 
       if (response.ok) {
         setIsQuestionSubmitted(true);
+        if (!questionProfile && resolvedUserName) {
+          persistQuestionProfile({ name: resolvedUserName, country: selectedCountry });
+        }
+        moveToNextPersonalQuestion();
       } else if (response.status === 409) {
         setSubmissionError('You have already answered this question.');
+        moveToNextPersonalQuestion();
       } else {
         const data = await response.json().catch(() => null);
         setSubmissionError(data?.message ?? 'Unable to save your response. Please try again.');
@@ -768,7 +883,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     setQuestionName('');
     setIsQuestionFocused(false);
     setIsQuestionSubmitted(false);
-    setShowSerdarAnswer(false);
     setSubmissionError(null);
   };
 
@@ -784,16 +898,23 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     }, 500);
   };
 
-  const openQuestionModal = () => {
+  const openQuestionModal = async () => {
     if (isQuestionAnimating) return;
     setIsQuestionAnimating(true);
+    if (!activeQuestion) {
+      setSubmissionError('No questions available right now. Please add one from the admin.');
+      setIsQuestionOpen(false);
+      setTimeout(() => {
+        setIsQuestionAnimating(false);
+      }, 0);
+      return;
+    }
+    setIsQuestionOpen(true);
 
-    // Delay to allow initial render before animating in
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setIsQuestionOpen(true);
-      });
-    });
+    const nextIndex = await findNextUnansweredPersonalQuestion(personalQuestionIndex);
+    const normalizedIndex = normalizePersonalQuestionIndex(nextIndex, questionCount);
+    setPersonalQuestionIndex(normalizedIndex);
+    persistPersonalQuestionIndex(normalizedIndex);
 
     // Allow animation to complete
     setTimeout(() => {
@@ -810,7 +931,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       openToolbox();
     },
     openQuestion: () => {
-      openQuestionModal();
+      void openQuestionModal();
     },
   }));
 
@@ -956,7 +1077,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </a>
                 <button
                   type="button"
-                  onClick={openQuestionModal}
+                  onClick={() => void openQuestionModal()}
                   disabled={isQuestionAnimating}
                   className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
@@ -1286,7 +1407,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               aria-hidden="true"
             />
             <div className="flex items-start justify-between gap-4 mb-6">
-              <h3 className="text-lg md:text-xl font-semibold">{activeQuestion.question}</h3>
+                  <h3 className="text-lg md:text-xl font-semibold">
+                    {activeQuestion?.question ?? 'No questions available yet'}
+                  </h3>
               <button
                 type="button"
                 onClick={closeQuestionModal}
@@ -1323,7 +1446,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                             placeholder="Your name..."
                             className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
                             value={questionName}
-                            onChange={(e) => setQuestionName(e.target.value)}
+                            onChange={(e) => {
+                              setQuestionName(e.target.value);
+                              if (questionProfile) {
+                                setQuestionProfile(null);
+                              }
+                            }}
                           />
                         </div>
                         <div className="relative w-full max-w-[200px]">
@@ -1332,9 +1460,18 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                             placeholder="Your country..."
                             className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
                             value={questionCountry}
-                            onChange={(e) => setQuestionCountry(e.target.value)}
+                            onChange={(e) => {
+                              setQuestionCountry(e.target.value);
+                              if (questionProfile) {
+                                setQuestionProfile(null);
+                              }
+                            }}
                             onKeyDown={(event) => {
-                              if (event.key === 'Enter' && isQuestionCountryRecognized && resolvedQuestionCountryOption) {
+                              if (
+                                event.key === 'Enter' &&
+                                isQuestionCountryRecognized &&
+                                resolvedQuestionCountryOption
+                              ) {
                                 event.preventDefault();
                                 handleQuestionCountrySelection(resolvedQuestionCountryOption);
                               }
@@ -1349,14 +1486,19 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                           )}
                         </div>
                       </div>
+                      {questionProfile && (
+                        <p className="text-xs text-white/70 text-center">
+                          Responses will be logged as {questionProfile.name} from {questionProfile.country.name}.
+                        </p>
+                      )}
                       <p className="text-xs text-white/60 text-center">
                         By submitting, you agree your answer may be shared publicly
                       </p>
                       <div className="flex justify-center">
                         <button
                           type="button"
-                          onClick={() => resolvedQuestionCountryOption && handleQuestionSubmit(resolvedQuestionCountryOption)}
-                          disabled={!questionAnswer.trim() || !isQuestionCountryRecognized || isSubmittingResponse}
+                          onClick={() => handleQuestionSubmit(questionProfile ? undefined : resolvedQuestionCountryOption)}
+                          disabled={!canSubmitQuestion}
                           className="px-8 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
                         >
                           {isSubmittingResponse ? 'Saving...' : 'Submit'}
@@ -1371,36 +1513,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   )}
                 </div>
               ) : (
-                <div className="space-y-6 text-center">
-                  {!showSerdarAnswer ? (
-                    <>
-                      <p className="text-lg font-semibold">Thanks for sharing!</p>
-                      <button
-                        type="button"
-                        onClick={() => setShowSerdarAnswer(true)}
-                        className="mx-auto inline-flex items-center justify-center px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide hover:bg-white/90 transition"
+                <div className="space-y-4 text-left">
+                  <p className="text-lg font-semibold text-center">Thanks for sharing!</p>
+                  <p className="text-sm font-medium text-amber-200/90 text-center flex items-center justify-center gap-2">
+                    <span className="text-lg">💭</span>
+                    <span>Serdar's thoughts</span>
+                  </p>
+                  <div className="rounded-3xl bg-linear-to-br from-amber-500/20 via-orange-400/15 to-pink-400/20 border border-amber-300/30 p-7 space-y-4 shadow-lg">
+                        {activeQuestionAnswers.map((paragraph, index) => (
+                      <p
+                        key={index}
+                        className={`text-base leading-relaxed text-white/95 ${index === activeQuestionLastIndex ? 'font-semibold text-amber-100' : ''}`}
                       >
-                        See Serdar's answer
-                      </button>
-                    </>
-                  ) : (
-                    <div className="space-y-4 text-left">
-                      <p className="text-sm font-medium text-amber-200/90 text-center flex items-center justify-center gap-2">
-                        <span className="text-lg">💭</span>
-                        <span>Serdar's thoughts</span>
+                        {paragraph}
                       </p>
-                      <div className="rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-400/15 to-pink-400/20 border border-amber-300/30 p-7 space-y-4 shadow-lg">
-                        {activeQuestion.answer.map((paragraph, index) => (
-                          <p
-                            key={index}
-                            className={`text-base leading-relaxed text-white/95 ${index === activeQuestion.answer.length - 1 ? 'font-semibold text-amber-100' : ''}`}
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
