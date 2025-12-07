@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Questions array is required.' }, { status: 400 });
     }
 
-    let sanitized = questions.map((question) => normalizePayload(question, hasIsDefaultColumn));
+    let sanitized = questions.map((question: PersonalQuestionPayload) => normalizePayload(question, hasIsDefaultColumn));
 
     const applyDefaultStrategy = (items: NormalizedPersonalQuestion[]) => {
       const defaultIndex = items.findIndex((question) => question.is_default);
@@ -145,7 +145,7 @@ export async function POST(request: Request) {
       } catch (error) {
         if (hasIsDefaultColumn && isMissingDefaultColumnError(error)) {
           hasIsDefaultColumn = false;
-          sanitized = questions.map((question) => normalizePayload(question, false));
+          sanitized = questions.map((question: PersonalQuestionPayload) => normalizePayload(question, false));
           await persistPersonalQuestions(sanitized);
           return;
         }
@@ -167,7 +167,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Unable to save questions.' }, { status: 500 });
     }
 
-    return NextResponse.json({ questions: (data ?? []).map(formatRow) });
+    return NextResponse.json({ questions: ((data as NormalizedPersonalQuestion[] | null) ?? []).map(formatRow) });
   } catch (error) {
     console.error('Unexpected error saving personal questions:', error);
     return NextResponse.json({ message: 'Invalid payload.' }, { status: 400 });
