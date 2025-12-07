@@ -37,7 +37,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { sessionId, countryCode, questionId, answerText } = await request.json();
+    const { sessionId, countryCode, questionId, answerText, userName } = await request.json();
 
     if (!sessionId || typeof sessionId !== 'string') {
       return NextResponse.json({ message: 'Missing sessionId' }, { status: 400 });
@@ -65,6 +65,7 @@ export async function POST(request: Request) {
       country_code: countryCode,
       question_id: questionId,
       answer_text: answerText,
+      user_name: userName || null,
       ip_address: ipAddress,
       user_agent: userAgent,
     });

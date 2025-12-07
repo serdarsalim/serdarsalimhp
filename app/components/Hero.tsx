@@ -293,6 +293,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
   const [questionAnswer, setQuestionAnswer] = useState('');
   const [questionCountry, setQuestionCountry] = useState('');
+  const [questionName, setQuestionName] = useState('');
   const [isQuestionFocused, setIsQuestionFocused] = useState(false);
   const [isQuestionSubmitted, setIsQuestionSubmitted] = useState(false);
   const [showSerdarAnswer, setShowSerdarAnswer] = useState(false);
@@ -474,7 +475,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       : undefined;
   const resolvedQuestionCountryOption = getNormalizedCountry(questionCountry) ?? suggestedQuestionCountry;
   const displayQuestionSuggestion = resolvedQuestionCountryOption?.name ?? '';
-  const isQuestionCountryRecognized = Boolean(resolvedQuestionCountryOption);
+  // Only recognize country when full name matches (case-insensitive)
+  const isQuestionCountryRecognized = Boolean(
+    resolvedQuestionCountryOption &&
+    resolvedQuestionCountryOption.name.toLowerCase() === trimmedQuestionCountryInput.toLowerCase()
+  );
 
   const checkIfAnswered = async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
     if (!sessionId) return false;
@@ -737,6 +742,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           countryCode: selectedCountry.code,
           questionId: String(ACTIVE_QUESTION_ID),
           answerText: questionAnswer.trim(),
+          userName: questionName.trim() || null,
         }),
       });
 
@@ -759,6 +765,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const resetQuestionModal = () => {
     setQuestionAnswer('');
     setQuestionCountry('');
+    setQuestionName('');
     setIsQuestionFocused(false);
     setIsQuestionSubmitted(false);
     setShowSerdarAnswer(false);
@@ -1051,7 +1058,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
                   <textarea
                     placeholder="Type your answer..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70 resize-none"
+                    className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
                     rows={4}
                     value={curiousAnswer}
                     onChange={(e) => setCuriousAnswer(e.target.value)}
@@ -1268,12 +1275,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {(isQuestionOpen || isQuestionAnimating) && (
         <div className="fixed inset-x-0 top-0 bottom-0 z-40 px-4 pt-20 pb-8 flex items-center justify-center">
           <div
-            className="relative w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
+            className="relative overflow-hidden w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-black/40 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
             style={{
               transform: isQuestionOpen ? 'translateY(0)' : 'translateY(100%)',
               opacity: isQuestionOpen ? 1 : 0,
             }}
           >
+            <div
+              className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60"
+              aria-hidden="true"
+            />
             <div className="flex items-start justify-between gap-4 mb-6">
               <h3 className="text-lg md:text-xl font-semibold">{activeQuestion.question}</h3>
               <button
@@ -1296,7 +1307,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   </p>
                   <textarea
                     placeholder="Type your answer..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70 resize-none"
+                    className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
                     rows={4}
                     value={questionAnswer}
                     onChange={(e) => setQuestionAnswer(e.target.value)}
@@ -1305,39 +1316,52 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
                   {isQuestionFocused && (
                     <div className="space-y-3 animate-fade-in-up">
-                      <div className="relative w-full max-w-[260px] mx-auto">
-                        <input
-                          type="text"
-                          placeholder="Your country..."
-                          className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
-                          value={questionCountry}
-                          onChange={(e) => setQuestionCountry(e.target.value)}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter' && isQuestionCountryRecognized && resolvedQuestionCountryOption) {
-                              event.preventDefault();
-                              handleQuestionCountrySelection(resolvedQuestionCountryOption);
-                            }
-                          }}
-                        />
-                        {isQuestionCountryRecognized && (
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
+                      <div className="flex gap-3 justify-center">
+                        <div className="relative w-full max-w-[200px]">
+                          <input
+                            type="text"
+                            placeholder="Your name..."
+                            className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                            value={questionName}
+                            onChange={(e) => setQuestionName(e.target.value)}
+                          />
+                        </div>
+                        <div className="relative w-full max-w-[200px]">
+                          <input
+                            type="text"
+                            placeholder="Your country..."
+                            className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                            value={questionCountry}
+                            onChange={(e) => setQuestionCountry(e.target.value)}
+                            onKeyDown={(event) => {
+                              if (event.key === 'Enter' && isQuestionCountryRecognized && resolvedQuestionCountryOption) {
+                                event.preventDefault();
+                                handleQuestionCountrySelection(resolvedQuestionCountryOption);
+                              }
+                            }}
+                          />
+                          {isQuestionCountryRecognized && (
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                              <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <p className="text-xs text-white/60 text-center">
                         By submitting, you agree your answer may be shared publicly
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => resolvedQuestionCountryOption && handleQuestionSubmit(resolvedQuestionCountryOption)}
-                        disabled={!questionAnswer.trim() || !isQuestionCountryRecognized || isSubmittingResponse}
-                        className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
-                      >
-                        {isSubmittingResponse ? 'Saving...' : 'Submit'}
-                      </button>
+                      <div className="flex justify-center">
+                        <button
+                          type="button"
+                          onClick={() => resolvedQuestionCountryOption && handleQuestionSubmit(resolvedQuestionCountryOption)}
+                          disabled={!questionAnswer.trim() || !isQuestionCountryRecognized || isSubmittingResponse}
+                          className="px-8 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
+                        >
+                          {isSubmittingResponse ? 'Saving...' : 'Submit'}
+                        </button>
+                      </div>
                       {submissionError && (
                         <p className="text-xs text-red-200 text-center">
                           {submissionError}
