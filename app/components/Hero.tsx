@@ -312,6 +312,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [showSummary, setShowSummary] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [isToolboxOpen, setIsToolboxOpen] = useState(false);
+  const [isQuestionAnimating, setIsQuestionAnimating] = useState(false);
   const [toolboxTab, setToolboxTab] = useState<'productivity' | 'inspiration' | 'creativity'>('productivity');
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
@@ -464,6 +465,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const displaySuggestion = resolvedCountryOption?.name ?? '';
   const isCountryRecognized = Boolean(resolvedCountryOption);
   const canSubmitResponse = Boolean(isCountryRecognized && answerChoice && sessionId && !isSubmittingResponse);
+
+  // Country suggestion for Question modal
+  const trimmedQuestionCountryInput = questionCountry.trim();
+  const suggestedQuestionCountry =
+    trimmedQuestionCountryInput.length > 0
+      ? countryOptions.find((country) => country.name.toLowerCase().startsWith(trimmedQuestionCountryInput.toLowerCase()))
+      : undefined;
+  const resolvedQuestionCountryOption = getNormalizedCountry(questionCountry) ?? suggestedQuestionCountry;
+  const displayQuestionSuggestion = resolvedQuestionCountryOption?.name ?? '';
+  const isQuestionCountryRecognized = Boolean(resolvedQuestionCountryOption);
 
   const checkIfAnswered = async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
     if (!sessionId) return false;
@@ -669,14 +680,31 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const previous = document.body.style.overflow;
-    document.body.style.overflow = isCuriousOpen || isToolboxOpen ? 'hidden' : '';
+    document.body.style.overflow = isCuriousOpen || isToolboxOpen || isQuestionOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [isCuriousOpen, isToolboxOpen]);
+  }, [isCuriousOpen, isToolboxOpen, isQuestionOpen]);
 
-  const handleQuestionSubmit = async () => {
-    if (!questionAnswer.trim() || !questionCountry.trim()) return;
+  const handleQuestionCountrySelection = (countryOption: CountryOption) => {
+    setQuestionCountry(countryOption.name);
+    // Auto-submit after country selection
+    handleQuestionSubmit(countryOption);
+  };
+
+  const handleQuestionSubmit = async (countryOption?: CountryOption) => {
+    if (!questionAnswer.trim()) return;
+
+    // Get country from parameter or resolve from questionCountry input
+    let selectedCountry = countryOption;
+    if (!selectedCountry) {
+      const countryMatch = countryOptions.find(c => c.name.toLowerCase() === questionCountry.trim().toLowerCase());
+      if (!countryMatch) {
+        setSubmissionError('Please select a valid country.');
+        return;
+      }
+      selectedCountry = countryMatch;
+    }
 
     // Generate sessionId if not exists
     let currentSessionId = sessionId;
@@ -699,10 +727,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     setSubmissionError(null);
 
     try {
-      // Find country code from questionCountry input
-      const countryMatch = countryOptions.find(c => c.name.toLowerCase() === questionCountry.trim().toLowerCase());
-      const countryCode = countryMatch?.code || 'UNKNOWN';
-
       const response = await fetch('/api/question-response', {
         method: 'POST',
         headers: {
@@ -710,7 +734,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         },
         body: JSON.stringify({
           sessionId: currentSessionId,
-          countryCode,
+          countryCode: selectedCountry.code,
           questionId: String(ACTIVE_QUESTION_ID),
           answerText: questionAnswer.trim(),
         }),
@@ -738,11 +762,32 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     setIsQuestionFocused(false);
     setIsQuestionSubmitted(false);
     setShowSerdarAnswer(false);
+    setSubmissionError(null);
   };
 
   const closeQuestionModal = () => {
-    setIsQuestionOpen(false);
-    resetQuestionModal();
+    if (isQuestionAnimating) return;
+    setIsQuestionAnimating(true);
+
+    // Slide panel out, then slide hero content back in
+    setTimeout(() => {
+      setIsQuestionOpen(false);
+      resetQuestionModal();
+      setTimeout(() => {
+        setIsQuestionAnimating(false);
+      }, 500);
+    }, 500);
+  };
+
+  const openQuestionModal = () => {
+    if (isQuestionAnimating) return;
+    setIsQuestionAnimating(true);
+    setIsQuestionOpen(true);
+
+    // Allow animation to complete
+    setTimeout(() => {
+      setIsQuestionAnimating(false);
+    }, 500);
   };
 
   useImperativeHandle(ref, () => ({
@@ -754,7 +799,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       openToolbox();
     },
     openQuestion: () => {
-      setIsQuestionOpen(true);
+      openQuestionModal();
     },
   }));
 
@@ -780,8 +825,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
+      {/* Content - wrapped for animation */}
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0 transition-transform duration-500 ease-in-out"
+        style={{
+          transform: isQuestionOpen || isQuestionAnimating ? 'translateX(-120%)' : 'translateX(0)',
+        }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo */}
           <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-96">
@@ -890,8 +940,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </a>
                 <button
                   type="button"
-                  onClick={() => setIsQuestionOpen(true)}
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
+                  onClick={openQuestionModal}
+                  disabled={isQuestionAnimating}
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -985,8 +1036,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
                   </div>
                   <p className="text-base md:text-lg font-semibold">What do you think?</p>
-                  <p className="text-sm text-white/70">
-                    Share your answer and I'll share the truth
+                  <p className="text-base md:text-lg font-bold text-white">
+                    Share yours. See mine.
                   </p>
 
                   <textarea
@@ -1004,7 +1055,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                         <input
                           type="text"
                           placeholder="Your country..."
-                          className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
+                          className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
                           value={countryInput}
                           onChange={(event) => setCountryInput(event.target.value)}
                           onKeyDown={(event) => {
@@ -1014,16 +1065,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                             }
                           }}
                         />
+                        {isCountryRecognized && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
                       </div>
-                      {displaySuggestion && (
-                        <button
-                          type="button"
-                          className="inline-flex items-center justify-center px-4 py-2 rounded-2xl border border-white/40 text-white text-sm bg-white/10 hover:bg-white/20 transition"
-                          onClick={() => resolvedCountryOption && handleCountrySelection(resolvedCountryOption)}
-                        >
-                          {displaySuggestion}
-                        </button>
-                      )}
                       <p className="text-xs text-white/60 text-center">
                         By submitting, you agree your answer may be shared publicly
                       </p>
@@ -1206,11 +1255,15 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         </div>
       )}
 
-      {/* Question Modal */}
+      {/* Question Modal - Slide-in Panel */}
       {isQuestionOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
-          <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeQuestionModal} />
-          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col max-h-[700px] md:max-h-[80vh]">
+        <div className="fixed inset-x-0 top-0 bottom-0 z-40 px-4 pt-20 pb-8 flex items-center justify-center">
+          <div
+            className="relative w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-transform duration-500 ease-in-out"
+            style={{
+              transform: isQuestionAnimating && isQuestionOpen ? 'translateY(100%)' : 'translateY(0)',
+            }}
+          >
             <div className="flex items-start justify-between gap-4 mb-6">
               <h3 className="text-lg md:text-xl font-semibold">{activeQuestion.question}</h3>
               <button
@@ -1228,8 +1281,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
             <div className="flex-1 overflow-y-auto">
               {!isQuestionSubmitted ? (
                 <div className="space-y-4">
-                  <p className="text-sm text-white/70 text-center">
-                    Share your answer and I'll share mine
+                  <p className="text-base md:text-lg font-bold text-white text-center">
+                    Share yours. See mine.
                   </p>
                   <textarea
                     placeholder="Type your answer..."
@@ -1242,20 +1295,35 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
                   {isQuestionFocused && (
                     <div className="space-y-3 animate-fade-in-up">
-                      <input
-                        type="text"
-                        placeholder="Your country..."
-                        className="w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
-                        value={questionCountry}
-                        onChange={(e) => setQuestionCountry(e.target.value)}
-                      />
+                      <div className="relative w-full max-w-[260px] mx-auto">
+                        <input
+                          type="text"
+                          placeholder="Your country..."
+                          className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
+                          value={questionCountry}
+                          onChange={(e) => setQuestionCountry(e.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' && isQuestionCountryRecognized && resolvedQuestionCountryOption) {
+                              event.preventDefault();
+                              handleQuestionCountrySelection(resolvedQuestionCountryOption);
+                            }
+                          }}
+                        />
+                        {isQuestionCountryRecognized && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
                       <p className="text-xs text-white/60 text-center">
                         By submitting, you agree your answer may be shared publicly
                       </p>
                       <button
                         type="button"
-                        onClick={handleQuestionSubmit}
-                        disabled={!questionAnswer.trim() || !questionCountry.trim() || isSubmittingResponse}
+                        onClick={() => resolvedQuestionCountryOption && handleQuestionSubmit(resolvedQuestionCountryOption)}
+                        disabled={!questionAnswer.trim() || !isQuestionCountryRecognized || isSubmittingResponse}
                         className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
                       >
                         {isSubmittingResponse ? 'Saving...' : 'Submit'}
@@ -1283,12 +1351,15 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     </>
                   ) : (
                     <div className="space-y-4 text-left">
-                      <p className="text-sm uppercase tracking-[0.25em] text-white/70 text-center">Serdar's Answer</p>
-                      <div className="rounded-2xl bg-white/10 border border-white/20 p-6 space-y-3">
+                      <p className="text-sm font-medium text-amber-200/90 text-center flex items-center justify-center gap-2">
+                        <span className="text-lg">💭</span>
+                        <span>Serdar's thoughts</span>
+                      </p>
+                      <div className="rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-400/15 to-pink-400/20 border border-amber-300/30 p-7 space-y-4 shadow-lg">
                         {activeQuestion.answer.map((paragraph, index) => (
                           <p
                             key={index}
-                            className={`text-base leading-relaxed ${index === activeQuestion.answer.length - 1 ? 'font-semibold' : ''}`}
+                            className={`text-base leading-relaxed text-white/95 ${index === activeQuestion.answer.length - 1 ? 'font-semibold text-amber-100' : ''}`}
                           >
                             {paragraph}
                           </p>
@@ -1320,6 +1391,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       :global(.toolbox-modal::-webkit-scrollbar-thumb) {
         background: rgba(255, 255, 255, 0.35);
         border-radius: 999px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
       }
     `}</style>
     </>
