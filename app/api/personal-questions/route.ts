@@ -103,7 +103,7 @@ export async function GET() {
       return NextResponse.json({ message: 'Unable to load questions.' }, { status: 500 });
     }
 
-    const questions = (data ?? []).map(formatRow);
+    const questions = (data as NormalizedPersonalQuestion[] | null ?? []).map(formatRow);
     return NextResponse.json({ questions });
   } catch (error) {
     console.error('Unexpected error fetching personal questions:', error);

@@ -6,7 +6,7 @@ import SkySunset from './SkySunset';
 import { countryOptions, type CountryOption } from '../data/countries';
 import type { PersonalQuestion } from '../data/personalQuestions';
 
-type CuriousStep = 'question' | 'location' | 'result';
+type CuriousStep = 'question' | 'result';
 type CuriousChoice = 'yes' | 'no';
 
 interface CuriousQuestion {
@@ -530,10 +530,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
   const handleAnswerSelection = (choice: CuriousChoice) => {
     setAnswerChoice(choice);
-    if (storedCountry) {
-      submitAnswer(storedCountry, choice);
+    const isCorrect = choice === currentQuestion.correctAnswer;
+    const isFinalQuestion = questionIndex === totalQuestions - 1;
+
+    // Update stats
+    updateStats(isCorrect);
+
+    if (isCorrect && !isFinalQuestion) {
+      // Correct answer on non-final question - go to next question immediately
+      goToNextQuestion();
     } else {
-      setCuriousStep('location');
+      // Wrong answer OR final question - show result/explanation
+      setCuriousStep('result');
+      if (isFinalQuestion) {
+        // Show summary automatically on final question
+        setShowSummary(true);
+      }
     }
   };
 
@@ -1290,70 +1302,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 </div>
               )}
 
-              {curiousStep === 'location' && (
-                <div className="space-y-4 text-center">
-                  <div className="flex justify-center">
-                    <img src="/quiz/globus2.jpg" alt="Globe illustration" className="w-40 md:w-56 rounded-full border border-white/30 shadow-lg" />
-                  </div>
-                  <p className="text-base md:text-lg font-semibold">What do you think?</p>
-                  <p className="text-base md:text-lg font-bold text-white">
-                    Share yours. See mine.
-                  </p>
-
-                  <textarea
-                    placeholder="Type your answer..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
-                    rows={4}
-                    value={curiousAnswer}
-                    onChange={(e) => setCuriousAnswer(e.target.value)}
-                    onFocus={() => setIsCuriousAnswerFocused(true)}
-                  />
-
-                  {isCuriousAnswerFocused && (
-                    <div className="space-y-3 animate-fade-in-up">
-                      <div className="relative w-full max-w-[260px] mx-auto">
-                        <input
-                          type="text"
-                          placeholder="Your country..."
-                          className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/70"
-                          value={countryInput}
-                          onChange={(event) => setCountryInput(event.target.value)}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter' && canSubmitResponse && resolvedCountryOption) {
-                              event.preventDefault();
-                              submitAnswer(resolvedCountryOption);
-                            }
-                          }}
-                        />
-                        {isCountryRecognized && (
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-xs text-white/60 text-center">
-                        By submitting, you agree your answer may be shared publicly
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => resolvedCountryOption && submitAnswer(resolvedCountryOption)}
-                        disabled={!canSubmitResponse || !curiousAnswer.trim()}
-                        className="w-full px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
-                      >
-                        {isSubmittingResponse ? 'Saving...' : 'See the answer'}
-                      </button>
-                    </div>
-                  )}
-
-                  {submissionError && (
-                    <p className="text-xs text-red-200 text-center">
-                      {submissionError}
-                    </p>
-                  )}
-                </div>
-              )}
 
               {curiousStep === 'result' && (
                 <div className="flex flex-col flex-1 justify-center space-y-4">
@@ -1401,16 +1349,16 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
             </div>
             {curiousStep === 'result' && (
               <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap gap-3 justify-center">
-                <button
-                  type="button"
-                  onClick={closeCuriousModal}
-                  className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
-                >
-                  Close
-                </button>
                 {quizComplete ? (
                   showSummary ? (
                     <>
+                      <button
+                        type="button"
+                        onClick={closeCuriousModal}
+                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                      >
+                        Close
+                      </button>
                       <button
                         type="button"
                         onClick={shareResult}
@@ -1430,7 +1378,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     <button
                       type="button"
                       onClick={() => setShowSummary(true)}
-                      className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                      className="w-full max-w-[200px] mx-auto px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
                     >
                       Score
                     </button>
@@ -1439,9 +1387,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   <button
                     type="button"
                     onClick={handleAskMore}
-                    className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
+                    className="w-full max-w-[200px] mx-auto px-6 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide"
                   >
-                    Ask more
+                    Next
                   </button>
                 )}
               </div>
@@ -1670,7 +1618,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   {entry.paragraphs.map((paragraph, index) => (
                     <p
                       key={`${entry.id}-${index}`}
-                      className="text-base leading-relaxed text-white/95"
+                      className="text-base leading-relaxed text-white/95 whitespace-pre-wrap"
                     >
                       {paragraph}
                     </p>

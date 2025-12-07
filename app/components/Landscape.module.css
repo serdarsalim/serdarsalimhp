@@ -640,3 +640,33 @@
     transform: translateX(8px);
   }
 }
+
+.book-button {
+  position: absolute;
+  bottom: 55vh;
+  left: 13vw;
+  z-index: 3;
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  font-size: 1.5rem;
+  animation: bookFloat 4s ease-in-out infinite;
+}
+
+.book-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+@keyframes bookFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
