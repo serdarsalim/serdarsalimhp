@@ -68,6 +68,7 @@ export default function AdminPage() {
       const saved = savedQuestions[index];
       if (!saved) return true;
       if (saved.question !== question.question) return true;
+      if ((saved.is_default ?? false) !== (question.is_default ?? false)) return true;
       if (saved.answer.length !== question.answer.length) return true;
       for (let i = 0; i < question.answer.length; i += 1) {
         if ((saved.answer[i] ?? '') !== question.answer[i]) {
@@ -157,6 +158,15 @@ export default function AdminPage() {
       return updated;
     });
     setStatusMessage('New question added. Fill in the prompt and answers, then save.');
+  };
+
+  const setActiveQuestionDefault = (value: boolean) => {
+    setQuestions((prev) =>
+      prev.map((question, index) => ({
+        ...question,
+        is_default: value ? index === activeIndex : index === activeIndex ? false : question.is_default ?? false,
+      }))
+    );
   };
 
   const handleCancelEdit = () => {
@@ -323,6 +333,17 @@ export default function AdminPage() {
                 <h2 className="text-xl font-semibold">
                   {activeQuestion?.question ?? 'Create a question below'}
                 </h2>
+                {activeQuestion && (
+                  <label className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(activeQuestion.is_default)}
+                      onChange={(event) => setActiveQuestionDefault(event.target.checked)}
+                      className="h-4 w-4 rounded-sm border border-white/30 bg-black/20 text-amber-300 focus:ring-0"
+                    />
+                    <span>Show as default question</span>
+                  </label>
+                )}
               </div>
               {activeQuestion ? (
                 <>

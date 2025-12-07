@@ -737,15 +737,23 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const storedPersonalIndex = window.localStorage.getItem(PERSONAL_QUESTION_INDEX_KEY);
-    if (storedPersonalIndex) {
-      const parsedPersonalIndex = Number(storedPersonalIndex);
-      if (!Number.isNaN(parsedPersonalIndex)) {
-        setPersonalQuestionIndex(normalizePersonalQuestionIndex(parsedPersonalIndex, questionCount));
-      }
+    if (typeof window === 'undefined' || questionCount === 0) return;
+
+    const defaultIndex = personalQuestions.findIndex((question) => question.is_default);
+    if (defaultIndex >= 0) {
+      const normalizedDefault = normalizePersonalQuestionIndex(defaultIndex, questionCount);
+      setPersonalQuestionIndex(normalizedDefault);
+      persistPersonalQuestionIndex(normalizedDefault);
+      return;
     }
-  }, [questionCount]);
+
+    const storedPersonalIndex = window.localStorage.getItem(PERSONAL_QUESTION_INDEX_KEY);
+    if (!storedPersonalIndex) return;
+    const parsedPersonalIndex = Number(storedPersonalIndex);
+    if (!Number.isNaN(parsedPersonalIndex)) {
+      setPersonalQuestionIndex(normalizePersonalQuestionIndex(parsedPersonalIndex, questionCount));
+    }
+  }, [questionCount, personalQuestions]);
 
   useEffect(() => {
     if (storedCountry) return;

@@ -8,9 +8,15 @@ create table if not exists personal_questions (
   updated_at timestamptz not null default now()
 );
 
+alter table personal_questions
+  add column if not exists is_default boolean not null default false;
+
 create index if not exists idx_personal_questions_admin_email on personal_questions(admin_email);
+create unique index if not exists idx_personal_questions_default_true on personal_questions ((is_default)) where is_default;
 
 alter table personal_questions enable row level security;
+
+drop policy if exists "Allow service role to manage personal questions" on personal_questions;
 
 create policy "Allow service role to manage personal questions"
   on personal_questions
