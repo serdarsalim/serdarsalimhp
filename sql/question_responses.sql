@@ -9,6 +9,7 @@ create table if not exists question_responses (
   ip_address text,
   user_agent text,
   created_at timestamptz default now(),
+  is_hidden boolean not null default false,
   -- Create a unique constraint on session_id + question_id to prevent duplicate submissions
   unique(session_id, question_id)
 );

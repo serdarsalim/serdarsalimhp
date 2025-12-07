@@ -5,6 +5,16 @@ import type { EditablePersonalQuestion } from '../data/personalQuestions';
 
 const ADMIN_AUTH_ENDPOINT = '/api/admin/auth';
 const QUESTIONS_ENDPOINT = '/api/personal-questions';
+const RESPONSES_ENDPOINT = '/api/question-responses/admin';
+
+type AdminQuestionResponse = {
+  id: string;
+  user_name: string | null;
+  country_code: string | null;
+  answer_text: string;
+  created_at: string;
+  is_hidden: boolean;
+};
 
 export default function AdminPage() {
   const [passwordInput, setPasswordInput] = useState('');
@@ -16,9 +26,94 @@ export default function AdminPage() {
   const [questions, setQuestions] = useState<EditablePersonalQuestion[]>([]);
   const [savedQuestions, setSavedQuestions] = useState<EditablePersonalQuestion[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [responses, setResponses] = useState<AdminQuestionResponse[]>([]);
+  const [isLoadingResponses, setIsLoadingResponses] = useState(false);
+  const [isManagingResponse, setIsManagingResponse] = useState(false);
   const notifyQuestionsUpdated = () => {
     if (typeof window === 'undefined') return;
     window.dispatchEvent(new Event('personalQuestionsUpdated'));
+  };
+
+  const fetchResponsesForQuestion = async (questionId?: number | null) => {
+    if (!questionId) {
+      setResponses([]);
+      return;
+    }
+
+    setIsLoadingResponses(true);
+    try {
+      const response = await fetch(`${RESPONSES_ENDPOINT}?questionId=${questionId}`);
+      if (!response.ok) {
+        throw new Error('Unable to load responses.');
+      }
+      const data = await response.json();
+      setResponses(Array.isArray(data?.responses) ? data.responses : []);
+    } catch (error) {
+      console.error('Failed to load responses', error);
+      setResponses([]);
+    } finally {
+      setIsLoadingResponses(false);
+    }
+  };
+
+  const toggleResponseVisibility = async (responseId: string, hide: boolean) => {
+    if (isManagingResponse) return;
+    setIsManagingResponse(true);
+    setStatusMessage('');
+
+    try {
+      const response = await fetch(RESPONSES_ENDPOINT, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: responseId, is_hidden: hide }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setStatusMessage(data?.message ?? 'Unable to update response.');
+        return;
+      }
+
+      setStatusMessage(hide ? 'Response hidden.' : 'Response visible.');
+      await fetchResponsesForQuestion(activeQuestion?.id);
+    } catch (error) {
+      console.error('Failed to update response', error);
+      setStatusMessage('Unable to update response.');
+    } finally {
+      setIsManagingResponse(false);
+    }
+  };
+
+  const deleteResponse = async (responseId: string) => {
+    if (isManagingResponse) return;
+    setIsManagingResponse(true);
+    setStatusMessage('');
+
+    try {
+      const response = await fetch(RESPONSES_ENDPOINT, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: responseId }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setStatusMessage(data?.message ?? 'Unable to delete response.');
+        return;
+      }
+
+      setStatusMessage('Response deleted.');
+      await fetchResponsesForQuestion(activeQuestion?.id);
+    } catch (error) {
+      console.error('Failed to delete response', error);
+      setStatusMessage('Unable to delete response.');
+    } finally {
+      setIsManagingResponse(false);
+    }
   };
 
   useEffect(() => {
@@ -236,6 +331,10 @@ export default function AdminPage() {
   }, [questions, activeIndex]);
 
   useEffect(() => {
+    void fetchResponsesForQuestion(activeQuestion?.id ?? null);
+  }, [activeQuestion?.id]);
+
+  useEffect(() => {
     if (typeof window === 'undefined') return;
     const storedState = window.localStorage.getItem('admin-authenticated');
     if (storedState === '1') {
@@ -407,6 +506,89 @@ export default function AdminPage() {
                     >
                       {isSaving ? 'Saving…' : 'Save question'}
                     </button>
+                  </div>
+                  <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">Responses</p>
+                      <button
+                        type="button"
+                        onClick={() => fetchResponsesForQuestion(activeQuestion?.id ?? null)}
+                        className="text-[10px] uppercase tracking-[0.3em] text-white/60 transition hover:text-white"
+                      >
+                        Refresh
+                      </button>
+                    </div>
+                    {isLoadingResponses ? (
+                      <p className="text-sm text-white/60">Loading responses…</p>
+                    ) : responses.length === 0 ? (
+                      <p className="text-sm text-white/60">No responses yet.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {responses.map((response) => (
+                          <article
+                            key={response.id}
+                            className={`space-y-3 rounded-2xl border p-4 ${
+                              response.is_hidden
+                                ? 'border-rose-400/40 bg-rose-900/30 shadow-[0_1px_20px_rgba(255,255,255,0.03)]'
+                                : 'border-white/10 bg-white/5'
+                            }`}
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/70">
+                              <div className="flex items-center gap-2">
+                                <span className="font-semibold text-white/80">
+                                  {response.user_name?.trim() || 'Anonymous'}
+                                </span>
+                                {response.country_code && (
+                                  <span className="text-white/50">• {response.country_code.toUpperCase()}</span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2">
+                                {response.is_hidden && (
+                                  <span className="rounded-full border border-amber-200/40 bg-amber-200/10 px-2 py-0.5 text-[9px] uppercase tracking-[0.4em] text-amber-200">
+                                    Hidden
+                                  </span>
+                                )}
+                                <span className="text-white/40">
+                                  {new Date(response.created_at).toLocaleDateString(undefined, {
+                                    month: 'short',
+                                    day: 'numeric',
+                                  })}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-sm leading-relaxed text-white/80 whitespace-pre-wrap">
+                              {response.answer_text}
+                            </p>
+                            <div className="flex flex-wrap gap-2 items-center">
+                              <button
+                                type="button"
+                                onClick={() => toggleResponseVisibility(response.id, !response.is_hidden)}
+                                disabled={isManagingResponse}
+                                className="relative flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-white/70 transition hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-50"
+                                aria-pressed={!response.is_hidden}
+                              >
+                                <span className="inline-flex h-4 w-10 items-center rounded-full bg-white/10 p-0.5 transition">
+                                  <span
+                                    className={`inline-block h-3 w-3 rounded-full transition ${
+                                      response.is_hidden ? 'translate-x-0 bg-white/70' : 'translate-x-4 bg-emerald-400'
+                                    }`}
+                                  />
+                                </span>
+                                <span>{response.is_hidden ? 'Hidden' : 'Visible'}</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => deleteResponse(response.id)}
+                                disabled={isManagingResponse}
+                                className="rounded-full border border-rose-400/60 px-3 py-1 text-[11px] uppercase tracking-[0.3em] text-rose-200 transition hover:border-rose-300 disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </>
               ) : (

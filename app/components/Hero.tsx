@@ -300,6 +300,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [questionName, setQuestionName] = useState('');
   const [isQuestionFocused, setIsQuestionFocused] = useState(false);
   const [isQuestionSubmitted, setIsQuestionSubmitted] = useState(false);
+  const [selectedQuestionCountry, setSelectedQuestionCountry] = useState<CountryOption | null>(null);
   const [curiousStep, setCuriousStep] = useState<CuriousStep>('question');
   const [answerChoice, setAnswerChoice] = useState<CuriousChoice | null>(null);
   const [curiousAnswer, setCuriousAnswer] = useState('');
@@ -325,21 +326,36 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const currentQuestion = curiousQuestions[questionIndex];
   const responseList = useMemo<ResponseEntry[]>(() => {
     const entries: ResponseEntry[] = [];
+    const questionText = activeQuestion?.question?.trim();
+
+    const sanitizeParagraphs = (paragraphs: string[]) => {
+      const trimmed = paragraphs
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+
+      if (questionText && trimmed.length > 1 && trimmed[0] === questionText) {
+        return trimmed.slice(1);
+      }
+
+      return trimmed;
+    };
+
     if (activeQuestion) {
       entries.push({
         id: `serdar-${activeQuestion.id}`,
         name: 'Serdar Salim',
         country: 'Türkiye',
-        paragraphs: activeQuestion.answer.filter((line) => line.trim().length > 0),
+        paragraphs: sanitizeParagraphs(activeQuestion.answer),
       });
     }
 
     questionResponses.forEach((response) => {
-      const paragraphs =
+      const paragraphs = sanitizeParagraphs(
         response.answer_text
           .split(/\r?\n/)
           .map((line) => line.trim())
-          .filter((line) => line.length > 0);
+          .filter((line) => line.length > 0),
+      );
       entries.push({
         id: response.id,
         name: response.user_name?.trim() || 'Anonymous',
@@ -557,7 +573,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   // Only recognize country when full name matches (case-insensitive)
   const isQuestionCountryRecognized = Boolean(resolvedQuestionCountryOption);
   const canSubmitQuestion = Boolean(
-    questionAnswer.trim() && !isSubmittingResponse && (questionProfile || isQuestionCountryRecognized)
+    questionAnswer.trim() &&
+      !isSubmittingResponse &&
+      (questionProfile?.country || selectedQuestionCountry)
   );
 
   const checkIfAnswered = useCallback(
@@ -828,8 +846,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     };
   }, [checkIfAnswered, personalQuestions, sessionId]);
   useEffect(() => {
-    if (!isQuestionSubmitted || !activeQuestion) {
+    if (!activeQuestion) {
       setQuestionResponses([]);
+      setIsLoadingQuestionResponses(false);
       return;
     }
 
@@ -861,7 +880,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     return () => {
       ignore = true;
     };
-  }, [isQuestionSubmitted, activeQuestion]);
+  }, [activeQuestion]);
 
   useEffect(() => {
     if (storedCountry) return;
@@ -902,21 +921,28 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     if (!questionProfile) return;
     setQuestionName(questionProfile.name);
     setQuestionCountry(questionProfile.country.name);
+    setSelectedQuestionCountry(questionProfile.country);
   }, [questionProfile]);
 
-  const handleQuestionCountrySelection = (countryOption: CountryOption) => {
+  const selectQuestionCountry = (countryOption: CountryOption, autoSubmit = false) => {
     setQuestionCountry(countryOption.name);
+    setSelectedQuestionCountry(countryOption);
     if (questionProfile) {
       setQuestionProfile(null);
     }
-    // Auto-submit after country selection
-    handleQuestionSubmit(countryOption);
+    if (autoSubmit) {
+      handleQuestionSubmit(countryOption);
+    }
+  };
+
+  const handleQuestionCountrySelection = (countryOption: CountryOption) => {
+    selectQuestionCountry(countryOption, true);
   };
 
   const handleQuestionSubmit = async (countryOption?: CountryOption) => {
     if (!questionAnswer.trim()) return;
 
-    let selectedCountry = countryOption ?? questionProfile?.country;
+    let selectedCountry = countryOption ?? questionProfile?.country ?? selectedQuestionCountry;
     if (!selectedCountry) {
       const countryMatch = countryOptions.find(
         (c) => c.name.toLowerCase() === questionCountry.trim().toLowerCase()
@@ -996,6 +1022,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const resetQuestionModal = () => {
     setQuestionAnswer('');
     setQuestionCountry('');
+    setSelectedQuestionCountry(null);
     setQuestionName('');
     setIsQuestionFocused(false);
     setIsQuestionSubmitted(false);
@@ -1517,26 +1544,26 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60"
               aria-hidden="true"
             />
-            <div className="flex items-start justify-between gap-4 mb-6">
-                  <h3 className="text-lg md:text-xl font-semibold">
-                    {activeQuestion?.question ?? 'No questions available yet'}
-                  </h3>
+            <div className="relative mb-6">
               <button
                 type="button"
                 onClick={closeQuestionModal}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/40 hover:bg-white/30 transition shrink-0"
+                className="absolute right-0 top-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/40 hover:bg-white/30 transition shrink-0"
                 aria-label="Close question modal"
               >
                 <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
+              <h3 className="text-lg md:text-xl font-semibold text-white text-center pt-12">
+                {activeQuestion?.question ?? 'No question available yet'}
+              </h3>
             </div>
 
             <div className="flex-1 overflow-y-auto">
               {!isQuestionSubmitted ? (
                 <div className="space-y-4">
-                  <p className="text-base md:text-lg font-bold text-white text-center">
+                  <p className="text-sm md:text-base font-semibold text-white/70 text-center tracking-widest">
                     Share yours. See mine.
                   </p>
                   <textarea
@@ -1576,6 +1603,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                               if (questionProfile) {
                                 setQuestionProfile(null);
                               }
+                              setSelectedQuestionCountry(null);
                             }}
                             onKeyDown={(event) => {
                               if (
@@ -1588,15 +1616,35 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                               }
                             }}
                           />
-                          {isQuestionCountryRecognized && (
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                              <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
-                          )}
                         </div>
                       </div>
+                      {selectedQuestionCountry ? (
+                        <div className="flex justify-center">
+                          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/5 text-xs uppercase tracking-[0.3em] text-white/70">
+                            {selectedQuestionCountry.name}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedQuestionCountry(null);
+                                setQuestionCountry('');
+                              }}
+                              className="text-[11px] uppercase tracking-[0.4em] text-white/70 hover:text-white transition"
+                            >
+                              Change
+                            </button>
+                          </span>
+                        </div>
+                      ) : resolvedQuestionCountryOption ? (
+                        <div className="flex justify-center">
+                          <button
+                            type="button"
+                            onClick={() => selectQuestionCountry(resolvedQuestionCountryOption)}
+                            className="rounded-full px-4 py-1.5 border border-white/30 bg-white/10 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white/20"
+                          >
+                            Select {resolvedQuestionCountryOption.name}
+                          </button>
+                        </div>
+                      ) : null}
                       {questionProfile && (
                         <p className="text-xs text-white/70 text-center">
                           Responses will be logged as {questionProfile.name} from {questionProfile.country.name}.
@@ -1623,55 +1671,46 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="space-y-4 text-left">
-                  <p className="text-lg font-semibold text-center">Thanks for sharing!</p>
-                  <p className="text-sm font-medium text-amber-200/90 text-center flex items-center justify-center gap-2">
-                    <span className="text-lg">💭</span>
-                    <span>Serdar's thoughts</span>
-                  </p>
-                  <div className="rounded-3xl bg-linear-to-br from-amber-500/20 via-orange-400/15 to-pink-400/20 border border-amber-300/30 p-7 space-y-4 shadow-lg">
-                    {isLoadingQuestionResponses && responseList.length === 1 ? (
-                      <p className="text-sm text-white/70">Loading other responses…</p>
-                    ) : (
-                      responseList.map((entry) => (
-                        <article key={entry.id} className="space-y-2">
-                          <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
-                            <span
-                              className={`font-semibold ${
-                                entry.id.startsWith('serdar-') ? 'text-amber-100' : 'text-white/70'
-                              }`}
-                            >
-                              {entry.name}
-                              {entry.country ? ` • ${entry.country}` : ''}
-                            </span>
-                            {entry.createdAt && (
-                              <span className="text-white/40">
-                                {new Date(entry.createdAt).toLocaleDateString('en-US', {
-                                  month: 'short',
-                                  day: 'numeric',
-                                })}
-                              </span>
-                            )}
-                          </div>
-                          {entry.paragraphs.map((paragraph, index) => (
-                            <p
-                              key={`${entry.id}-${index}`}
-                              className={`text-base leading-relaxed text-white/95 ${
-                                entry.id.startsWith('serdar-') && index === entry.paragraphs.length - 1
-                                  ? 'font-semibold text-amber-100'
-                                  : ''
-                              }`}
-                            >
-                              {paragraph}
-                            </p>
-                          ))}
-                        </article>
-                      ))
-                    )}
-                  </div>
+      ) : (
+        <div className="space-y-6">
+          <div className="grid gap-4">
+            {responseList.map((entry) => (
+              <article
+                key={entry.id}
+                className="rounded-3xl border border-white/15 bg-transparent p-5 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3"
+              >
+                <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
+                  <span className={`font-semibold ${entry.id.startsWith('serdar-') ? 'text-amber-100' : 'text-white/70'}`}>
+                    {entry.name}
+                    {entry.country ? ` • ${entry.country}` : ''}
+                  </span>
+                  {entry.createdAt && (
+                    <span className="text-white/40">
+                      {new Date(entry.createdAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </span>
+                  )}
                 </div>
-              )}
+                <div className="space-y-2">
+                  {entry.paragraphs.map((paragraph, index) => (
+                    <p
+                      key={`${entry.id}-${index}`}
+                      className="text-base leading-relaxed text-white/95"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          {isLoadingQuestionResponses && responseList.length <= 1 && (
+            <p className="text-sm text-white/70">Loading other responses…</p>
+          )}
+        </div>
+      )}
             </div>
           </div>
         </div>
