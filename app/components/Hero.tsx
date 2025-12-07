@@ -1517,9 +1517,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
 
       {/* Question Modal - Slide-in Panel */}
       {(isQuestionOpen || isQuestionAnimating) && (
-        <div className="fixed inset-0 z-40 px-2 md:px-4 pt-20 pb-8 flex items-center justify-center">
+        <div className="fixed inset-0 z-40 md:px-4 md:pt-20 md:pb-8 flex items-center justify-center">
           <div
-            className="relative overflow-hidden w-full max-w-full md:max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-black/40 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-5 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
+            className="relative overflow-hidden w-full h-full md:h-[85vh] md:max-w-2xl md:max-h-[800px] md:rounded-[30px] md:border border-white/25 bg-black/70 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] pt-20 px-4 pb-4 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
             style={{
               transform: isQuestionOpen ? 'translateY(0)' : 'translateY(100%)',
               opacity: isQuestionOpen ? 1 : 0,
@@ -1545,7 +1545,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               </h3>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto question-modal-scroll pr-2">
               {isCheckingPreviousAnswer ? (
                 <div className="flex h-full flex-col items-center justify-center">
                   <p className="text-sm text-white/60">Checking your previous answer…</p>
@@ -1722,6 +1722,23 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       :global(.toolbox-modal::-webkit-scrollbar-thumb) {
         background: rgba(255, 255, 255, 0.35);
         border-radius: 999px;
+      }
+      :global(.question-modal-scroll) {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+      }
+      :global(.question-modal-scroll::-webkit-scrollbar) {
+        width: 8px;
+      }
+      :global(.question-modal-scroll::-webkit-scrollbar-track) {
+        background: transparent;
+        margin-right: 4px;
+      }
+      :global(.question-modal-scroll::-webkit-scrollbar-thumb) {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        border-right: 4px solid transparent;
+        background-clip: padding-box;
       }
       @media (prefers-reduced-motion: reduce) {
         * {
