@@ -384,7 +384,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 px-4 py-10 text-white">
-      <div className="mx-auto max-w-6xl space-y-8 px-4 sm:px-6 md:px-8 lg:px-12">
+      <div className="mx-auto max-w-4xl space-y-8 px-3 sm:px-4 md:px-4 lg:px-5">
         <header className="space-y-1">
           <p className="text-xs uppercase tracking-[0.5em] text-white/70">Admin</p>
           <h1 className="text-3xl font-bold">Personal Questions Manager</h1>
@@ -432,17 +432,6 @@ export default function AdminPage() {
                 <h2 className="text-xl font-semibold">
                   {activeQuestion?.question ?? 'Create a question below'}
                 </h2>
-                {activeQuestion && (
-                  <label className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(activeQuestion.is_default)}
-                      onChange={(event) => setActiveQuestionDefault(event.target.checked)}
-                      className="h-4 w-4 rounded-sm border border-white/30 bg-black/20 text-amber-300 focus:ring-0"
-                    />
-                    <span>Show as default question</span>
-                  </label>
-                )}
               </div>
               {activeQuestion ? (
                 <>
@@ -489,23 +478,36 @@ export default function AdminPage() {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-4 flex justify-end gap-3 border-t border-white/10 pt-4">
-                    <button
-                      type="button"
-                      onClick={handleCancelEdit}
-                      disabled={!hasUnsavedChanges}
-                      className="rounded-2xl border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white/80 transition disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleSave()}
-                      disabled={!canSaveQuestion || isSaving}
-                      className="rounded-2xl border border-white/50 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#4c2372] transition hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {isSaving ? 'Saving…' : 'Save question'}
-                    </button>
+                  <div className="mt-4 flex justify-between items-center gap-3 border-t border-white/10 pt-4">
+                    {activeQuestion && (
+                      <label className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(activeQuestion.is_default)}
+                          onChange={(event) => setActiveQuestionDefault(event.target.checked)}
+                          className="h-4 w-4 rounded-sm border border-white/30 bg-black/20 text-amber-300 focus:ring-0"
+                        />
+                        <span>Default</span>
+                      </label>
+                    )}
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={handleCancelEdit}
+                        disabled={!hasUnsavedChanges}
+                        className="rounded-2xl border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white/80 transition disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleSave()}
+                        disabled={!canSaveQuestion || isSaving}
+                        className="rounded-2xl border border-white/50 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#4c2372] transition hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isSaving ? 'Saving…' : 'Save question'}
+                      </button>
+                    </div>
                   </div>
                   <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
                     <div className="flex items-center justify-between">

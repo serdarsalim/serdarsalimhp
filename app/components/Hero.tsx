@@ -1581,11 +1581,11 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                             }}
                           />
                         </div>
-                        <div className="relative w-full max-w-[200px]">
+                        <div className="relative w-full max-w-[240px]">
                           <input
                             type="text"
                             placeholder="Your country..."
-                            className="relative z-10 w-full px-4 py-2.5 pr-10 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                            className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
                             value={questionCountry}
                             onChange={(e) => {
                               setQuestionCountry(e.target.value);
@@ -1607,24 +1607,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                           />
                         </div>
                       </div>
-                      {selectedQuestionCountry ? (
-                        <div className="flex justify-center">
-                          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/5 text-xs uppercase tracking-[0.3em] text-white/70">
-                            {selectedQuestionCountry.name}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setSelectedQuestionCountry(null);
-                                setQuestionCountry('');
-                              }}
-                              className="text-[11px] uppercase tracking-[0.4em] text-white/70 hover:text-white transition"
-                            >
-                              Change
-                            </button>
-                          </span>
-                        </div>
-                      ) : resolvedQuestionCountryOption ? (
-                        <div className="flex justify-center">
+                      <div className="flex justify-center min-h-[32px]">
+                        {!selectedQuestionCountry && resolvedQuestionCountryOption && normalizeForMatching(questionCountry.trim()) !== normalizeForMatching(resolvedQuestionCountryOption.name) ? (
                           <button
                             type="button"
                             onClick={() => selectQuestionCountry(resolvedQuestionCountryOption)}
@@ -1632,8 +1616,8 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                           >
                             Select {resolvedQuestionCountryOption.name}
                           </button>
-                        </div>
-                      ) : null}
+                        ) : null}
+                      </div>
                       {questionProfile && (
                         <p className="text-xs text-white/70 text-center">
                           Responses will be logged as {questionProfile.name} from {questionProfile.country.name}.
@@ -1661,7 +1645,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   )}
                 </div>
               ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-16">
           <div className="grid gap-4">
             {responseList.map((entry) => (
               <article
