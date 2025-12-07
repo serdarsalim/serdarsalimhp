@@ -9,7 +9,8 @@ import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
 import Landscape from './components/Landscape';
-import SkyMorning from './components/SkyMorning';
+import SkyMidMorning from './components/SkyMidMorning';
+import SkyAfternoon from './components/SkyAfternoon';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -105,7 +106,7 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <SkyMorning />
+        <SkyMidMorning />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
@@ -166,7 +167,7 @@ export default function Home() {
         id="projects"
         className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
       >
-        <SkyMorning />
+        <SkyAfternoon />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">

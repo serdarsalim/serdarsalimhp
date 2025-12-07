@@ -1,0 +1,59 @@
+:root {
+  --afternoon-1: #ffb99c;  /* blend of peach and salmon */
+  --afternoon-2: #ffa5b5;  /* coral with lavender */
+  --afternoon-3: #ff99cc;  /* pink-purple */
+  --cloud-afternoon: #ffddd5;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, var(--afternoon-1), var(--afternoon-2), var(--afternoon-3));
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(0.90);
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud-afternoon);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.32;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.26;
+  filter: blur(1px);
+  animation-delay: 0;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.20;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}

@@ -1,0 +1,59 @@
+:root {
+  --midmorning-1: #ffc4a3;  /* vibrant peach */
+  --midmorning-2: #ffaa99;  /* bright coral */
+  --midmorning-3: #ff99bb;  /* pink with purple undertone */
+  --cloud-midmorning: #ffffff;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, var(--midmorning-1), var(--midmorning-2), var(--midmorning-3));
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(0.92);
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud-midmorning);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.35;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.28;
+  filter: blur(1px);
+  animation-delay: 0;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.22;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}
