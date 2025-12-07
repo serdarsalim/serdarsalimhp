@@ -768,21 +768,25 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const closeQuestionModal = () => {
     if (isQuestionAnimating) return;
     setIsQuestionAnimating(true);
+    setIsQuestionOpen(false);
 
-    // Slide panel out, then slide hero content back in
+    // Wait for animation to complete, then clean up
     setTimeout(() => {
-      setIsQuestionOpen(false);
       resetQuestionModal();
-      setTimeout(() => {
-        setIsQuestionAnimating(false);
-      }, 500);
+      setIsQuestionAnimating(false);
     }, 500);
   };
 
   const openQuestionModal = () => {
     if (isQuestionAnimating) return;
     setIsQuestionAnimating(true);
-    setIsQuestionOpen(true);
+
+    // Delay to allow initial render before animating in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsQuestionOpen(true);
+      });
+    });
 
     // Allow animation to complete
     setTimeout(() => {
@@ -826,15 +830,15 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       </div>
 
       {/* Content - wrapped for animation */}
-      <div
-        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0 transition-transform duration-500 ease-in-out"
-        style={{
-          transform: isQuestionOpen || isQuestionAnimating ? 'translateX(-120%)' : 'translateX(0)',
-        }}
-      >
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo */}
-          <div className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-96">
+          <div
+            className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-96 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: isQuestionOpen ? 'translateX(-200%)' : 'translateX(0)',
+            }}
+          >
             <div className="relative">
               <img
                 src="/profile.png"
@@ -851,7 +855,12 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           </div>
 
           {/* Right side - Text */}
-          <div className="animate-fade-in-up animation-delay-200 md:-mt-32">
+          <div
+            className="animate-fade-in-up animation-delay-200 md:-mt-32 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: isQuestionOpen ? 'translateX(200%)' : 'translateX(0)',
+            }}
+          >
             <div className="w-full max-w-xl text-left mx-auto md:mx-0 space-y-6">
               <div className="space-y-2">
                 <h1
@@ -1256,12 +1265,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       )}
 
       {/* Question Modal - Slide-in Panel */}
-      {isQuestionOpen && (
+      {(isQuestionOpen || isQuestionAnimating) && (
         <div className="fixed inset-x-0 top-0 bottom-0 z-40 px-4 pt-20 pb-8 flex items-center justify-center">
           <div
-            className="relative w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-transform duration-500 ease-in-out"
+            className="relative w-full max-w-2xl h-[85vh] max-h-[800px] rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
             style={{
-              transform: isQuestionAnimating && isQuestionOpen ? 'translateY(100%)' : 'translateY(0)',
+              transform: isQuestionOpen ? 'translateY(0)' : 'translateY(100%)',
+              opacity: isQuestionOpen ? 1 : 0,
             }}
           >
             <div className="flex items-start justify-between gap-4 mb-6">
