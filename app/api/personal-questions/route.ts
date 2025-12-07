@@ -59,10 +59,11 @@ const formatRow = (row: NormalizedPersonalQuestion): PersonalQuestion => ({
 });
 
 const selectPersonalQuestions = async () => {
-  const { data, error } = await supabaseAdmin
-    .from('personal_questions')
-    .select(selectFields())
-    .order('id', { ascending: true });
+  let query = supabaseAdmin.from('personal_questions').select(selectFields());
+  if (hasIsDefaultColumn) {
+    query = query.order('is_default', { ascending: false });
+  }
+  const { data, error } = await query.order('id', { ascending: true });
 
   if (error && hasIsDefaultColumn && isMissingDefaultColumnError(error)) {
     hasIsDefaultColumn = false;

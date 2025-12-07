@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#452e58]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/20 shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#556e8f]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/20 shadow-lg">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
@@ -64,7 +64,13 @@ export default function Home() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4 ml-auto">
+            <div className="hidden md:flex items-center gap-6 ml-auto">
+              <a
+                href="#projects"
+                className="text-xs font-semibold uppercase tracking-[0.4em] text-white/70 transition-colors hover:text-white"
+              >
+                Apps
+              </a>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
@@ -75,7 +81,13 @@ export default function Home() {
             </div>
 
             {/* Mobile Menu - Simplified */}
-            <div className="md:hidden flex items-center gap-3 ml-auto">
+            <div className="md:hidden flex items-center gap-5 ml-auto">
+              <a
+                href="#projects"
+                className="text-[10px] font-semibold uppercase tracking-[0.4em] text-white/70"
+              >
+                Apps
+              </a>
               <BlogButton
                 href="https://blog.serdarsalim.com/"
                 target="_blank"
@@ -156,12 +168,12 @@ export default function Home() {
       >
         <SkyMorning />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-8 md:mb-8">
+            <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               My Apps
             </h2>
             <p className="text-sm md:text-base text-white/80" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-              free to use
+             These are webapps I created, free to use.
             </p>
           </div>
 

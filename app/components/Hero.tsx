@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 import SkySunset from './SkySunset';
 import { countryOptions, type CountryOption } from '../data/countries';
@@ -258,6 +258,22 @@ type QuestionProfile = {
   country: CountryOption;
 };
 
+type QuestionResponder = {
+  id: string;
+  user_name: string | null;
+  country_code: string | null;
+  answer_text: string;
+  created_at: string;
+};
+
+type ResponseEntry = {
+  id: string;
+  name: string;
+  country?: string;
+  paragraphs: string[];
+  createdAt?: string;
+};
+
 export type HeroHandle = {
   openCurious: () => void;
   openToolbox: () => void;
@@ -272,8 +288,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const normalizedPersonalQuestionIndex = normalizePersonalQuestionIndex(personalQuestionIndex, questionCount);
   const activeQuestion =
     personalQuestions.length > 0 ? personalQuestions[normalizedPersonalQuestionIndex] : null;
-  const activeQuestionAnswers = activeQuestion?.answer ?? [];
-  const activeQuestionLastIndex = activeQuestionAnswers.length - 1;
 
   const [isHoveringName, setIsHoveringName] = useState(false);
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
@@ -298,6 +312,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionMessage, setSubmissionMessage] = useState<string | null>(null);
   const [storedCountry, setStoredCountry] = useState<CountryOption | null>(null);
+  const [questionResponses, setQuestionResponses] = useState<QuestionResponder[]>([]);
+  const [isLoadingQuestionResponses, setIsLoadingQuestionResponses] = useState(false);
+  const [hasAnsweredDefaultQuestion, setHasAnsweredDefaultQuestion] = useState(false);
   const [stats, setStats] = useState({ answered: 0, correct: 0 });
   const [showSummary, setShowSummary] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -306,6 +323,34 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [toolboxTab, setToolboxTab] = useState<'productivity' | 'inspiration' | 'creativity'>('productivity');
   const totalQuestions = curiousQuestions.length;
   const currentQuestion = curiousQuestions[questionIndex];
+  const responseList = useMemo<ResponseEntry[]>(() => {
+    const entries: ResponseEntry[] = [];
+    if (activeQuestion) {
+      entries.push({
+        id: `serdar-${activeQuestion.id}`,
+        name: 'Serdar Salim',
+        country: 'Türkiye',
+        paragraphs: activeQuestion.answer.filter((line) => line.trim().length > 0),
+      });
+    }
+
+    questionResponses.forEach((response) => {
+      const paragraphs =
+        response.answer_text
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0);
+      entries.push({
+        id: response.id,
+        name: response.user_name?.trim() || 'Anonymous',
+        country: response.country_code?.toUpperCase() ?? undefined,
+        paragraphs: paragraphs.length > 0 ? paragraphs : [response.answer_text.trim()],
+        createdAt: response.created_at,
+      });
+    });
+
+    return entries;
+  }, [activeQuestion, questionResponses]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -515,19 +560,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     questionAnswer.trim() && !isSubmittingResponse && (questionProfile || isQuestionCountryRecognized)
   );
 
-  const checkIfAnswered = async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
-    if (!sessionId) return false;
-    try {
-      const response = await fetch(`/api/${endpoint}?sessionId=${sessionId}&questionId=${questionId}`);
-      if (response.ok) {
-        const data = await response.json();
-        return data.hasAnswered;
+  const checkIfAnswered = useCallback(
+    async (questionId: string, endpoint: 'curious-response' | 'question-response') => {
+      if (!sessionId) return false;
+      try {
+        const response = await fetch(`/api/${endpoint}?sessionId=${sessionId}&questionId=${questionId}`);
+        if (response.ok) {
+          const data = await response.json();
+          return data.hasAnswered;
+        }
+      } catch (error) {
+        console.error('Failed to check if answered', error);
       }
-    } catch (error) {
-      console.error('Failed to check if answered', error);
-    }
-    return false;
-  };
+      return false;
+    },
+    [sessionId]
+  );
 
   const persistPersonalQuestionIndex = (value: number) => {
     if (typeof window === 'undefined') return;
@@ -754,6 +802,66 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       setPersonalQuestionIndex(normalizePersonalQuestionIndex(parsedPersonalIndex, questionCount));
     }
   }, [questionCount, personalQuestions]);
+  useEffect(() => {
+    if (!sessionId || !personalQuestions.length) {
+      setHasAnsweredDefaultQuestion(false);
+      return;
+    }
+
+    const defaultQuestion = personalQuestions.find((question) => question.is_default) ?? personalQuestions[0];
+    if (!defaultQuestion) {
+      setHasAnsweredDefaultQuestion(false);
+      return;
+    }
+
+    let ignore = false;
+
+    const checkDefaultAnswered = async () => {
+      const answered = await checkIfAnswered(String(defaultQuestion.id), 'question-response');
+      if (ignore) return;
+      setHasAnsweredDefaultQuestion(answered);
+    };
+
+    checkDefaultAnswered();
+    return () => {
+      ignore = true;
+    };
+  }, [checkIfAnswered, personalQuestions, sessionId]);
+  useEffect(() => {
+    if (!isQuestionSubmitted || !activeQuestion) {
+      setQuestionResponses([]);
+      return;
+    }
+
+    let ignore = false;
+    const loadResponses = async () => {
+      setIsLoadingQuestionResponses(true);
+      try {
+        const response = await fetch(`/api/question-responses?questionId=${activeQuestion.id}`);
+        if (!response.ok) {
+          throw new Error('Unable to load responses.');
+        }
+        const data = await response.json();
+        if (!ignore) {
+          setQuestionResponses(Array.isArray(data?.responses) ? data.responses : []);
+        }
+      } catch (error) {
+        console.error('Failed to load question responses', error);
+        if (!ignore) {
+          setQuestionResponses([]);
+        }
+      } finally {
+        if (!ignore) {
+          setIsLoadingQuestionResponses(false);
+        }
+      }
+    };
+
+    loadResponses();
+    return () => {
+      ignore = true;
+    };
+  }, [isQuestionSubmitted, activeQuestion]);
 
   useEffect(() => {
     if (storedCountry) return;
@@ -919,10 +1027,19 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     }
     setIsQuestionOpen(true);
 
-    const nextIndex = await findNextUnansweredPersonalQuestion(personalQuestionIndex);
-    const normalizedIndex = normalizePersonalQuestionIndex(nextIndex, questionCount);
-    setPersonalQuestionIndex(normalizedIndex);
-    persistPersonalQuestionIndex(normalizedIndex);
+    const defaultIndex = personalQuestions.findIndex((question) => question.is_default);
+    if (hasAnsweredDefaultQuestion && defaultIndex >= 0) {
+      const normalizedDefault = normalizePersonalQuestionIndex(defaultIndex, questionCount);
+      setPersonalQuestionIndex(normalizedDefault);
+      persistPersonalQuestionIndex(normalizedDefault);
+      setIsQuestionSubmitted(true);
+    } else {
+      const nextIndex = await findNextUnansweredPersonalQuestion(personalQuestionIndex);
+      const normalizedIndex = normalizePersonalQuestionIndex(nextIndex, questionCount);
+      setPersonalQuestionIndex(normalizedIndex);
+      persistPersonalQuestionIndex(normalizedIndex);
+      setIsQuestionSubmitted(false);
+    }
 
     // Allow animation to complete
     setTimeout(() => {
@@ -1066,23 +1183,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     </svg>
                   </span>
                 </a>
-                <a
-                  href="#projects"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
-                  style={{ fontFamily: 'var(--font-jetbrains)' }}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
-                  <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
-                    <span>Apps</span>
-                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
-                    </svg>
-                  </span>
-                </a>
                 <button
                   type="button"
                   onClick={() => void openQuestionModal()}
@@ -1092,7 +1192,10 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/15 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
                   <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
-                    <span>Question</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19V5m0 0l-6 6m6-6l6 6" />
+                    </svg>
+                    <span>Curious?</span>
                   </span>
                 </button>
               </div>
@@ -1528,14 +1631,44 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     <span>Serdar's thoughts</span>
                   </p>
                   <div className="rounded-3xl bg-linear-to-br from-amber-500/20 via-orange-400/15 to-pink-400/20 border border-amber-300/30 p-7 space-y-4 shadow-lg">
-                        {activeQuestionAnswers.map((paragraph, index) => (
-                      <p
-                        key={index}
-                        className={`text-base leading-relaxed text-white/95 ${index === activeQuestionLastIndex ? 'font-semibold text-amber-100' : ''}`}
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
+                    {isLoadingQuestionResponses && responseList.length === 1 ? (
+                      <p className="text-sm text-white/70">Loading other responses…</p>
+                    ) : (
+                      responseList.map((entry) => (
+                        <article key={entry.id} className="space-y-2">
+                          <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
+                            <span
+                              className={`font-semibold ${
+                                entry.id.startsWith('serdar-') ? 'text-amber-100' : 'text-white/70'
+                              }`}
+                            >
+                              {entry.name}
+                              {entry.country ? ` • ${entry.country}` : ''}
+                            </span>
+                            {entry.createdAt && (
+                              <span className="text-white/40">
+                                {new Date(entry.createdAt).toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric',
+                                })}
+                              </span>
+                            )}
+                          </div>
+                          {entry.paragraphs.map((paragraph, index) => (
+                            <p
+                              key={`${entry.id}-${index}`}
+                              className={`text-base leading-relaxed text-white/95 ${
+                                entry.id.startsWith('serdar-') && index === entry.paragraphs.length - 1
+                                  ? 'font-semibold text-amber-100'
+                                  : ''
+                              }`}
+                            >
+                              {paragraph}
+                            </p>
+                          ))}
+                        </article>
+                      ))
+                    )}
                   </div>
                 </div>
               )}
