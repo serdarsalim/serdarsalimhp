@@ -1,7 +1,5 @@
 'use client';
 
-import SkyEvening from './SkyEvening';
-
 export default function Experience() {
   const experiences = [
     {
@@ -29,8 +27,6 @@ export default function Experience() {
 
   return (
     <section className="relative py-16 md:py-32 text-white overflow-hidden">
-      <SkyEvening />
-
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">

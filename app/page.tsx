@@ -4,12 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import Hero, { HeroHandle } from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import Experience from './components/Experience';
-import Contact from './components/Contact';
 import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
 import Landscape from './components/Landscape';
-import SkyMidMorning from './components/SkyMidMorning';
 import SkyAfternoon from './components/SkyAfternoon';
 
 export default function Home() {
@@ -104,12 +102,14 @@ export default function Home() {
       {/* Hero Section */}
       <Hero ref={heroRef} />
 
-      {/* About Section */}
-      <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <SkyMidMorning />
+      {/* Unified background wrapper for About, Apps, and Experience */}
+      <div className="relative overflow-hidden">
+        <SkyAfternoon />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
+        {/* About Section */}
+        <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* Content */}
+          <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
           <h2 className="text-2xl md:text-4xl font-bold text-white/90 text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             About Me
           </h2>
@@ -167,7 +167,6 @@ export default function Home() {
         id="projects"
         className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
       >
-        <SkyAfternoon />
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
@@ -197,6 +196,8 @@ export default function Home() {
 
       {/* Experience Section */}
       <Experience />
+
+      </div>
 
       {/* Landscape Section */}
       <Landscape heroRef={heroRef} />
