@@ -1113,7 +1113,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           <div
             className="flex relative animate-fade-in-up justify-center self-start -mt-40 md:-mt-96 transition-transform duration-500 ease-in-out"
             style={{
-              transform: isQuestionOpen ? 'translateX(-200%)' : 'translateX(0)',
+              transform: isQuestionOpen ? 'translateX(-400%)' : 'translateX(0)',
             }}
           >
             <div className="relative">
@@ -1135,7 +1135,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
           <div
             className="animate-fade-in-up animation-delay-200 md:-mt-32 transition-transform duration-500 ease-in-out"
             style={{
-              transform: isQuestionOpen ? 'translateX(200%)' : 'translateX(0)',
+              transform: isQuestionOpen ? 'translateX(400%)' : 'translateX(0)',
             }}
           >
             <div className="w-full max-w-xl text-left mx-auto md:mx-0 space-y-6">
@@ -1529,7 +1529,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                             }}
                           />
                         </div>
-                        <div className="relative w-full max-w-[240px]">
+                        <div className="relative w-full max-w-60">
                           <input
                             type="text"
                             placeholder="Your country..."
@@ -1555,7 +1555,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                           />
                         </div>
                       </div>
-                      <div className="flex justify-center min-h-[32px]">
+                      <div className="flex justify-center min-h-">
                         {!selectedQuestionCountry && resolvedQuestionCountryOption && normalizeForMatching(questionCountry.trim()) !== normalizeForMatching(resolvedQuestionCountryOption.name) ? (
                           <button
                             type="button"

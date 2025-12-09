@@ -2,13 +2,14 @@
   --afternoon-1: #ffb99c;  /* blend of peach and salmon */
   --afternoon-2: #ffa5b5;  /* coral with lavender */
   --afternoon-3: #ff99cc;  /* pink-purple */
+  --afternoon-4: #8861cd;  /* purple bottom */
   --cloud-afternoon: #ffddd5;
 }
 
 .sky {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(to bottom, var(--afternoon-1), var(--afternoon-2), var(--afternoon-3));
+  background-image: linear-gradient(to bottom, var(--afternoon-1), var(--afternoon-2), var(--afternoon-3), var(--afternoon-4));
   overflow: hidden;
   pointer-events: none;
   filter: brightness(0.90);
