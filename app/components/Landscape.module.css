@@ -503,13 +503,11 @@
   height: 0.5vmin;
   width: 20vmin;
   background: white;
-  left: 65%;
-  right: 0;
-  margin: auto;
+  left: 50%;
   top: calc(50% + 1vmin);
   animation: light 6s ease-in-out infinite;
   opacity: 0.5;
-  transform: scaleX(1);
+  transform: translateX(-50%) scaleX(1);
   border-radius: 0.25vh;
   filter: blur(1px);
 }
@@ -517,11 +515,11 @@
 @keyframes light {
   0%, 100% {
     opacity: 0.5;
-    transform: scaleX(1);
+    transform: translateX(-50%) scaleX(1);
   }
   50% {
     opacity: 0.7;
-    transform: scaleX(1.1) translate3d(3%, 0, 0);
+    transform: translateX(-50%) scaleX(1.1) translate3d(3%, 0, 0);
   }
 }
 
