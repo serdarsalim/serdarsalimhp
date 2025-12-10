@@ -271,6 +271,36 @@ body {
   animation-delay: 2.4s;
 }
 
+@media (max-width: 640px) {
+  .pleiades-star {
+    left: clamp(3.5rem, 12vw, 11rem);
+  }
+
+  .pleiades-star-1 {
+    left: clamp(3rem, 11vw, 10rem);
+  }
+
+  .pleiades-star-2 {
+    left: clamp(5.2rem, 14vw, 13rem);
+  }
+
+  .pleiades-star-3 {
+    left: clamp(6.2rem, 16vw, 15rem);
+  }
+
+  .pleiades-star-4 {
+    left: clamp(7.2rem, 18vw, 17rem);
+  }
+
+  .pleiades-star-5 {
+    left: clamp(6.3rem, 16vw, 14.5rem);
+  }
+
+  .pleiades-star-6 {
+    left: clamp(5.5rem, 15vw, 13.2rem);
+  }
+}
+
 @keyframes pleiades-twinkle {
   0% {
     opacity: 0.3;
