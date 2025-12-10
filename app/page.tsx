@@ -173,13 +173,13 @@ export default function Home() {
         <div className="absolute bottom-20 left-1/4 w-28 h-8 bg-white/12 rounded-full blur-sm opacity-20 animate-[float_30s_ease-in-out_infinite_5s]" />
 
         {/* Pleiades star cluster - right side */}
-        <div className="pleiades-star"></div>
-        <div className="pleiades-star pleiades-star-1"></div>
-        <div className="pleiades-star pleiades-star-2"></div>
-        <div className="pleiades-star pleiades-star-3"></div>
-        <div className="pleiades-star pleiades-star-4"></div>
-        <div className="pleiades-star pleiades-star-5"></div>
-        <div className="pleiades-star pleiades-star-6"></div>
+        <div className="pleiades-star" />
+        <div className="pleiades-star pleiades-star-1" />
+        <div className="pleiades-star pleiades-star-2" />
+        <div className="pleiades-star pleiades-star-3" />
+        <div className="pleiades-star pleiades-star-4" />
+        <div className="pleiades-star pleiades-star-5" />
+        <div className="pleiades-star pleiades-star-6" />
 
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
