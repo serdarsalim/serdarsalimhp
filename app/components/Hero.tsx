@@ -1185,7 +1185,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
                   <span className="relative text-sm sm:text-base md:text-lg font-semibold flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
                     <span>About me</span>
-                    <svg className="hidden sm:block w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l6-6m-6 6l-6-6" />
                     </svg>
                   </span>

@@ -27,6 +27,13 @@ export default function Experience() {
 
   return (
     <section className="relative py-16 md:py-32 text-white overflow-hidden">
+      {/* Floating clouds */}
+      <div className="absolute top-16 right-12 w-32 h-8 bg-white/10 rounded-full blur-sm opacity-25 animate-[float_28s_ease-in-out_infinite]" />
+      <div className="absolute top-48 left-8 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-20 animate-[float_22s_ease-in-out_infinite_3s]" />
+      <div className="absolute bottom-40 right-1/4 w-28 h-7 bg-white/12 rounded-full blur-sm opacity-30 animate-[float_26s_ease-in-out_infinite_6s]" />
+
+      {/* Purple blend at bottom to transition to Landscape */}
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#be91c6] pointer-events-none z-0" />
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">

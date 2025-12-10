@@ -1,16 +1,17 @@
 :root {
-  --day-1: #0f1b3d;  /* midnight blue */
-  --day-2: #1e3a5f;  /* deep blue */
-  --day-3: #ff99bb;  /* soft pink */
-  --day-4: #d99bc7;  /* pink-purple transition */
-  --day-5: #be91c6;  /* blend to footer purple */
+  --day-1: #3d5a7f;  /* lighter blue - About section starts lighter */
+  --day-2: #2a4466;  /* getting darker */
+  --day-3: #1e3a5f;  /* deep blue - About blends to dark */
+  --day-4: #0f1b3d;  /* midnight blue - Apps stays dark */
+  --day-5: #0f1b3d;  /* midnight blue - Experience stays dark */
+  --day-6: #be91c6;  /* blend to footer purple at very end */
   --cloud-day: #ffffff;
 }
 
 .sky {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(to bottom, var(--day-1), var(--day-2), var(--day-3), var(--day-4), var(--day-5));
+  background-image: linear-gradient(to bottom, var(--day-1), var(--day-2), var(--day-3), var(--day-4), var(--day-5), var(--day-6));
   overflow: hidden;
   pointer-events: none;
   filter: brightness(0.90);
@@ -22,8 +23,8 @@
   height: 6vmin;
   background: currentcolor;
   color: var(--cloud-day);
-  top: 24vmin;
-  left: 20vmin;
+  top: 12vmin;
+  left: 5vmin;
   border-radius: 50%;
   box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
     -25vmin 0 0 -0.6vmin currentcolor;
@@ -43,8 +44,8 @@
 }
 
 .cloud-1 {
-  left: 60vmin;
-  top: 15vmin;
+  left: 80vmin;
+  top: 28vmin;
   opacity: 0.4;
   filter: blur(1px);
   animation-delay: 0;
@@ -52,12 +53,39 @@
 }
 
 .cloud-2 {
-  left: 40vmin;
-  top: 35vmin;
+  left: 25vmin;
+  top: 45vmin;
   opacity: 0.35;
   filter: blur(2px);
   animation-delay: -30s;
   animation-duration: 140s;
+}
+
+.cloud-3 {
+  left: 70vmin;
+  top: 40%;
+  opacity: 0.3;
+  filter: blur(1.5px);
+  animation-delay: -45s;
+  animation-duration: 110s;
+}
+
+.cloud-4 {
+  left: 20vmin;
+  top: 60%;
+  opacity: 0.25;
+  filter: blur(2px);
+  animation-delay: -60s;
+  animation-duration: 130s;
+}
+
+.cloud-5 {
+  left: 50vmin;
+  top: 75%;
+  opacity: 0.28;
+  filter: blur(1px);
+  animation-delay: -75s;
+  animation-duration: 115s;
 }
 
 .moon {
@@ -66,17 +94,19 @@
   border-radius: 50%;
   width: 12vmin;
   height: 12vmin;
-  left: calc(20% - 6vmin);
-  top: 12vh;
+  right: 15vw;
+  top: 8vh;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(255, 255, 255, 0.4);
-  animation: moonDrift 180s ease-in-out infinite;
+  animation: moonSetting 180s ease-in forwards;
 }
 
-@keyframes moonDrift {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
+@keyframes moonSetting {
+  0% {
+    top: 8vh;
+    opacity: 1;
   }
-  50% {
-    transform: translate3d(5vmin, -2vmin, 0);
+  100% {
+    top: 200vh;
+    opacity: 0.3;
   }
 }
