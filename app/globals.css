@@ -199,6 +199,85 @@ body {
   display: block;
 }
 
+/* Pleiades star cluster styling */
+.pleiades-star {
+  position: absolute;
+  top: 2.5rem;
+  left: 6%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 20%, #b2c7ff 70%, transparent 80%);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 30px rgba(118, 153, 255, 0.7);
+  animation: pleiades-twinkle 4s ease-in-out infinite;
+  opacity: 0.95;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.pleiades-star-1 {
+  top: 4.3rem;
+  left: 8%;
+  width: 9px;
+  height: 9px;
+  animation-delay: 0.4s;
+}
+
+.pleiades-star-2 {
+  top: 5.4rem;
+  left: 11%;
+  width: 6px;
+  height: 6px;
+  animation-delay: 1s;
+}
+
+.pleiades-star-3 {
+  top: 4.8rem;
+  left: 5%;
+  width: 11px;
+  height: 11px;
+  animation-delay: 1.4s;
+}
+
+.pleiades-star-4 {
+  top: 6.5rem;
+  left: 7%;
+  width: 7px;
+  height: 7px;
+  animation-delay: 2s;
+}
+
+.pleiades-star-5 {
+  top: 6rem;
+  left: 4%;
+  width: 6px;
+  height: 6px;
+  animation-delay: 2.6s;
+}
+
+.pleiades-star-6 {
+  top: 3.4rem;
+  left: 3%;
+  width: 5px;
+  height: 5px;
+  animation-delay: 3.2s;
+}
+
+@keyframes pleiades-twinkle {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+}
+
 .blog-button__cover {
   transform-origin: 1.25em;
   background-color: #556e8f;
