@@ -273,7 +273,7 @@ export default function Landscape({ heroRef }: LandscapeProps) {
         >
           <span className="pond-turtle-bob">
             <span className="pond-turtle-body" ref={turtleEyeRef}>
-              <SwimTurtle className="w-12 md:w-16 h-auto opacity-90" eyeOffset={turtleEyeOffset} />
+              <SwimTurtle className="w-16 md:w-22 h-auto opacity-90" eyeOffset={turtleEyeOffset} />
             </span>
           </span>
 

@@ -15,8 +15,8 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 export default function SwimTurtle({ glow = true, eyeOffset, ...props }: SwimTurtleProps) {
   const offsetX = clamp(eyeOffset?.x ?? 0, -1, 1);
   const offsetY = clamp(eyeOffset?.y ?? 0, -1, 1);
-  const pupilCx = 21 + offsetX * 4;
-  const pupilCy = 42 + offsetY * 3;
+  const pupilCx = 21 + offsetX * 1.5;
+  const pupilCy = 42 + offsetY * 1.5;
 
   return (
     <svg
