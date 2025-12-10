@@ -301,7 +301,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(#fea798cc, var(--v2));
+  background: linear-gradient(to bottom, #fea798dd, var(--v2), var(--v3));
   overflow: hidden;
   box-shadow: inset 0 1px 4px -3px white;
   z-index: 2;

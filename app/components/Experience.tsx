@@ -37,7 +37,7 @@ export default function Experience() {
       <div className="relative max-w-4xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Experience</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Experience</h2>
           <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, index) => (
               <div
@@ -60,7 +60,7 @@ export default function Experience() {
 
         {/* Education */}
         <div className="education-sunset">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">Education</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Education</h2>
           <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
               <div
