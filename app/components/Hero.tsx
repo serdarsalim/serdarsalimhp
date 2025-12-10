@@ -1481,140 +1481,179 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 <div className="flex h-full flex-col items-center justify-center">
                   <p className="text-sm text-white/60">Checking your previous answer…</p>
                 </div>
-              ) : !isQuestionSubmitted ? (
-                <div className="space-y-4">
-                  <p className="text-sm md:text-base font-semibold text-white/70 text-center tracking-widest">
-                    Share yours. See mine.
-                  </p>
-                  <textarea
-                    placeholder="Type your answer..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
-                    rows={4}
-                    value={questionAnswer}
-                    onChange={(e) => setQuestionAnswer(e.target.value)}
-                    onFocus={() => setIsQuestionFocused(true)}
-                  />
+              ) : (
+                <div className="space-y-6 pb-16">
+                  {/* Admin answer - always shown first */}
+                  {activeQuestion && (
+                    <article className="rounded-3xl border border-white/15 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3">
+                      <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
+                        <span className="font-semibold text-amber-100">
+                          Serdar Salim • Türkiye
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {activeQuestion.answer.map((paragraph, index) => {
+                          const trimmed = paragraph.trim();
+                          if (!trimmed || trimmed === activeQuestion.question?.trim()) return null;
+                          return (
+                            <p
+                              key={`admin-${index}`}
+                              className="text-base leading-relaxed text-white/95 whitespace-pre-wrap"
+                            >
+                              {trimmed}
+                            </p>
+                          );
+                        })}
+                      </div>
+                    </article>
+                  )}
 
-                  {isQuestionFocused && (
-                    <div className="space-y-3 animate-fade-in-up">
-                      <div className="flex gap-3 justify-center">
-                        <div className="relative w-full max-w-[200px]">
-                          <input
-                            type="text"
-                            placeholder="Your name..."
-                            className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
-                            value={questionName}
-                            onChange={(e) => {
-                              setQuestionName(e.target.value);
-                              if (questionProfile) {
-                                setQuestionProfile(null);
-                              }
-                            }}
-                          />
-                        </div>
-                        <div className="relative w-full max-w-60">
-                          <input
-                            type="text"
-                            placeholder="Your country..."
-                            className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
-                            value={questionCountry}
-                            onChange={(e) => {
-                              setQuestionCountry(e.target.value);
-                              if (questionProfile) {
-                                setQuestionProfile(null);
-                              }
-                              setSelectedQuestionCountry(null);
-                            }}
-                            onKeyDown={(event) => {
-                              if (
-                                event.key === 'Enter' &&
-                                isQuestionCountryRecognized &&
-                                resolvedQuestionCountryOption
-                              ) {
-                                event.preventDefault();
-                                handleQuestionCountrySelection(resolvedQuestionCountryOption);
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <div className="flex justify-center min-h-">
-                        {!selectedQuestionCountry && resolvedQuestionCountryOption && normalizeForMatching(questionCountry.trim()) !== normalizeForMatching(resolvedQuestionCountryOption.name) ? (
-                          <button
-                            type="button"
-                            onClick={() => selectQuestionCountry(resolvedQuestionCountryOption)}
-                            className="rounded-full px-4 py-1.5 border border-white/30 bg-white/10 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white/20"
-                          >
-                            Select {resolvedQuestionCountryOption.name}
-                          </button>
-                        ) : null}
-                      </div>
-                      {questionProfile && (
-                        <p className="text-xs text-white/70 text-center">
-                          Responses will be logged as {questionProfile.name} from {questionProfile.country.name}.
-                        </p>
-                      )}
-                      <p className="text-xs text-white/60 text-center">
-                        By submitting, you agree your answer may be shared publicly
+                  {/* Optional user response section */}
+                  {!isQuestionSubmitted ? (
+                    <div className="space-y-4">
+                      <p className="text-sm md:text-base font-semibold text-white/70 text-center tracking-wide">
+                        What about you?
                       </p>
-                      <div className="flex justify-center">
-                        <button
-                          type="button"
-                          onClick={() => handleQuestionSubmit(questionProfile ? undefined : resolvedQuestionCountryOption)}
-                          disabled={!canSubmitQuestion}
-                          className="px-8 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
-                        >
-                          {isSubmittingResponse ? 'Saving...' : 'Submit'}
-                        </button>
-                      </div>
-                      {submissionError && (
-                        <p className="text-xs text-red-200 text-center">
-                          {submissionError}
-                        </p>
+                      <textarea
+                        placeholder="Share your answer (optional)..."
+                        className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
+                        rows={4}
+                        value={questionAnswer}
+                        onChange={(e) => setQuestionAnswer(e.target.value)}
+                        onFocus={() => setIsQuestionFocused(true)}
+                      />
+
+                      {isQuestionFocused && (
+                        <div className="space-y-3 animate-fade-in-up">
+                          <div className="flex gap-3 justify-center">
+                            <div className="relative w-full max-w-[200px]">
+                              <input
+                                type="text"
+                                placeholder="Your name..."
+                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                                value={questionName}
+                                onChange={(e) => {
+                                  setQuestionName(e.target.value);
+                                  if (questionProfile) {
+                                    setQuestionProfile(null);
+                                  }
+                                }}
+                              />
+                            </div>
+                            <div className="relative w-full max-w-60">
+                              <input
+                                type="text"
+                                placeholder="Your country..."
+                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                                value={questionCountry}
+                                onChange={(e) => {
+                                  setQuestionCountry(e.target.value);
+                                  if (questionProfile) {
+                                    setQuestionProfile(null);
+                                  }
+                                  setSelectedQuestionCountry(null);
+                                }}
+                                onKeyDown={(event) => {
+                                  if (
+                                    event.key === 'Enter' &&
+                                    isQuestionCountryRecognized &&
+                                    resolvedQuestionCountryOption
+                                  ) {
+                                    event.preventDefault();
+                                    handleQuestionCountrySelection(resolvedQuestionCountryOption);
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div className="flex justify-center min-h-">
+                            {!selectedQuestionCountry && resolvedQuestionCountryOption && normalizeForMatching(questionCountry.trim()) !== normalizeForMatching(resolvedQuestionCountryOption.name) ? (
+                              <button
+                                type="button"
+                                onClick={() => selectQuestionCountry(resolvedQuestionCountryOption)}
+                                className="rounded-full px-4 py-1.5 border border-white/30 bg-white/10 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white/20"
+                              >
+                                Select {resolvedQuestionCountryOption.name}
+                              </button>
+                            ) : null}
+                          </div>
+                          {questionProfile && (
+                            <p className="text-xs text-white/70 text-center">
+                              Responses will be logged as {questionProfile.name} from {questionProfile.country.name}.
+                            </p>
+                          )}
+                          <p className="text-xs text-white/60 text-center">
+                            By submitting, you agree your answer may be shared publicly
+                          </p>
+                          <div className="flex justify-center">
+                            <button
+                              type="button"
+                              onClick={() => handleQuestionSubmit(questionProfile ? undefined : resolvedQuestionCountryOption)}
+                              disabled={!canSubmitQuestion}
+                              className="px-8 py-2.5 rounded-2xl bg-white text-[#4c2372] font-semibold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/90 transition"
+                            >
+                              {isSubmittingResponse ? 'Saving...' : 'Submit'}
+                            </button>
+                          </div>
+                          {submissionError && (
+                            <p className="text-xs text-red-200 text-center">
+                              {submissionError}
+                            </p>
+                          )}
+                        </div>
                       )}
                     </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <p className="text-sm text-white/60 text-center">Community responses</p>
+                      <div className="grid gap-4">
+                        {questionResponses.map((response) => {
+                          const paragraphs = response.answer_text
+                            .split(/\r?\n/)
+                            .map((line) => line.trim())
+                            .filter((line) => line.length > 0 && line !== activeQuestion?.question?.trim());
+
+                          return (
+                            <article
+                              key={response.id}
+                              className="rounded-3xl border border-white/15 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3"
+                            >
+                              <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
+                                <span className="font-semibold text-white/70">
+                                  {response.user_name?.trim() || 'Anonymous'}
+                                  {response.country_code ? ` • ${response.country_code.toUpperCase()}` : ''}
+                                </span>
+                                {response.created_at && (
+                                  <span className="text-white/40">
+                                    {new Date(response.created_at).toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      day: 'numeric',
+                                    })}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                {paragraphs.map((paragraph, index) => (
+                                  <p
+                                    key={`${response.id}-${index}`}
+                                    className="text-base leading-relaxed text-white/95 whitespace-pre-wrap"
+                                  >
+                                    {paragraph}
+                                  </p>
+                                ))}
+                              </div>
+                            </article>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {isLoadingQuestionResponses && questionResponses.length === 0 && (
+                    <p className="text-sm text-white/70 text-center">Loading community responses…</p>
                   )}
                 </div>
-              ) : (
-        <div className="space-y-6 pb-16">
-          <div className="grid gap-4">
-            {responseList.map((entry) => (
-              <article
-                key={entry.id}
-                className="rounded-3xl border border-white/15 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3"
-              >
-                <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
-                  <span className={`font-semibold ${entry.id.startsWith('serdar-') ? 'text-amber-100' : 'text-white/70'}`}>
-                    {entry.name}
-                    {entry.country ? ` • ${entry.country}` : ''}
-                  </span>
-                  {entry.createdAt && (
-                    <span className="text-white/40">
-                      {new Date(entry.createdAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </span>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  {entry.paragraphs.map((paragraph, index) => (
-                    <p
-                      key={`${entry.id}-${index}`}
-                      className="text-base leading-relaxed text-white/95 whitespace-pre-wrap"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-          {isLoadingQuestionResponses && responseList.length <= 1 && (
-            <p className="text-sm text-white/70">Loading other responses…</p>
-          )}
-        </div>
-      )}
+              )}
             </div>
           </div>
         </div>
