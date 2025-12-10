@@ -66,7 +66,6 @@
   filter: blur(1.5px);
   animation-delay: -45s;
   animation-duration: 110s;
-  z-index: -1;
 }
 
 .cloud-4 {
@@ -85,5 +84,14 @@
   filter: blur(1px);
   animation-delay: -75s;
   animation-duration: 115s;
-  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .cloud-3 {
+    top: 90vmin;
+  }
+
+  .cloud-5 {
+    top: 95vmin;
+  }
 }
