@@ -271,6 +271,80 @@ body {
   animation-delay: 2.4s;
 }
 
+/* Gemini constellation styling (Castor & Pollux twins) */
+.gemini-star {
+  position: absolute;
+  top: clamp(0rem, 4vw, 1.6rem);
+  left: clamp(2.2rem, 11vw, 9rem);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 18%, #c8ddff 60%, transparent 80%);
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.85),
+    0 0 34px rgba(118, 153, 255, 0.65);
+  animation: pleiades-twinkle 4.6s ease-in-out infinite;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.gemini-star-1 {
+  top: clamp(0.5rem, 5.5vw, 2.2rem);
+  left: clamp(5.4rem, 14vw, 13rem);
+  width: 11px;
+  height: 11px;
+  animation-delay: 0.25s;
+}
+
+.gemini-star-2 {
+  top: clamp(1.4rem, 6.5vw, 3.4rem);
+  left: clamp(3.2rem, 11vw, 10rem);
+  width: 9px;
+  height: 9px;
+  animation-delay: 0.8s;
+}
+
+.gemini-star-3 {
+  top: clamp(2.4rem, 8.5vw, 5rem);
+  left: clamp(2.2rem, 10vw, 8.2rem);
+  width: 8px;
+  height: 8px;
+  animation-delay: 1.2s;
+}
+
+.gemini-star-4 {
+  top: clamp(3.2rem, 10.5vw, 6.4rem);
+  left: clamp(3rem, 11.5vw, 9.6rem);
+  width: 8px;
+  height: 8px;
+  animation-delay: 1.6s;
+}
+
+.gemini-star-5 {
+  top: clamp(4.6rem, 12.5vw, 8rem);
+  left: clamp(4rem, 12.5vw, 10.8rem);
+  width: 7px;
+  height: 7px;
+  animation-delay: 2s;
+}
+
+.gemini-star-6 {
+  top: clamp(1.4rem, 6.5vw, 3.6rem);
+  left: clamp(6rem, 15vw, 13.6rem);
+  width: 9px;
+  height: 9px;
+  animation-delay: 2.4s;
+}
+
+.gemini-star-7 {
+  top: clamp(2.4rem, 8.5vw, 5.2rem);
+  left: clamp(7rem, 16.5vw, 14.8rem);
+  width: 8px;
+  height: 8px;
+  animation-delay: 2.8s;
+}
+
 @media (max-width: 640px) {
   .pleiades-star {
     left: clamp(3.5rem, 12vw, 11rem);
@@ -298,6 +372,39 @@ body {
 
   .pleiades-star-6 {
     left: clamp(5.5rem, 15vw, 13.2rem);
+  }
+
+  .gemini-star {
+    left: clamp(0.4rem, 9vw, 4.8rem);
+    top: clamp(0rem, 6vw, 2.6rem);
+  }
+  .gemini-star-1 {
+    left: clamp(3.6rem, 18vw, 10.2rem);
+    top: clamp(0.6rem, 8.5vw, 3.4rem);
+  }
+  .gemini-star-2 {
+    left: clamp(0.6rem, 7vw, 4.2rem);
+    top: clamp(1.2rem, 10vw, 4.6rem);
+  }
+  .gemini-star-3 {
+    left: clamp(1.6rem, 10.5vw, 6.4rem);
+    top: clamp(2rem, 11.5vw, 6rem);
+  }
+  .gemini-star-4 {
+    left: clamp(1.2rem, 9vw, 5.2rem);
+    top: clamp(2.8rem, 14vw, 7.6rem);
+  }
+  .gemini-star-5 {
+    left: clamp(1.8rem, 10.5vw, 7rem);
+    top: clamp(3.8rem, 16.5vw, 9.4rem);
+  }
+  .gemini-star-6 {
+    left: clamp(4.4rem, 19.5vw, 11.4rem);
+    top: clamp(1.2rem, 9vw, 4.6rem);
+  }
+  .gemini-star-7 {
+    left: clamp(5.4rem, 21.5vw, 12.8rem);
+    top: clamp(2rem, 11vw, 6rem);
   }
 }
 

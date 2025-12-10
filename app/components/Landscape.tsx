@@ -227,8 +227,6 @@ export default function Landscape({ heroRef }: LandscapeProps) {
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
-      <div className={styles.cloud}></div>
-      <div className={`${styles.cloud} ${styles['cloud-1']}`}></div>
       <div className={styles.light}></div>
       <div className={`${styles.light} ${styles['light-1']}`}></div>
       <div className={`${styles.light} ${styles['light-2']}`}></div>

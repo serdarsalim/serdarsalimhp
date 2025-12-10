@@ -32,11 +32,21 @@ export default function Experience() {
       <div className="absolute top-48 left-8 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-20 animate-[float_22s_ease-in-out_infinite_3s]" />
       <div className="absolute bottom-40 right-1/4 w-28 h-7 bg-white/12 rounded-full blur-sm opacity-30 animate-[float_26s_ease-in-out_infinite_6s]" />
 
+      {/* Gemini star constellation - left side */}
+      <div className="gemini-star" />
+      <div className="gemini-star gemini-star-1" />
+      <div className="gemini-star gemini-star-2" />
+      <div className="gemini-star gemini-star-3" />
+      <div className="gemini-star gemini-star-4" />
+      <div className="gemini-star gemini-star-5" />
+      <div className="gemini-star gemini-star-6" />
+      <div className="gemini-star gemini-star-7" />
+
       {/* Purple blend at bottom to transition to Landscape */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#be91c6] pointer-events-none z-0" />
-      <div className="relative max-w-4xl mx-auto px-4 md:px-6">
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-linear-to-b from-transparent to-[#be91c6] pointer-events-none z-0" />
+      <div className="relative max-w-6xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
-        <div className="mb-12 md:mb-20">
+        <div className="pt-14 md:pt-14 mb-12 md:mb-20 md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Experience</h2>
           <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, index) => (
@@ -59,7 +69,7 @@ export default function Experience() {
         </div>
 
         {/* Education */}
-        <div className="education-sunset">
+        <div className="education-sunset md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Education</h2>
           <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
@@ -85,4 +95,3 @@ export default function Experience() {
     </section>
   );
 }
-
