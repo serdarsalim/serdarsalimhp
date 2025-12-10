@@ -66,7 +66,8 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-6 ml-auto">
               <a
                 href="#projects"
-                className="text-xs font-semibold uppercase tracking-[0.4em] text-white/70 transition-colors hover:text-white"
+                className="text-xs font-semibold uppercase tracking-[0.4em] text-white transition-colors hover:text-white"
+                style={{ color: '#fff' }}
               >
                 Apps
               </a>
@@ -83,7 +84,8 @@ export default function Home() {
             <div className="md:hidden flex items-center gap-5 ml-auto">
               <a
                 href="#projects"
-                className="text-[10px] font-semibold uppercase tracking-[0.4em] text-white/70"
+                className="text-[10px] font-semibold uppercase tracking-[0.4em] text-white"
+                style={{ color: '#fff' }}
               >
                 Apps
               </a>

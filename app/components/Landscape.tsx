@@ -85,8 +85,8 @@ export default function Landscape({ heroRef }: LandscapeProps) {
     const x = ((e.clientX - landscapeRect.left) / landscapeRect.width) * 100 - dragOffsetRef.current.x;
     const y = ((e.clientY - landscapeRect.top) / landscapeRect.height) * 100 - dragOffsetRef.current.y;
 
-    // Keep turtle in water area when dragging
-    const clampedY = Math.max(50, Math.min(95, y));
+    // Keep turtle in water area when dragging (water now starts at 60%)
+    const clampedY = Math.max(60, Math.min(95, y));
     setTurtlePosition({ x, y: clampedY });
     hasMoved.current = true;
   };
@@ -165,7 +165,7 @@ export default function Landscape({ heroRef }: LandscapeProps) {
   return (
     <div ref={landscapeRef} className={styles.landscape}>
       {/* Space video overlay at top with fade downward */}
-      <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden" style={{ zIndex: 1 }}>
+      <div className="absolute inset-x-0 top-0 h-[70%] overflow-hidden" style={{ zIndex: 1 }}>
         <video
           className="w-full h-full object-cover pointer-events-none opacity-70"
           src="/universe.mp4"
@@ -175,8 +175,8 @@ export default function Landscape({ heroRef }: LandscapeProps) {
           playsInline
           aria-hidden="true"
           style={{
-            maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 15%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.15) 85%, rgba(0,0,0,0.05) 95%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 15%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.15) 85%, rgba(0,0,0,0.05) 95%, transparent 100%)',
           }}
         />
       </div>

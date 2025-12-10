@@ -166,7 +166,7 @@
   border-radius: 180% 80% 0% 0%/60vmin 60vmin 0% 0%;
   width: 40vmin;
   height: 30vmin;
-  bottom: 50%;
+  bottom: 40%;
   left: -10vmin;
   background: var(--v3);
   background-image: linear-gradient(var(--v1), var(--v2) 30%, var(--v3));
@@ -297,7 +297,7 @@
 }
 
 .water {
-  top: 50%;
+  top: 60%;
   bottom: 0;
   left: 0;
   right: 0;
@@ -504,7 +504,7 @@
   width: 20vmin;
   background: white;
   left: 50%;
-  top: calc(50% + 1vmin);
+  top: calc(60% + 1vmin);
   animation: light 6s ease-in-out infinite;
   opacity: 0.5;
   transform: translateX(-50%) scaleX(1);
@@ -524,42 +524,42 @@
 }
 
 .light-1 {
-  top: calc(50% + 2vmin);
+  top: calc(60% + 2vmin);
   animation-delay: 0.5s;
 }
 
 .light-2 {
-  top: calc(50% + 3vmin);
+  top: calc(60% + 3vmin);
   width: 18vmin;
   animation-delay: 1s;
 }
 
 .light-3 {
-  top: calc(50% + 4vmin);
+  top: calc(60% + 4vmin);
   width: 18vmin;
   animation-delay: 1.5s;
 }
 
 .light-4 {
-  top: calc(50% + 5vmin);
+  top: calc(60% + 5vmin);
   width: 16vmin;
   animation-delay: 2s;
 }
 
 .light-5 {
-  top: calc(50% + 8vmin);
+  top: calc(60% + 8vmin);
   width: 14vmin;
   animation-delay: 2.5s;
 }
 
 .light-6 {
-  top: calc(50% + 9vmin);
+  top: calc(60% + 9vmin);
   width: 10vmin;
   animation-delay: 3s;
 }
 
 .light-7 {
-  top: calc(50% + 7vmin);
+  top: calc(60% + 7vmin);
   width: 12vmin;
   animation-delay: 3.5s;
 }
@@ -628,7 +628,7 @@
 }
 .productivity-button {
   position: absolute;
-  bottom: 55vh;
+  bottom: 45vh;
   left: 5vw;
   z-index: 10;
   background: transparent;
@@ -657,7 +657,7 @@
 
 .book-button {
   position: absolute;
-  bottom: 55vh;
+  bottom: 45vh;
   left: 13vw;
   z-index: 10;
   background: transparent;
