@@ -15,8 +15,8 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 export default function SwimTurtle({ glow = true, eyeOffset, ...props }: SwimTurtleProps) {
   const offsetX = clamp(eyeOffset?.x ?? 0, -1, 1);
   const offsetY = clamp(eyeOffset?.y ?? 0, -1, 1);
-  const pupilCx = 22 + offsetX * 3;
-  const pupilCy = 43 + offsetY * 2;
+  const pupilCx = 21 + offsetX * 4;
+  const pupilCy = 42 + offsetY * 3;
 
   return (
     <svg
@@ -78,23 +78,23 @@ export default function SwimTurtle({ glow = true, eyeOffset, ...props }: SwimTur
         <circle cx="25" cy="45" r="11" fill="url(#turtleBodyGradient)" opacity="0.9" />
 
         {/* Eye socket shadow */}
-        <circle cx="22" cy="44" r="3.5" fill="#0f172a" opacity="0.15" />
+        <circle cx="21" cy="43" r="4.5" fill="#0f172a" opacity="0.15" />
 
         {/* Eye white */}
-        <circle cx="22" cy="43" r="3" fill="#ffffff" />
+        <circle cx="21" cy="42" r="4" fill="#ffffff" />
 
         {/* Pupil with tracking */}
-        <circle cx={pupilCx} cy={pupilCy} r="1.5" fill="#0f172a" />
+        <circle cx={pupilCx} cy={pupilCy} r="2" fill="#0f172a" />
 
         {/* Eye shine */}
-        <circle cx={pupilCx - 0.6} cy={pupilCy - 0.6} r="0.7" fill="#e0f2fe" opacity="0.9" />
+        <circle cx={pupilCx - 0.7} cy={pupilCy - 0.7} r="0.9" fill="#e0f2fe" opacity="0.9" />
 
         {/* Cute smile */}
         <path
-          d="M 20 48 Q 25 50 30 48"
+          d="M 16 50 Q 21 52 26 50"
           stroke="#ffffff"
-          strokeOpacity="0.5"
-          strokeWidth="1.5"
+          strokeOpacity="0.8"
+          strokeWidth="2"
           strokeLinecap="round"
           fill="none"
         />
