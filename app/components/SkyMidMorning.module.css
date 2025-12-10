@@ -1,7 +1,7 @@
 :root {
-  --midmorning-1: #ffc4a3;  /* vibrant peach */
-  --midmorning-2: #ffaa99;  /* bright coral */
-  --midmorning-3: #ff99bb;  /* pink with purple undertone */
+  --midmorning-1: #87ceeb;  /* sky blue */
+  --midmorning-2: #5dade2;  /* bright blue */
+  --midmorning-3: #4a90d9;  /* deeper blue */
   --cloud-midmorning: #ffffff;
 }
 
@@ -11,7 +11,8 @@
   background-image: linear-gradient(to bottom, var(--midmorning-1), var(--midmorning-2), var(--midmorning-3));
   overflow: hidden;
   pointer-events: none;
-  filter: brightness(0.92);
+  filter: brightness(1);
+  z-index: 1;
 }
 
 .cloud {
@@ -56,4 +57,33 @@
   filter: blur(2px);
   animation-delay: -30s;
   animation-duration: 140s;
+}
+
+.cloud-3 {
+  left: 70vmin;
+  top: 70vmin;
+  opacity: 0.3;
+  filter: blur(1.5px);
+  animation-delay: -45s;
+  animation-duration: 110s;
+  z-index: -1;
+}
+
+.cloud-4 {
+  left: 20vmin;
+  top: 75vmin;
+  opacity: 0.25;
+  filter: blur(2px);
+  animation-delay: -60s;
+  animation-duration: 130s;
+}
+
+.cloud-5 {
+  left: 50vmin;
+  top: 80vmin;
+  opacity: 0.28;
+  filter: blur(1px);
+  animation-delay: -75s;
+  animation-duration: 115s;
+  z-index: -1;
 }

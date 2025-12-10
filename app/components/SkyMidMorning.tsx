@@ -8,6 +8,8 @@ export default function SkyMidMorning() {
       <div className={styles.cloud}></div>
       <div className={`${styles.cloud} ${styles['cloud-1']}`}></div>
       <div className={`${styles.cloud} ${styles['cloud-2']}`}></div>
+      <div className={`${styles.cloud} ${styles['cloud-3']}`}></div>
+      <div className={`${styles.cloud} ${styles['cloud-5']}`}></div>
     </div>
   );
 }
