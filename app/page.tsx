@@ -8,7 +8,7 @@ import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
 import Landscape from './components/Landscape';
-import SkyAfternoon from './components/SkyAfternoon';
+import SkyDay from './components/SkyDay';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -104,7 +104,7 @@ export default function Home() {
 
       {/* Unified background wrapper for About, Apps, and Experience */}
       <div className="relative overflow-hidden">
-        <SkyAfternoon />
+        <SkyDay />
 
         {/* About Section */}
         <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">

@@ -164,6 +164,23 @@ export default function Landscape({ heroRef }: LandscapeProps) {
 
   return (
     <div ref={landscapeRef} className={styles.landscape}>
+      {/* Space video overlay at top with fade downward */}
+      <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden" style={{ zIndex: 1 }}>
+        <video
+          className="w-full h-full object-cover pointer-events-none opacity-70"
+          src="/universe.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          style={{
+            maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+          }}
+        />
+      </div>
+
       <div className={styles['connect-card']}>
         <h2 className={styles['connect-title']}>Let's Connect</h2>
         <div className={styles['connect-card-content']}>
@@ -210,10 +227,6 @@ export default function Landscape({ heroRef }: LandscapeProps) {
       <div className={styles.mountain}></div>
       <div className={`${styles.mountain} ${styles['mountain-2']}`}></div>
       <div className={`${styles.mountain} ${styles['mountain-3']}`}></div>
-      <div className={`${styles['sun-container']} ${styles['sun-container-1']}`}></div>
-      <div className={styles['sun-container']}>
-        <div className={styles.sun}></div>
-      </div>
       <div className={styles.cloud}></div>
       <div className={`${styles.cloud} ${styles['cloud-1']}`}></div>
       <div className={styles.light}></div>

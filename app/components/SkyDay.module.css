@@ -1,0 +1,82 @@
+:root {
+  --day-1: #0f1b3d;  /* midnight blue */
+  --day-2: #1e3a5f;  /* deep blue */
+  --day-3: #ff99bb;  /* soft pink */
+  --day-4: #d99bc7;  /* pink-purple transition */
+  --day-5: #be91c6;  /* blend to footer purple */
+  --cloud-day: #ffffff;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, var(--day-1), var(--day-2), var(--day-3), var(--day-4), var(--day-5));
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(0.90);
+}
+
+.cloud {
+  position: absolute;
+  width: 80vmin;
+  height: 6vmin;
+  background: currentcolor;
+  color: var(--cloud-day);
+  top: 24vmin;
+  left: 20vmin;
+  border-radius: 50%;
+  box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor,
+    -25vmin 0 0 -0.6vmin currentcolor;
+  opacity: 0.5;
+  transform: translate3d(-150vmin, 0, 0);
+  animation: clouds 120s linear infinite;
+  animation-delay: -10s;
+}
+
+@keyframes clouds {
+  0% {
+    transform: translate3d(-150vmin, 0, 0);
+  }
+  100% {
+    transform: translate3d(150vmin, 0, 0);
+  }
+}
+
+.cloud-1 {
+  left: 60vmin;
+  top: 15vmin;
+  opacity: 0.4;
+  filter: blur(1px);
+  animation-delay: 0;
+  animation-duration: 100s;
+}
+
+.cloud-2 {
+  left: 40vmin;
+  top: 35vmin;
+  opacity: 0.35;
+  filter: blur(2px);
+  animation-delay: -30s;
+  animation-duration: 140s;
+}
+
+.moon {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  width: 12vmin;
+  height: 12vmin;
+  left: calc(20% - 6vmin);
+  top: 12vh;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(255, 255, 255, 0.4);
+  animation: moonDrift 180s ease-in-out infinite;
+}
+
+@keyframes moonDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(5vmin, -2vmin, 0);
+  }
+}

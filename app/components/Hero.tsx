@@ -2,7 +2,7 @@
 
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
-import SkySunset from './SkySunset';
+import SkyMidMorning from './SkyMidMorning';
 import { countryOptions, type CountryOption } from '../data/countries';
 import type { PersonalQuestion } from '../data/personalQuestions';
 
@@ -1087,24 +1087,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <SkySunset />
-
-      {/* Subtle space video anchored at bottom with fade upward */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 overflow-hidden" style={{ zIndex: 1 }}>
-        <video
-          className="w-full h-full object-cover pointer-events-none opacity-70"
-          src="/universe.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-          style={{
-            maskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.15) 80%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-          }}
-        />
-      </div>
+      <SkyMidMorning />
 
       {/* Content - wrapped for animation */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
