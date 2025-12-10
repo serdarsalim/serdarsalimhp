@@ -227,6 +227,7 @@
 }
 
 .lotus {
+  position: absolute;
   width: 10vmin;
   height: 5vmin;
   background: conic-gradient(
@@ -235,6 +236,7 @@
     var(--v3) 80deg
   );
   border-radius: 50%;
+  z-index: 3;
 }
 
 .lotus-1 {
@@ -565,6 +567,7 @@
 }
 
 .splash {
+  position: absolute;
   width: 8vmin;
   height: 3vmin;
   border: 2px solid var(--s1);
@@ -574,6 +577,7 @@
   left: 70%;
   animation: splash 3s ease-out infinite;
   transform: scale(0);
+  z-index: 4;
 }
 
 .splash-stone {
