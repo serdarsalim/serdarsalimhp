@@ -123,7 +123,8 @@ export default function Home() {
           <h2 className="text-2xl md:text-4xl font-bold text-white/90 text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             About Me
           </h2>
-          <div className="rounded-3xl border border-white/25 bg-black/40 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
+          <div className="rounded-3xl border border-white/25 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden relative">
+            <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-black/40 from-40% to-black opacity-100" aria-hidden="true" />
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
@@ -136,6 +137,9 @@ export default function Home() {
                 <p>
                   I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
                 </p>
+              </div>
+
+              <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
                 <p>
                   After living across five countries, I've now made Malaysia home. I'm married and have a daughter.
                 </p>
@@ -165,12 +169,15 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Coat of Arms - Closing seal */}
+              {/* Video - Closing seal */}
               <div className="flex justify-center pt-4 md:pt-8">
-                <img
-                  src="/SalimsWappen.png"
-                  alt="Coat of Arms"
-                  className="h-28 sm:h-32 md:h-40 w-auto rounded-md select-none"
+                <video
+                  src="/owlio.MP4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-40 sm:h-48 md:h-56 w-auto rounded-md select-none"
                   style={{
                     filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06))'
                   }}
