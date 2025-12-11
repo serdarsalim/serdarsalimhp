@@ -54,7 +54,10 @@ export default function Home() {
               {/* Name - only visible when scrolled down, flips on click */}
               {showNavBrand && (
                 <span
-                  className="text-lg md:text-xl font-extrabold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
+                  className="text-lg md:text-xl font-bold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
+                  style={{
+                    textShadow: '-2px 2px 0 #a855f7, -3px 3px 0 #7e22ce'
+                  }}
                   onClick={() => setIsNavHovered(!isNavHovered)}
                 >
                   {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
@@ -118,42 +121,55 @@ export default function Home() {
           <div className="rounded-3xl border border-white/25 bg-black/40 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden">
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
-              <div className="space-y-4 text-sm md:text-lg text-white/90 leading-relaxed">
-              <p>
-                I build web apps for everyday use and share my perspective about a purposeful life. 
-              </p>
-            <p>
-              My family immigrated from Türkiye to Austria when I was a child. Growing up with a migration background, I had one goal: Choose where I live not because of circumstances, but because of my own free will.
-            </p>
-            <p>
-              I became the first in my family to graduate university, moved to Ireland to manage projects at a global tech company, led international teams.
-            </p>
-            After living across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬), I have now made malaysia home.
-              I'm married and raising a daughter. 
-              
-              <p></p>My goal now? To contribute to a future where Muslims are the innovators, not the immigrants.
-          <p>  </p>
-            <p className="pt-2">
-              Read more on my{' '}
-              <a
-                href="https://blog.serdarsalim.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
-              >
-                blog
-              </a>
-              . Watch more on my{' '}
-              <a
-                href="https://tiktok.com/@salimspoke"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
-              >
-                TikTok
-              </a>
-              .
-            </p>
+              <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
+                <p>
+                  I grew up between Türkiye and Austria and learned to take the best from both.
+                </p>
+                <p>
+                  Austrians are incredible at discipline, attention to detail, and work ethics. Turks lead the world in hospitality, generosity, leadership and love for Islam.
+                </p>
+                <p>
+                  Some of my passions are technology, history, and traveling. I lived across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) and visited more than 50. I worked at Twitter for about a decade managing global programs.
+                </p>
+                <p>
+                  I'm married with a daughter and we live in Putrajaya.
+                </p>
+                <p>
+                  My goal? Build a world where Muslims are the innovators, not the immigrants.
+                </p>
+                <p className="pt-2">
+                  Read more on my{' '}
+                  <a
+                    href="https://blog.serdarsalim.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
+                  >
+                    blog
+                  </a>
+                  . Watch more on my{' '}
+                  <a
+                    href="https://tiktok.com/@salimspoke"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
+                  >
+                    TikTok
+                  </a>
+                  .
+                </p>
+              </div>
+
+              {/* Coat of Arms - Closing seal */}
+              <div className="flex justify-center pt-4 md:pt-8">
+                <img
+                  src="/SalimsWappen.png"
+                  alt="Coat of Arms"
+                  className="h-28 sm:h-32 md:h-40 w-auto rounded-md select-none"
+                  style={{
+                    filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06))'
+                  }}
+                />
               </div>
             </div>
           </div>
