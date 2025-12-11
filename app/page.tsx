@@ -56,7 +56,7 @@ export default function Home() {
                 <span
                   className="text-lg md:text-xl font-bold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
                   style={{
-                    textShadow: '-2px 2px 0 #a855f7, -3px 3px 0 #7e22ce'
+                    textShadow: '-1px 1px 0 #a855f7, -2px 2px 0 #7e22ce'
                   }}
                   onClick={() => setIsNavHovered(!isNavHovered)}
                 >
