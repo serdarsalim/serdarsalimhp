@@ -6,6 +6,7 @@ import type { EditablePersonalQuestion } from '../data/personalQuestions';
 const ADMIN_AUTH_ENDPOINT = '/api/admin/auth';
 const QUESTIONS_ENDPOINT = '/api/personal-questions';
 const RESPONSES_ENDPOINT = '/api/question-responses/admin';
+const MODAL_STATS_ENDPOINT = '/api/admin/modal-stats';
 
 type AdminQuestionResponse = {
   id: string;
@@ -14,6 +15,14 @@ type AdminQuestionResponse = {
   answer_text: string;
   created_at: string;
   is_hidden: boolean;
+};
+
+type ModalStats = {
+  totalOpens: number;
+  uniqueSessions: number;
+  totalResponses: number;
+  conversionRate: string;
+  topCountries: Array<{ country_code: string; count: number }>;
 };
 
 export default function AdminPage() {
@@ -29,9 +38,28 @@ export default function AdminPage() {
   const [responses, setResponses] = useState<AdminQuestionResponse[]>([]);
   const [isLoadingResponses, setIsLoadingResponses] = useState(false);
   const [isManagingResponse, setIsManagingResponse] = useState(false);
+  const [modalStats, setModalStats] = useState<ModalStats | null>(null);
+  const [isLoadingStats, setIsLoadingStats] = useState(false);
   const notifyQuestionsUpdated = () => {
     if (typeof window === 'undefined') return;
     window.dispatchEvent(new Event('personalQuestionsUpdated'));
+  };
+
+  const fetchModalStats = async () => {
+    setIsLoadingStats(true);
+    try {
+      const response = await fetch(MODAL_STATS_ENDPOINT);
+      if (!response.ok) {
+        throw new Error('Failed to fetch stats');
+      }
+      const data = await response.json();
+      setModalStats(data);
+    } catch (error) {
+      console.error('Failed to load modal stats', error);
+      setModalStats(null);
+    } finally {
+      setIsLoadingStats(false);
+    }
   };
 
   const fetchResponsesForQuestion = async (questionId?: number | null) => {
@@ -342,6 +370,12 @@ export default function AdminPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isAuthorized) {
+      void fetchModalStats();
+    }
+  }, [isAuthorized]);
+
   if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-slate-950 px-4 py-10 text-white">
@@ -389,6 +423,68 @@ export default function AdminPage() {
           <p className="text-xs uppercase tracking-[0.5em] text-white/70">Admin</p>
           <h1 className="text-3xl font-bold">Personal Questions Manager</h1>
         </header>
+
+        {/* Modal Open Analytics Section */}
+        <section className="space-y-4 rounded-3xl border border-white/10 bg-black/40 p-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold">Modal Analytics</h2>
+            <button
+              type="button"
+              onClick={() => fetchModalStats()}
+              disabled={isLoadingStats}
+              className="text-xs uppercase tracking-[0.3em] text-white/60 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isLoadingStats ? 'Refreshing…' : 'Refresh'}
+            </button>
+          </div>
+
+          {isLoadingStats && !modalStats ? (
+            <p className="text-sm text-white/60">Loading analytics…</p>
+          ) : modalStats ? (
+            <>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="space-y-1 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Total Opens</p>
+                  <p className="text-3xl font-bold">{modalStats.totalOpens.toLocaleString()}</p>
+                </div>
+                <div className="space-y-1 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Unique Sessions</p>
+                  <p className="text-3xl font-bold">{modalStats.uniqueSessions.toLocaleString()}</p>
+                </div>
+                <div className="space-y-1 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Responses</p>
+                  <p className="text-3xl font-bold">{modalStats.totalResponses.toLocaleString()}</p>
+                </div>
+                <div className="space-y-1 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Conversion</p>
+                  <p className="text-3xl font-bold">{modalStats.conversionRate}%</p>
+                </div>
+              </div>
+
+              {modalStats.topCountries.length > 0 && (
+                <div className="space-y-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/60">Top Countries</p>
+                  <div className="space-y-2">
+                    {modalStats.topCountries.map((country, index) => (
+                      <div
+                        key={country.country_code}
+                        className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-2"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-semibold text-white/40">#{index + 1}</span>
+                          <span className="text-sm font-semibold uppercase">{country.country_code}</span>
+                        </div>
+                        <span className="text-sm font-bold">{country.count.toLocaleString()}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="text-sm text-white/60">Failed to load analytics.</p>
+          )}
+        </section>
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"

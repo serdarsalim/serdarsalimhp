@@ -1055,6 +1055,22 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
     }
     setIsQuestionOpen(true);
 
+    // Track modal open event
+    if (sessionId && activeQuestion) {
+      fetch('/api/track-modal-open', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId,
+          questionId: String(activeQuestion.id),
+        }),
+      }).catch(() => {
+        // Silently fail - don't block user experience
+      });
+    }
+
     const defaultIndex = personalQuestions.findIndex((question) => question.is_default);
     const normalizedDefault =
       defaultIndex >= 0
