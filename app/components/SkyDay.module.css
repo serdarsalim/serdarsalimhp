@@ -11,10 +11,9 @@
 .sky {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(to bottom, var(--day-1), var(--day-2), var(--day-3), var(--day-4), var(--day-5), var(--day-6));
+  background: transparent;
   overflow: hidden;
   pointer-events: none;
-  filter: brightness(0.90);
 }
 
 .cloud {

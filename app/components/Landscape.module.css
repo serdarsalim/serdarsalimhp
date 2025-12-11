@@ -31,7 +31,7 @@
 
 .landscape {
   height: 100vh;
-  background-image: linear-gradient(var(--v2), var(--v3), var(--v4));
+  background: transparent;
   position: relative;
   z-index: 1;
   overflow: hidden;

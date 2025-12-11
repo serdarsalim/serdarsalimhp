@@ -29,7 +29,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(to bottom, #87ceeb 0%, #5dade2 8%, #4a90d9 15%, #2d3d6f 22%, #1e2757 28%, #1a1f45 40%, #0f1b3d 55%, #3b1895 75%, #5e30d9 88%, #8a65cc 100%)'
+      }}
+    >
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#556e8f]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/20 shadow-lg">
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
@@ -123,19 +128,19 @@ export default function Home() {
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
               <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
                 <p>
-                  I grew up between Türkiye and Austria and learned to take the best from both.
+                  I build web apps for everyday use and share my thoughts on living with purpose.
                 </p>
                 <p>
-                  Austrians are incredible at discipline, attention to detail, and work ethics. Turks lead the world in hospitality, generosity, leadership and love for Islam.
+                  I grew up in a Turkish immigrant family in Austria, which taught me two things: adapt fast and aim higher. My dream back then was to live somewhere by choice, not necessity.
                 </p>
                 <p>
-                  Some of my passions are technology, history, and traveling. I lived across five countries (🇹🇷 🇦🇹 🇮🇪 🇵🇭 🇸🇬) and visited more than 50. I worked at Twitter for about a decade managing global programs.
+                  I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
                 </p>
                 <p>
-                  I'm married with a daughter and we live in Putrajaya.
+                  After living across five countries, I've now made Malaysia home. I'm married and have a daughter.
                 </p>
                 <p>
-                  My goal? Build a world where Muslims are the innovators, not the immigrants.
+                  My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
                 </p>
                 <p className="pt-2">
                   Read more on my{' '}

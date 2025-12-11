@@ -1087,7 +1087,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <SkyMidMorning />
+      {/* Floating clouds only - no background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-1">
+        <div className="cloud"></div>
+        <div className="cloud cloud-1"></div>
+        <div className="cloud cloud-2"></div>
+        <div className="cloud cloud-3"></div>
+        <div className="cloud cloud-5"></div>
+      </div>
 
       {/* Content - wrapped for animation */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
@@ -1693,6 +1700,62 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         border-radius: 999px;
         border-right: 4px solid transparent;
         background-clip: padding-box;
+      }
+      /* Cloud styles */
+      .cloud {
+        position: absolute;
+        width: 80vmin;
+        height: 6vmin;
+        background: currentcolor;
+        color: #ffffff;
+        top: 24vmin;
+        left: 20vmin;
+        border-radius: 50%;
+        box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor, -25vmin 0 0 -0.6vmin currentcolor;
+        opacity: 0.35;
+        transform: translate3d(-150vmin, 0, 0);
+        animation: clouds 120s linear infinite;
+        animation-delay: -10s;
+      }
+      @keyframes clouds {
+        0% { transform: translate3d(-150vmin, 0, 0); }
+        100% { transform: translate3d(150vmin, 0, 0); }
+      }
+      .cloud-1 {
+        left: 60vmin;
+        top: 15vmin;
+        opacity: 0.28;
+        filter: blur(1px);
+        animation-delay: 0;
+        animation-duration: 100s;
+      }
+      .cloud-2 {
+        left: 40vmin;
+        top: 35vmin;
+        opacity: 0.22;
+        filter: blur(2px);
+        animation-delay: -30s;
+        animation-duration: 140s;
+      }
+      .cloud-3 {
+        left: 70vmin;
+        top: 70vmin;
+        opacity: 0.3;
+        filter: blur(1.5px);
+        animation-delay: -45s;
+        animation-duration: 110s;
+      }
+      .cloud-5 {
+        left: 50vmin;
+        top: 80vmin;
+        opacity: 0.28;
+        filter: blur(1px);
+        animation-delay: -75s;
+        animation-duration: 115s;
+      }
+      @media (max-width: 768px) {
+        .cloud-3 { top: 90vmin; }
+        .cloud-5 { top: 95vmin; }
       }
       @media (prefers-reduced-motion: reduce) {
         * {
