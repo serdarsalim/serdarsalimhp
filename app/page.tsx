@@ -32,7 +32,32 @@ export default function Home() {
     <div
       className="min-h-screen relative overflow-hidden"
       style={{
-        background: 'linear-gradient(to bottom, #87ceeb 0%, #5dade2 8%, #4a90d9 15%, #2d3d6f 22%, #1e2757 28%, #1a1f45 40%, #0f1b3d 55%, #3b1895 75%, #5e30d9 88%, #8a65cc 100%)'
+        background: `
+          linear-gradient(to bottom,
+            #87ceeb 0%,
+            #5dade2 8%,
+            #4a90d9 15%,
+            #2d3d6f 22%,
+            #1e2757 28%,
+            #1a1f45 40%,
+            #0f1b3d 55%,
+            #0a0f1f 65%,
+            transparent 75%
+          ),
+          linear-gradient(to bottom,
+            transparent 50%,
+            rgba(15, 10, 20, 0.2) 55%,
+            rgba(18, 12, 25, 0.35) 60%,
+            rgba(22, 15, 32, 0.5) 65%,
+            rgba(28, 18, 40, 0.65) 70%,
+            rgba(32, 20, 48, 0.8) 75%,
+            rgba(38, 23, 55, 0.95) 80%,
+            #2a1850 85%,
+            #3b1895 90%,
+            #5e30d9 96%,
+            #8a65cc 100%
+          )
+        `
       }}
     >
       {/* Navigation */}
@@ -127,24 +152,18 @@ export default function Home() {
             <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-black/40 from-40% to-black opacity-100" aria-hidden="true" />
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
-              <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
+              <div className="space-y-4 text-base md:text-lg text-white/90 leading-relaxed">
                 <p>
                   I build web apps for everyday use and share my thoughts on living with purpose.
                 </p>
                 <p>
-                  I grew up in a Turkish immigrant family in Austria, which taught me two things: adapt fast and aim higher. My dream back then was to live somewhere by choice, not necessity.
-                </p>
-                <p>
-                  I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
+                  I grew up in a Turkish immigrant family in Austria, which taught me two things: adapt fast and aim higher. My dream back then was to live somewhere by choice, not necessity. I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
                 </p>
               </div>
 
-              <div className="space-y-4 text-sm md:text-base text-white/90 leading-relaxed">
+              <div className="space-y-4 text-base md:text-lg text-white/90 leading-relaxed">
                 <p>
-                  After living across five countries, I've now made Malaysia home. I'm married and have a daughter.
-                </p>
-                <p>
-                  My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
+                  After living across five countries, I've now made Malaysia home. I'm married and have a daughter. My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
                 </p>
                 <p className="pt-2">
                   Read more on my{' '}

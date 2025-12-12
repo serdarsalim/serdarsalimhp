@@ -35,7 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const isCulturia = project.id === 'culturia';
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(95,39,87,0.35)] transition-all duration-500">
+    <div className="group relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] transition-all duration-500">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
       <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">

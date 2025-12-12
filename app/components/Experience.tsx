@@ -32,18 +32,8 @@ export default function Experience() {
       <div className="absolute top-48 left-8 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-20 animate-[float_22s_ease-in-out_infinite_3s]" />
       <div className="absolute bottom-40 right-1/4 w-28 h-7 bg-white/12 rounded-full blur-sm opacity-30 animate-[float_26s_ease-in-out_infinite_6s]" />
 
-      {/* Gemini star constellation - left side */}
-      <div className="gemini-star" />
-      <div className="gemini-star gemini-star-1" />
-      <div className="gemini-star gemini-star-2" />
-      <div className="gemini-star gemini-star-3" />
-      <div className="gemini-star gemini-star-4" />
-      <div className="gemini-star gemini-star-5" />
-      <div className="gemini-star gemini-star-6" />
-      <div className="gemini-star gemini-star-7" />
-
       {/* Purple blend at bottom to transition to Landscape */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-linear-to-b from-transparent to-[#be91c6] pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 right-0 h-[600px] bg-linear-to-b from-transparent via-transparent to-[#be91c6]/60 pointer-events-none z-0" />
       <div className="relative max-w-6xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="pt-14 md:pt-14 mb-12 md:mb-20 md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
@@ -52,7 +42,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
               >
                 <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
@@ -75,7 +65,7 @@ export default function Experience() {
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(95,39,87,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
               >
                 <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
