@@ -148,7 +148,7 @@ export default function Home() {
           <h2 className="text-2xl md:text-4xl font-bold text-white/90 text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             About Me
           </h2>
-          <div className="rounded-3xl border border-white/25 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden relative">
+          <div className="rounded-3xl border border-white/10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden relative">
             <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-black/40 from-40% to-black opacity-100" aria-hidden="true" />
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
             <div className="relative px-5 md:px-10 pt-6 md:pt-8 pb-10 md:pb-14 space-y-6">
