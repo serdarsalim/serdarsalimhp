@@ -61,8 +61,8 @@ export default function Home() {
       }}
     >
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#556e8f]/80 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/20 shadow-lg">
-        <div className="max-w-7xl mx-auto px-3 md:px-5 py-2">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#5882a5] border-b border-white/20 shadow-lg">
+        <div className="max-w-7xl mx-auto px-3 md:px-5 py-3">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
               {/* Logo - always visible, scrolls to top */}
@@ -86,7 +86,7 @@ export default function Home() {
                 <span
                   className="text-lg md:text-xl font-bold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
                   style={{
-                    textShadow: '-1px 1px 0 #a855f7, -2px 2px 0 #7e22ce'
+                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
                   }}
                   onClick={() => setIsNavHovered(!isNavHovered)}
                 >
