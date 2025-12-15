@@ -1,6 +1,10 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const experiences = [
     {
       company: 'Independent',
@@ -25,15 +29,66 @@ export default function Experience() {
     },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / sectionHeight));
+
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <section className="relative py-16 md:py-32 text-white overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-32 text-white overflow-hidden">
       {/* Floating clouds */}
       <div className="absolute top-16 right-12 w-32 h-8 bg-white/10 rounded-full blur-sm opacity-25 animate-[float_28s_ease-in-out_infinite]" />
       <div className="absolute top-48 left-8 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-20 animate-[float_22s_ease-in-out_infinite_3s]" />
       <div className="absolute bottom-40 right-1/4 w-28 h-7 bg-white/12 rounded-full blur-sm opacity-30 animate-[float_26s_ease-in-out_infinite_6s]" />
 
-      {/* Purple blend at bottom to transition to Landscape */}
-      <div className="absolute bottom-0 left-0 right-0 h-[600px] bg-linear-to-b from-transparent via-transparent to-[#be91c6]/60 pointer-events-none z-0" />
+      {/* Parallax color transition - multi-layer gradients moving at different speeds */}
+      <div className="absolute bottom-0 left-0 right-0 h-[120vh] pointer-events-none overflow-hidden">
+        {/* Layer 1 - Slowest (background purple) */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-full"
+          style={{
+            transform: `translateY(${(1 - scrollProgress) * 80}vh)`,
+            opacity: Math.min(0.6, scrollProgress * 1.2),
+          }}
+        >
+          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#8a65cc]/20 to-[#5e30d9]/40" />
+        </div>
+
+        {/* Layer 2 - Medium speed (mid purple/pink) */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-full"
+          style={{
+            transform: `translateY(${(1 - scrollProgress) * 50}vh)`,
+            opacity: Math.min(0.5, scrollProgress * 1.5),
+          }}
+        >
+          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#be91c6]/15 to-[#8a65cc]/35" />
+        </div>
+
+        {/* Layer 3 - Fastest (foreground warm tones) */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-full"
+          style={{
+            transform: `translateY(${(1 - scrollProgress) * 30}vh)`,
+            opacity: Math.min(0.4, scrollProgress * 1.8),
+          }}
+        >
+          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#fea798]/10 to-[#be91c6]/30" />
+        </div>
+      </div>
       <div className="relative max-w-6xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="pt-14 md:pt-14 mb-12 md:mb-20 md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
