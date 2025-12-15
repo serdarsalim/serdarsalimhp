@@ -97,7 +97,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
               >
                 <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
@@ -120,7 +120,7 @@ export default function Experience() {
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/25 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
               >
                 <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">

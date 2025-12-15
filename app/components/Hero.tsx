@@ -1222,7 +1222,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
                 <a
                   href="#about"
-                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/25 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
+                  className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/10 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
                   style={{ fontFamily: 'var(--font-jetbrains)' }}
                 >
                   <span className="absolute inset-0 bg-linear-to-r from-indigo-200/0 via-white/20 to-purple-200/0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700" aria-hidden="true" />
@@ -1257,13 +1257,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {isCuriousOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8" onClick={() => setShowShareMenu(false)}>
           <div className="absolute inset-0 bg-[#0d031a]/90 backdrop-blur-md" onClick={closeCuriousModal} />
-          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/25 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col h-[600px] md:h-[620px]">
+          <div className="relative z-10 w-full max-w-xl rounded-[30px] border border-white/10 bg-white/15 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-6 md:p-8 flex flex-col h-[600px] md:h-[620px]">
             <div className="flex items-start justify-between gap-4">
               <div className="relative">
                 <button
                   type="button"
                   onClick={(event) => { event.stopPropagation(); setShowShareMenu((prev) => !prev); }}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/30 hover:bg-white/30 transition"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/10 hover:bg-white/30 transition"
                   aria-label="Share curious quiz"
                 >
                   <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1272,7 +1272,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   </svg>
                 </button>
                 {showShareMenu && (
-                  <div className="absolute left-0 top-12 bg-white/20 border border-white/30 rounded-2xl backdrop-blur px-3 py-2 space-y-2 text-xs" onClick={(event) => event.stopPropagation()}>
+                  <div className="absolute left-0 top-12 bg-white/20 border border-white/10 rounded-2xl backdrop-blur px-3 py-2 space-y-2 text-xs" onClick={(event) => event.stopPropagation()}>
                     <button onClick={() => shareTo('twitter')} className="block text-left w-full hover:text-white">Twitter</button>
                     <button onClick={() => shareTo('linkedin')} className="block text-left w-full hover:text-white">LinkedIn</button>
                     <button onClick={() => shareTo('copy')} className="block text-left w-full hover:text-white">Copy link</button>
@@ -1282,7 +1282,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <button
                 type="button"
                 onClick={closeCuriousModal}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/40 hover:bg-white/30 transition"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/10 hover:bg-white/30 transition"
                 aria-label="Close curious modal"
               >
                 <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1306,21 +1306,21 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                     <button
                       type="button"
                       onClick={() => handleAnswerSelection('yes')}
-                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/10 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
                     >
                       Yes
                     </button>
                     <button
                       type="button"
                       onClick={() => handleAnswerSelection('no')}
-                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/40 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl bg-white/20 border border-white/10 hover:bg-white/30 transition font-semibold uppercase tracking-wide"
                     >
                       No
                     </button>
                     <button
                       type="button"
                       onClick={handleSkipQuestion}
-                      className="min-w-[88px] px-3 py-2.5 rounded-2xl border border-white/40 text-white/80 hover:bg-white/10 transition font-semibold uppercase tracking-wide"
+                      className="min-w-[88px] px-3 py-2.5 rounded-2xl border border-white/10 text-white/80 hover:bg-white/10 transition font-semibold uppercase tracking-wide"
                     >
                       Skip
                     </button>
@@ -1381,14 +1381,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                       <button
                         type="button"
                         onClick={closeCuriousModal}
-                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/10 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
                       >
                         Close
                       </button>
                       <button
                         type="button"
                         onClick={shareResult}
-                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/40 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
+                        className="flex-1 min-w-[120px] max-w-[150px] px-3.5 py-2 rounded-2xl bg-white/15 border border-white/10 font-semibold uppercase tracking-wide hover:bg-white/25 transition"
                       >
                         Share
                       </button>
@@ -1427,7 +1427,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {isToolboxOpen && (
         <div className="fixed inset-0 z-40 flex items-start justify-center px-4 py-12">
           <div className="absolute inset-0 bg-[#04000b]/85 backdrop-blur-sm" onClick={closeToolbox} />
-          <div className="toolbox-modal relative z-10 mt-12 w-full max-w-[880px] rounded-4xl border border-white/20 bg-white/10 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.6)] p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+          <div className="toolbox-modal relative z-10 mt-12 w-full max-w-[880px] rounded-4xl border border-white/10 bg-white/10 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.6)] p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <p className="text-sm uppercase tracking-wider text-white/70">Things worth sharing</p>
@@ -1435,7 +1435,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <button
                 type="button"
                 onClick={closeToolbox}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/25 hover:bg-white/25 transition"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 border border-white/10 hover:bg-white/25 transition"
                 aria-label="Close toolbox"
               >
                 <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1470,7 +1470,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                   href={tool.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-2xl border border-white/20 bg-white/5 p-4 flex flex-col gap-2 hover:bg-white/10 transition-colors"
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-2 hover:bg-white/10 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -1493,7 +1493,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {(isQuestionOpen || isQuestionAnimating) && (
         <div className="fixed inset-0 z-40 md:px-4 md:pt-20 md:pb-8 flex items-center justify-center">
           <div
-            className="relative overflow-hidden w-full h-full md:h-[85vh] md:max-w-2xl md:max-h-[800px] md:rounded-[30px] md:border border-white/25 bg-black/70 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] pt-20 px-4 pb-4 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
+            className="relative overflow-hidden w-full h-full md:h-[85vh] md:max-w-2xl md:max-h-[800px] md:rounded-[30px] md:border border-white/10 bg-black/70 backdrop-blur-2xl text-white shadow-[0_30px_80px_rgba(0,0,0,0.45)] pt-20 px-4 pb-4 md:p-8 flex flex-col transition-all duration-500 ease-in-out"
             style={{
               transform: isQuestionOpen ? 'translateY(0)' : 'translateY(100%)',
               opacity: isQuestionOpen ? 1 : 0,
@@ -1507,7 +1507,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <button
                 type="button"
                 onClick={closeQuestionModal}
-                className="absolute right-0 top-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/40 hover:bg-white/30 transition shrink-0"
+                className="absolute right-0 top-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 border border-white/10 hover:bg-white/30 transition shrink-0"
                 aria-label="Close question modal"
               >
                 <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1528,7 +1528,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                 <div className="space-y-6 pb-16">
                   {/* Admin answer - always shown first */}
                   {activeQuestion && (
-                    <article className="rounded-3xl border border-white/15 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3">
+                    <article className="rounded-3xl border border-white/10 bg-transparent px-4 py-3 shadow-[0_15px_45px_rgba(0,0,0,0.15)] space-y-3">
                       <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60">
                         <span className="font-semibold text-amber-100">
                           Serdar Salim • Türkiye
@@ -1559,7 +1559,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                       </p>
                       <textarea
                         placeholder="Share your answer (optional)..."
-                        className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/50 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
+                        className="w-full px-4 py-3 rounded-2xl bg-white/25 border border-white/10 text-base text-white placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2 resize-none"
                         rows={4}
                         value={questionAnswer}
                         onChange={(e) => setQuestionAnswer(e.target.value)}
@@ -1573,7 +1573,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                               <input
                                 type="text"
                                 placeholder="Your name..."
-                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/10 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
                                 value={questionName}
                                 onChange={(e) => {
                                   setQuestionName(e.target.value);
@@ -1587,7 +1587,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                               <input
                                 type="text"
                                 placeholder="Your country..."
-                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/50 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
+                                className="relative z-10 w-full px-4 py-2.5 rounded-2xl bg-white/15 border border-white/10 text-base text-white text-center placeholder-white/60 focus:outline-none focus:border-white/70 focus:border-2"
                                 value={questionCountry}
                                 onChange={(e) => {
                                   setQuestionCountry(e.target.value);
@@ -1614,7 +1614,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
                               <button
                                 type="button"
                                 onClick={() => selectQuestionCountry(resolvedQuestionCountryOption)}
-                                className="rounded-full px-4 py-1.5 border border-white/30 bg-white/10 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white/20"
+                                className="rounded-full px-4 py-1.5 border border-white/10 bg-white/10 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white/20"
                               >
                                 Select {resolvedQuestionCountryOption.name}
                               </button>
