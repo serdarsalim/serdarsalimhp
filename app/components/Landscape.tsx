@@ -59,6 +59,96 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         }}
       />
 
+      {/* Animated minaret wrapper */}
+      <div
+        className="absolute bottom-[18vh] w-full h-[35vh]"
+        style={{
+          animation: 'moveMinaretWrapper 120s linear infinite',
+          zIndex: 2,
+        }}
+      >
+        {/* Minaret Tower */}
+        <div className="minaret-container" style={{ right: '10vw' }}>
+          <section className="top-minaret">
+          <div className="tige">
+            <div className="croissant"></div>
+            <div className="sphere1"></div>
+            <div className="sphere2"></div>
+            <div className="sphere3"></div>
+            <div className="barre"></div>
+          </div>
+          <div className="pyramide"></div>
+          <div className="base-pyramide"></div>
+          <div className="cube">
+            <div className="frize">
+              {[...Array(6)].map((_, i) => (
+                <div key={`top-frize-${i}`} className="motif-frize">
+                  <div className="details-frize1"></div>
+                  <div className="details-frize2"></div>
+                  <div className="details-frize3"></div>
+                  <div className="details-frize4"></div>
+                  <div className="details-frize5"></div>
+                  <div className="details-frize6"></div>
+                </div>
+              ))}
+            </div>
+            <div className="porte">
+              <div className="arc-ext">
+                <div className="arc-intern"></div>
+                <div className="cadre"></div>
+                <div className="motif-cadre">
+                  <div className="motif-left"></div>
+                  <div className="motif-right"></div>
+                </div>
+              </div>
+              <div className="fill1"></div>
+              <div className="fill2"></div>
+              <div className="fill3"></div>
+            </div>
+            <div className="motif-1"></div>
+            <div className="motif-2"></div>
+            <div className="arc"></div>
+          </div>
+          </section>
+          <section className="body-minaret">
+          <div className="frize">
+            {[...Array(9)].map((_, i) => (
+              <div key={`body-frize-${i}`} className="motif-frize">
+                <div className="details-frize1"></div>
+                <div className="details-frize2"></div>
+                <div className="details-frize3"></div>
+                <div className="details-frize4"></div>
+                <div className="details-frize5"></div>
+                <div className="details-frize6"></div>
+              </div>
+            ))}
+          </div>
+          <div className="motif-1">
+            <div className="arcs">
+              <div className="cadre-arc">
+                {[...Array(4)].map((_, i) => (
+                  <div key={`arc-${i}`} className="arc">
+                    <div className="cercle"></div>
+                    <div className="rectangle"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="motif-2"></div>
+          <div className="motif-3">
+            <div className="cadre-intern">
+              <div className="motifs-intern">
+                {[...Array(115)].map((_, i) => (
+                  <div key={`carre-${i}`} className="carre"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+          </section>
+        </div>
+      </div>
+
       {/* Wall/ground gradient */}
       <div
         className="absolute bottom-0 w-full h-[18vh]"
@@ -134,8 +224,13 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         }
 
         @keyframes animarEdificios {
-          from { background-position: 0 0; }
-          to { background-position: 100% 0; }
+          from { background-position: 0 bottom; }
+          to { background-position: -3000px bottom; }
+        }
+
+        @keyframes moveMinaretWrapper {
+          from { transform: translateX(0); }
+          to { transform: translateX(-3000px); }
         }
 
         @keyframes catWalk {

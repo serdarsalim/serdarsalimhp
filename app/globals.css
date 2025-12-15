@@ -554,3 +554,380 @@ body {
     box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
   }
 }
+
+/* Minaret Tower Styles */
+.minaret-container {
+  position: absolute;
+  bottom: 0;
+  transform: scale(0.245);
+  transform-origin: bottom center;
+}
+
+/**top-minaret**/
+.top-minaret {
+  width: 200px;
+  margin: auto;
+}
+.top-minaret .tige .croissant {
+  width:20px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: #ecce05;
+  margin: auto;
+  margin-bottom: 10px;
+  -webkit-box-shadow: -1px -7px 0px 5px rgba(236,206,5,1);
+  -moz-box-shadow: -1px -7px 0px 5px rgba(236,206,5,1);
+  box-shadow: -1px -7px 0px 5px rgba(236,206,5,1);
+  transform: rotate(180deg);
+  position: relative;
+  top:-10px;
+}
+.top-minaret .tige .sphere1 {
+  width:28px;
+  height: 28px;
+  border-radius: 25px;
+  background-color: #ecce05;
+  margin: auto;
+  margin-bottom: 7px;
+}
+.top-minaret .tige .sphere2 {
+  width:33px;
+  height: 33px;
+  border-radius: 25px;
+  background-color: #ecce05;
+  margin: auto;
+  margin-bottom: 7px;
+}
+.top-minaret .tige .sphere3 {
+  width :36px;
+  height: 36px;
+  border-radius: 25px;
+  background-color: #ecce05;
+  margin: auto;
+  margin-bottom: 7px;
+}
+.top-minaret .tige .barre {
+  width: 7px;
+  height: 150px;
+  background-color: #ecce05;
+  margin: auto;
+  position: relative;
+  top: -130px;
+}
+.top-minaret .pyramide {
+  border-bottom:130px solid #0e861f;
+  border-left:90px solid #ffffff00;
+  border-right:90px solid #ffffff00;
+  position: relative;
+  top: -130px;
+}
+.top-minaret .base-pyramide {
+  width: 199px;
+  height: 36px;
+  background-color: #12671e;
+  position: relative;
+  top: -130px;
+}
+
+.top-minaret .cube .frize {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  position: relative;
+  top: -30px;
+  left: 0px;
+}
+
+.top-minaret .cube .frize .motif-frize {
+  width: 34px;
+  height: 30px;
+}
+
+.top-minaret .cube .frize .motif-frize .details-frize1 {
+  width: 0px;
+  height: 15px;
+  border-top:15px solid #eae6de;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  margin: auto;
+}
+.top-minaret .cube .frize .motif-frize .details-frize2 {
+  width: 4px;
+  height: 15px;
+  border-top:15px solid #eae6de;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-25px;
+  margin: auto;
+}
+.top-minaret .cube .frize .motif-frize .details-frize3 {
+  width: 8px;
+  height: 15px;
+  border-top:15px solid #eae6de;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-50px;
+  margin: auto;
+}
+.top-minaret .cube .frize .motif-frize .details-frize4 {
+  width: 11px;
+  height: 15px;
+  border-top:15px solid #eae6de;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-80px;
+  margin: auto;
+}
+.top-minaret .cube .frize .motif-frize .details-frize5 {
+  width: 15px;
+  height: 15px;
+  border-top:15px solid #eae6de;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-105px;
+  margin: auto;
+}
+
+.top-minaret .cube {
+  width: 250px;
+  height: 220px;
+  background-color: #eae6de;
+  position: relative;
+  top: -150px;
+  left: -28px;
+}
+
+.top-minaret .cube .porte {
+  width: 150px;
+  height: 190px;
+  margin: auto;
+  border: 1px solid #7b7a76;
+}
+.top-minaret .cube .porte .arc-ext {
+  width: 148px;
+  height: 148px;
+  vertical-align: top;
+  border: 1px solid #7b7a76;
+  border-radius: 100px;
+  margin-top: 10px;
+}
+.top-minaret .cube .porte .arc-ext  .arc-intern{
+  width: 125px;
+  height: 125px;
+  border: 1px solid #7b7a76;
+  border-radius: 100px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: #b8d8ea;
+}
+.top-minaret .cube .porte .arc-ext  .cadre {
+  width: 125px;
+  height: 120px;
+  margin: auto;
+  border: 1px solid #7b7a76;
+  background-color: #b8d8ea;
+  margin-top: -79px;
+  border-top: none;
+  border-bottom: none;
+}
+.top-minaret .cube .porte .fill1 {
+  width: 12px;
+  height: 120px;
+  background-color: #eae6de;
+  position: relative;
+  top: -90px;
+}
+.top-minaret .cube .porte .fill2 {
+  width: 11px;
+  height: 120px;
+  background-color: #eae6de;
+  position: relative;
+  top: -210px;
+  float: right;
+}
+.top-minaret .cube .porte .arc-ext .motif-cadre {
+  position: relative;
+  top:-123px;
+  z-index: 1;
+}
+.top-minaret .cube .porte .arc-ext .motif-cadre .motif-left{
+  width: 22px;
+  height: 10px;
+  background-color: #eae6de;
+  border: 1px solid #7b7a76;
+  border-radius: 20px;
+  float: left;
+  z-index: 1;
+}
+.top-minaret .cube .porte .arc-ext .motif-cadre .motif-right{
+  width: 22px;
+  height: 10px;
+  background-color: #eae6de;
+  border: 1px solid #7b7a76;
+  border-radius: 20px;
+  float: right;
+  z-index: 1;
+}
+
+/**body-minaret**/
+.body-minaret {
+  width: 400px;
+  margin: auto;
+  margin-top: -184px;
+  position: relative;
+  z-index: 5;
+}
+.body-minaret .frize {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+}
+.body-minaret .frize .motif-frize {
+  width: 34px;
+  height: 30px;
+}
+
+.body-minaret .frize .motif-frize .details-frize1 {
+  width: 0px;
+  height: 15px;
+  border-top:15px solid #dcd7cd;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  margin: auto;
+}
+.body-minaret .frize .motif-frize .details-frize2 {
+  width: 4px;
+  height: 15px;
+  border-top:15px solid #dcd7cd;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-25px;
+  margin: auto;
+}
+.body-minaret .frize .motif-frize .details-frize3 {
+  width: 8px;
+  height: 15px;
+  border-top:15px solid #dcd7cd;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-50px;
+  margin: auto;
+}
+.body-minaret .frize .motif-frize .details-frize4 {
+  width: 11px;
+  height: 15px;
+  border-top:15px solid #dcd7cd;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-80px;
+  margin: auto;
+}
+.body-minaret .frize .motif-frize .details-frize5 {
+  width: 15px;
+  height: 15px;
+  border-top:15px solid #dcd7cd;
+  border-left:10px solid #ffffff00;
+  border-right:10px solid #ffffff00;
+  position: relative;
+  top:-105px;
+  margin: auto;
+}
+
+.body-minaret .motif-1 {
+  background-color: #dcd7cd;
+  padding: 20px;
+}
+
+.body-minaret .arcs {
+  background-color: #eae9de;
+  height: 130px;
+  width: 300px;
+  margin: auto;
+  border: 4px solid #c1bfaa;
+  padding: 20px;
+}
+.body-minaret .arcs  .cadre-arc {
+  background-color: #dcd7cd;
+  height: 120px;
+  width: 280px;
+  margin: auto;
+  border: 4px solid #c1bfaa;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-around;
+  position: relative;
+  top: -320px;
+}
+.body-minaret .arcs .cadre-arc .arc {
+  width: 60px;
+}
+
+.body-minaret .arcs .cadre-arc .arc .cercle  {
+  width: 51px;
+  height: 51px;
+  border-radius: 50px;
+  background-color: #b5b1a8;
+  margin: auto;
+}
+
+.body-minaret .arcs .cadre-arc .arc .rectangle  {
+  width: 60px;
+  height: 72px;
+  background-color: #b5b1a8;
+  margin: auto;
+  margin-top: -25px;
+}
+
+.body-minaret .motif-2 {
+  background-color:#d6d2ca;
+  padding: 20px;
+  border-top:5px solid #bdbbb4;
+  border-bottom:5px solid #bdbbb4;
+  height: 50px;
+}
+.body-minaret .motif-3 {
+  background-color:#eae6de;
+  padding: 40px;
+  height: 850px;
+}
+
+.body-minaret .motif-3 .cadre-intern {
+  background-color:#d6cdbc;
+  padding: 35px;
+  height: 750px;
+}
+
+.body-minaret .motif-3 .cadre-intern  .motifs-intern {
+  background-color:#d6cdbc;
+  height: 750px;
+  border: 4px solid #fcf8f0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.body-minaret .motif-3 .cadre-intern  .motifs-intern .carre {
+  background-color:#d6cdbc;
+  width: 30px;
+  height:30px;
+  border: 4px solid #fcf8f0;
+  transform: rotate(45deg);
+}
