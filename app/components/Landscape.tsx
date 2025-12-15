@@ -21,7 +21,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
 
       {/* Moon */}
       <div
-        className="absolute top-[5vh] left-[50%] w-[6vw] h-[6vw] min-w-[60px] min-h-[60px] max-w-[120px] max-h-[120px]"
+        className="absolute top-[12vh] right-[15%] w-[6vw] h-[6vw] min-w-[60px] min-h-[60px] max-w-[120px] max-h-[120px]"
         style={{
           borderRadius: '50%',
           boxShadow: '30px 10px 0 #F7F8E0',
@@ -56,7 +56,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         className="cat-sprite"
         style={{
           position: 'absolute',
-          bottom: '20vh',
+          bottom: '19vh',
           left: '10%',
           width: '150px',
           height: '100px',
