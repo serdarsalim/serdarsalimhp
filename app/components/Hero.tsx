@@ -1188,13 +1188,13 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               </div>
 
               {/* Subtitle */}
-              <div className="text-sm sm:text-base md:text-lg text-white leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+              <div className="text-base sm:text-lg md:text-xl text-white leading-relaxed space-y-1" style={{ fontFamily: 'var(--font-geist-sans)' }}>
                 <p
                   className="text-white font-semibold cursor-pointer select-none transition-all duration-300"
                   style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}
                   onClick={() => setShowThoughts(!showThoughts)}
                 >
-                  {showThoughts ? 'Shares his thoughts on tech, Islam, and life' : 'Builds web apps for everyday problems'}
+                  {showThoughts ? 'Shares his thoughts on life' : 'Builds web apps for everyday problems'}
                 </p>
                 <div
                   className="relative cursor-pointer select-none"
