@@ -106,14 +106,6 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
               <div className="fill2"></div>
               <div className="fill3"></div>
             </div>
-            <div className="mini-arches">
-              {[...Array(4)].map((_, i) => (
-                <div key={`mini-arc-${i}`} className="mini-arc">
-                  <div className="mini-arc-cercle"></div>
-                  <div className="mini-arc-rectangle"></div>
-                </div>
-              ))}
-            </div>
             <div className="motif-1"></div>
             <div className="motif-2"></div>
             <div className="arc"></div>
@@ -238,9 +230,8 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         }
 
         @keyframes moveMinaretWrapper {
-          0% { transform: translateX(0); }
-          95% { transform: translateX(-3000px); }
-          95.01%, 100% { transform: translateX(0); }
+          0%, 100% { transform: translateX(0); }
+          99% { transform: translateX(-3000px); }
         }
 
         @keyframes catWalk {
