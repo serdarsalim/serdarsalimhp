@@ -198,7 +198,7 @@ export default function Home() {
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-              My Apps
+              Web Apps
             </h2>
             <p className="text-sm md:text-base text-white/80" style={{ fontFamily: 'var(--font-jetbrains)' }}>
              These are webapps I created, free to use.
