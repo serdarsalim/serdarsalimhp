@@ -34,14 +34,14 @@ export default function Home() {
       style={{
         background: `
           linear-gradient(to bottom,
-            #87ceeb 0%,
-            #5dade2 8%,
-            #4a90d9 15%,
-            #2d3d6f 22%,
-            #1e2757 28%,
-            #1a1f45 40%,
-            #0f1b3d 55%,
-            #0a0f1f 65%,
+            #7ac5d9 0%,
+            #5daed9 8%,
+            #4a98b8 15%,
+            #3d7589 22%,
+            #2d5558 28%,
+            #1a2e2a 40%,
+            #0f1f1a 55%,
+            #0a1410 65%,
             transparent 75%
           ),
           linear-gradient(to bottom,
@@ -195,11 +195,6 @@ export default function Home() {
         id="projects"
         className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
       >
-        {/* Floating clouds */}
-        <div className="absolute top-10 left-10 w-20 h-6 bg-white/10 rounded-full blur-sm opacity-30 animate-[float_20s_ease-in-out_infinite]" />
-        <div className="absolute top-32 right-16 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-25 animate-[float_25s_ease-in-out_infinite_2s]" />
-        <div className="absolute bottom-20 left-1/4 w-28 h-8 bg-white/12 rounded-full blur-sm opacity-20 animate-[float_30s_ease-in-out_infinite_5s]" />
-
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">

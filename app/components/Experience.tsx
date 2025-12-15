@@ -49,11 +49,6 @@ export default function Experience() {
 
   return (
     <section ref={sectionRef} className="relative py-16 md:py-32 text-white overflow-hidden">
-      {/* Floating clouds */}
-      <div className="absolute top-16 right-12 w-32 h-8 bg-white/10 rounded-full blur-sm opacity-25 animate-[float_28s_ease-in-out_infinite]" />
-      <div className="absolute top-48 left-8 w-24 h-7 bg-white/8 rounded-full blur-sm opacity-20 animate-[float_22s_ease-in-out_infinite_3s]" />
-      <div className="absolute bottom-40 right-1/4 w-28 h-7 bg-white/12 rounded-full blur-sm opacity-30 animate-[float_26s_ease-in-out_infinite_6s]" />
-
       {/* Parallax color transition - multi-layer gradients moving at different speeds */}
       <div className="absolute bottom-0 left-0 right-0 h-[120vh] pointer-events-none overflow-hidden">
         {/* Layer 1 - Slowest (background purple) */}
