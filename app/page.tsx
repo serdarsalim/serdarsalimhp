@@ -151,7 +151,7 @@ export default function Home() {
           <div className="rounded-3xl border border-white/25 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden relative">
             <div className="absolute inset-0 pointer-events-none bg-linear-to-b from-black/40 from-40% to-black opacity-100" aria-hidden="true" />
             <div className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/15 via-transparent to-transparent opacity-60" aria-hidden="true" />
-            <div className="relative px-6 md:px-12 py-10 md:py-14 space-y-6">
+            <div className="relative px-5 md:px-10 pt-6 md:pt-8 pb-10 md:pb-14 space-y-6">
               <div className="space-y-4 text-base md:text-lg text-white/90 leading-relaxed">
                 <p>
                   I build web apps for everyday use and share my thoughts on living with purpose.
@@ -189,7 +189,7 @@ export default function Home() {
               </div>
 
               {/* Video - Closing seal */}
-              <div className="flex justify-center pt-4 md:pt-8">
+              <div className="flex justify-center pt-2 md:pt-4">
                 <video
                   src="/owlio.MP4"
                   autoPlay
