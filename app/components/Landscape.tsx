@@ -61,14 +61,15 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
 
       {/* Animated minaret wrapper */}
       <div
-        className="absolute bottom-[18vh] w-full h-[35vh]"
+        className="absolute bottom-[18vh] h-[35vh]"
         style={{
+          right: '10vw',
           animation: 'moveMinaretWrapper 240s linear infinite',
           zIndex: 2,
         }}
       >
         {/* Minaret Tower */}
-        <div className="minaret-container" style={{ right: '10vw' }}>
+        <div className="minaret-container">
           <section className="top-minaret">
           <div className="tige">
             <div className="croissant"></div>
@@ -237,8 +238,9 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         }
 
         @keyframes moveMinaretWrapper {
-          from { transform: translateX(0); }
-          to { transform: translateX(-3000px); }
+          0% { transform: translateX(0); }
+          95% { transform: translateX(-3000px); }
+          95.01%, 100% { transform: translateX(0); }
         }
 
         @keyframes catWalk {
