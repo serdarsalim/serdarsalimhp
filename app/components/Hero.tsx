@@ -1108,8 +1108,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         <div className="cloud"></div>
         <div className="cloud cloud-1"></div>
         <div className="cloud cloud-2"></div>
-        <div className="cloud cloud-3"></div>
-        <div className="cloud cloud-5"></div>
       </div>
 
       {/* Content - wrapped for animation */}
@@ -1752,26 +1750,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         filter: blur(2px);
         animation-delay: -30s;
         animation-duration: 140s;
-      }
-      .cloud-3 {
-        left: 70vmin;
-        top: 70vmin;
-        opacity: 0.3;
-        filter: blur(1.5px);
-        animation-delay: -45s;
-        animation-duration: 110s;
-      }
-      .cloud-5 {
-        left: 50vmin;
-        top: 80vmin;
-        opacity: 0.28;
-        filter: blur(1px);
-        animation-delay: -75s;
-        animation-duration: 115s;
-      }
-      @media (max-width: 768px) {
-        .cloud-3 { top: 90vmin; }
-        .cloud-5 { top: 95vmin; }
       }
       @media (prefers-reduced-motion: reduce) {
         * {
