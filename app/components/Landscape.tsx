@@ -10,11 +10,28 @@ interface LandscapeProps {
 export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#0c0207]">
-      {/* Sky gradient background */}
+      {/* Space video overlay at top with fade downward */}
+      <div className="absolute inset-x-0 top-0 h-[70%] overflow-hidden" style={{ zIndex: 0 }}>
+        <video
+          className="w-full h-full object-cover pointer-events-none opacity-50"
+          src="/universe.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          style={{
+            maskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+          }}
+        />
+      </div>
+
+      {/* Sky gradient background with transparency to show video */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          background: 'linear-gradient(to bottom, #5e30d9 0%, #8a65cc 35%, #3d2b5f 70%, #0c0207 100%)',
+          background: 'linear-gradient(to bottom, rgba(94, 48, 217, 0.7) 0%, rgba(138, 101, 204, 0.7) 35%, rgba(61, 43, 95, 0.85) 70%, #0c0207 100%)',
           zIndex: 1,
         }}
       />
@@ -31,7 +48,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
 
       {/* Animated buildings */}
       <div
-        className="absolute bottom-[20vh] w-full h-[35vh]"
+        className="absolute bottom-[18vh] w-full h-[35vh]"
         style={{
           backgroundImage: 'url(https://res.cloudinary.com/pastelitos/image/upload/v1610526533/eva/edificiosOne_fsg7nx.svg)',
           backgroundPosition: 'bottom',
@@ -44,9 +61,9 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
 
       {/* Wall/ground gradient */}
       <div
-        className="absolute bottom-0 w-full h-[20vh]"
+        className="absolute bottom-0 w-full h-[18vh]"
         style={{
-          background: 'linear-gradient(to bottom, #416663 0%, #0c0207 30%)',
+          background: 'linear-gradient(to bottom, #2a4442 0%, #1a2a29 40%, #0f1515 70%, #0c0207 100%)',
           zIndex: 4,
         }}
       />
@@ -56,7 +73,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         className="cat-sprite"
         style={{
           position: 'absolute',
-          bottom: '19vh',
+          bottom: '17vh',
           left: '10%',
           width: '150px',
           height: '100px',
