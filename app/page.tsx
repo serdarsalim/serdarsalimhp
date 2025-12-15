@@ -165,27 +165,6 @@ export default function Home() {
                 <p>
                   After living across five countries, I've now made Malaysia home. I'm married and have a daughter. My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
                 </p>
-                <p className="pt-2">
-                  Read more on my{' '}
-                  <a
-                    href="https://blog.serdarsalim.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
-                  >
-                    blog
-                  </a>
-                  . Watch more on my{' '}
-                  <a
-                    href="https://tiktok.com/@salimspoke"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/90 font-semibold underline hover:text-white/70 transition-colors"
-                  >
-                    TikTok
-                  </a>
-                  .
-                </p>
               </div>
 
               {/* Video - Closing seal */}

@@ -54,7 +54,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
           backgroundPosition: 'bottom',
           backgroundRepeat: 'repeat-x',
           backgroundSize: 'auto 100%',
-          animation: 'animarEdificios 120s linear infinite',
+          animation: 'animarEdificios 240s linear infinite',
           zIndex: 3,
         }}
       />
@@ -63,7 +63,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
       <div
         className="absolute bottom-[18vh] w-full h-[35vh]"
         style={{
-          animation: 'moveMinaretWrapper 120s linear infinite',
+          animation: 'moveMinaretWrapper 240s linear infinite',
           zIndex: 2,
         }}
       >
