@@ -14,7 +14,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          background: 'linear-gradient(to bottom, #0B4C5F 0%, #04B4AE 52%, #0c0207 100%)',
+          background: 'linear-gradient(to bottom, #5e30d9 0%, #8a65cc 35%, #3d2b5f 70%, #0c0207 100%)',
           zIndex: 1,
         }}
       />
