@@ -1126,18 +1126,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Floating clouds only - no background - with parallax */}
-      <div
-        className="absolute inset-0 overflow-hidden pointer-events-none z-1"
-        style={{
-          transform: `translateY(${scrollProgress * 150}px)`,
-          opacity: 1 - scrollProgress * 1.5,
-        }}
-      >
-        <div className="cloud"></div>
-        <div className="cloud cloud-1"></div>
-      </div>
-
       {/* Content - wrapped for animation with parallax fade */}
       <div
         className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0"
@@ -1748,34 +1736,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         border-radius: 999px;
         border-right: 4px solid transparent;
         background-clip: padding-box;
-      }
-      /* Cloud styles */
-      .cloud {
-        position: absolute;
-        width: 80vmin;
-        height: 6vmin;
-        background: currentcolor;
-        color: #ffffff;
-        top: 24vmin;
-        left: 20vmin;
-        border-radius: 50%;
-        box-shadow: 30vmin 0.5vmin 0 -1vmin currentcolor, -25vmin 0 0 -0.6vmin currentcolor;
-        opacity: 0.35;
-        transform: translate3d(-150vmin, 0, 0);
-        animation: clouds 120s linear infinite;
-        animation-delay: -10s;
-      }
-      @keyframes clouds {
-        0% { transform: translate3d(-150vmin, 0, 0); }
-        100% { transform: translate3d(150vmin, 0, 0); }
-      }
-      .cloud-1 {
-        left: 60vmin;
-        top: 15vmin;
-        opacity: 0.28;
-        filter: blur(1px);
-        animation-delay: 0;
-        animation-duration: 100s;
       }
       @media (prefers-reduced-motion: reduce) {
         * {

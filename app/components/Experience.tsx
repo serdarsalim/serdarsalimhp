@@ -52,7 +52,7 @@ export default function Experience() {
                   </div>
                   <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
                 </div>
-                <p className="relative text-sm md:text-base text-white leading-relaxed">{exp.description}</p>
+                <p className="relative text-base md:text-lg text-white leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function Experience() {
                   </div>
                   <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
                 </div>
-                <p className="relative text-sm md:text-base text-white leading-relaxed">{edu.description}</p>
+                <p className="relative text-base md:text-lg text-white leading-relaxed">{edu.description}</p>
               </div>
             ))}
           </div>
