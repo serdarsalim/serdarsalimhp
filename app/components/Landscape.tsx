@@ -105,6 +105,14 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
               <div className="fill2"></div>
               <div className="fill3"></div>
             </div>
+            <div className="mini-arches">
+              {[...Array(4)].map((_, i) => (
+                <div key={`mini-arc-${i}`} className="mini-arc">
+                  <div className="mini-arc-cercle"></div>
+                  <div className="mini-arc-rectangle"></div>
+                </div>
+              ))}
+            </div>
             <div className="motif-1"></div>
             <div className="motif-2"></div>
             <div className="arc"></div>

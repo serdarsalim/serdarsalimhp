@@ -614,7 +614,7 @@ body {
   top: -130px;
 }
 .top-minaret .pyramide {
-  border-bottom:130px solid #0e861f;
+  border-bottom:130px solid #041a07;
   border-left:90px solid #ffffff00;
   border-right:90px solid #ffffff00;
   position: relative;
@@ -623,7 +623,7 @@ body {
 .top-minaret .base-pyramide {
   width: 199px;
   height: 36px;
-  background-color: #12671e;
+  background-color: #041307;
   position: relative;
   top: -130px;
 }
@@ -694,11 +694,19 @@ body {
   top:-105px;
   margin: auto;
 }
+.top-minaret .cube .frize .motif-frize .details-frize1,
+.top-minaret .cube .frize .motif-frize .details-frize2,
+.top-minaret .cube .frize .motif-frize .details-frize3,
+.top-minaret .cube .frize .motif-frize .details-frize4,
+.top-minaret .cube .frize .motif-frize .details-frize5,
+.top-minaret .cube .frize .motif-frize .details-frize6 {
+  display: none;
+}
 
 .top-minaret .cube {
   width: 250px;
   height: 220px;
-  background-color: #eae6de;
+  background-color: #1b1b1b;
   position: relative;
   top: -150px;
   left: -28px;
@@ -708,31 +716,34 @@ body {
   width: 150px;
   height: 190px;
   margin: auto;
-  border: 1px solid #7b7a76;
+  border: 1px solid #353535;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 .top-minaret .cube .porte .arc-ext {
   width: 148px;
   height: 148px;
   vertical-align: top;
-  border: 1px solid #7b7a76;
+  border: 1px solid #353535;
   border-radius: 100px;
-  margin-top: 10px;
+  margin: 10px auto 0;
 }
 .top-minaret .cube .porte .arc-ext  .arc-intern{
   width: 125px;
   height: 125px;
-  border: 1px solid #7b7a76;
+  border: 1px solid #353535;
   border-radius: 100px;
   margin: auto;
   margin-top: 10px;
-  background-color: #b8d8ea;
+  background-color: #2a2a2a;
 }
 .top-minaret .cube .porte .arc-ext  .cadre {
   width: 125px;
   height: 120px;
   margin: auto;
-  border: 1px solid #7b7a76;
-  background-color: #b8d8ea;
+  border: 1px solid #353535;
+  background-color: #252525;
   margin-top: -79px;
   border-top: none;
   border-bottom: none;
@@ -740,14 +751,14 @@ body {
 .top-minaret .cube .porte .fill1 {
   width: 12px;
   height: 120px;
-  background-color: #eae6de;
+  background-color: #1b1b1b;
   position: relative;
   top: -90px;
 }
 .top-minaret .cube .porte .fill2 {
   width: 11px;
   height: 120px;
-  background-color: #eae6de;
+  background-color: #1b1b1b;
   position: relative;
   top: -210px;
   float: right;
@@ -760,8 +771,8 @@ body {
 .top-minaret .cube .porte .arc-ext .motif-cadre .motif-left{
   width: 22px;
   height: 10px;
-  background-color: #eae6de;
-  border: 1px solid #7b7a76;
+  background-color: #1b1b1b;
+  border: 1px solid #353535;
   border-radius: 20px;
   float: left;
   z-index: 1;
@@ -769,11 +780,47 @@ body {
 .top-minaret .cube .porte .arc-ext .motif-cadre .motif-right{
   width: 22px;
   height: 10px;
-  background-color: #eae6de;
-  border: 1px solid #7b7a76;
+  background-color: #1b1b1b;
+  border: 1px solid #353535;
   border-radius: 20px;
   float: right;
   z-index: 1;
+}
+.top-minaret .cube .mini-arches {
+  width: 200px;
+  margin: -70px auto 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 8px;
+}
+.top-minaret .cube .mini-arc {
+  width: 42px;
+  height: 70px;
+  border-radius: 20px 20px 10px 10px;
+  border: 1px solid #4c4c4c;
+  background-color: #1f1f1f;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.top-minaret .cube .mini-arc-cercle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #2d2d2d;
+  border: 1px solid #565656;
+  margin-top: 8px;
+}
+.top-minaret .cube .mini-arc-rectangle {
+  width: 32px;
+  height: 32px;
+  background-color: #2d2d2d;
+  border: 1px solid #565656;
+  margin-top: -10px;
+  border-radius: 2px;
 }
 
 /**body-minaret**/
@@ -837,85 +884,97 @@ body {
   margin: auto;
 }
 .body-minaret .frize .motif-frize .details-frize5 {
-  width: 15px;
-  height: 15px;
-  border-top:15px solid #dcd7cd;
-  border-left:10px solid #ffffff00;
-  border-right:10px solid #ffffff00;
-  position: relative;
-  top:-105px;
-  margin: auto;
+    width: 15px;
+	height: 15px;
+	border-top:15px solid #dcd7cd;
+	border-left:10px solid #ffffff00;
+	border-right:10px solid #ffffff00;
+	position: relative;
+	top:-105px;
+	margin: auto;
+}
+.body-minaret .frize .motif-frize .details-frize1,
+.body-minaret .frize .motif-frize .details-frize2,
+.body-minaret .frize .motif-frize .details-frize3,
+.body-minaret .frize .motif-frize .details-frize4,
+.body-minaret .frize .motif-frize .details-frize5,
+.body-minaret .frize .motif-frize .details-frize6 {
+  display: none;
 }
 
 .body-minaret .motif-1 {
-  background-color: #dcd7cd;
+  background-color: #1f1f1f;
   padding: 20px;
 }
 
 .body-minaret .arcs {
-  background-color: #eae9de;
+  background-color: #242424;
   height: 130px;
   width: 300px;
   margin: auto;
-  border: 4px solid #c1bfaa;
+  border: 4px solid #3d3d3d;
   padding: 20px;
 }
 .body-minaret .arcs  .cadre-arc {
-  background-color: #dcd7cd;
+  background-color: #1f1f1f;
   height: 120px;
   width: 280px;
   margin: auto;
-  border: 4px solid #c1bfaa;
+  border: 4px solid #3d3d3d;
   display: flex;
   align-items: flex-end;
-  flex-direction: row;
   justify-content: space-around;
-  position: relative;
-  top: -320px;
+  padding: 10px 12px 0;
 }
 .body-minaret .arcs .cadre-arc .arc {
   width: 60px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .body-minaret .arcs .cadre-arc .arc .cercle  {
-  width: 51px;
-  height: 51px;
-  border-radius: 50px;
-  background-color: #b5b1a8;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #3c3c3c;
+  border: 1px solid #5c5c5c;
   margin: auto;
 }
 
 .body-minaret .arcs .cadre-arc .arc .rectangle  {
-  width: 60px;
-  height: 72px;
-  background-color: #b5b1a8;
-  margin: auto;
-  margin-top: -25px;
+  width: 52px;
+  height: 64px;
+  background-color: #3c3c3c;
+  border: 1px solid #5c5c5c;
+  margin-top: -12px;
 }
 
 .body-minaret .motif-2 {
-  background-color:#d6d2ca;
+  background-color:#1d1d1d;
   padding: 20px;
-  border-top:5px solid #bdbbb4;
-  border-bottom:5px solid #bdbbb4;
+  border-top:5px solid #3a3a3a;
+  border-bottom:5px solid #3a3a3a;
   height: 50px;
 }
 .body-minaret .motif-3 {
-  background-color:#eae6de;
+  background-color:#202020;
   padding: 40px;
   height: 850px;
 }
 
 .body-minaret .motif-3 .cadre-intern {
-  background-color:#d6cdbc;
+  background-color:#1c1c1c;
   padding: 35px;
   height: 750px;
 }
 
 .body-minaret .motif-3 .cadre-intern  .motifs-intern {
-  background-color:#d6cdbc;
+  background-color:#1c1c1c;
   height: 750px;
-  border: 4px solid #fcf8f0;
+  border: 4px solid #3a3a3a;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -924,9 +983,9 @@ body {
   align-content: center;
 }
 .body-minaret .motif-3 .cadre-intern  .motifs-intern .carre {
-  background-color:#d6cdbc;
+  background-color:#1c1c1c;
   width: 30px;
   height:30px;
-  border: 4px solid #fcf8f0;
+  border: 4px solid #3a3a3a;
   transform: rotate(45deg);
 }
