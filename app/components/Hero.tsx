@@ -293,6 +293,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   const [isHoveringQuote, setIsHoveringQuote] = useState(false);
   const [showOrigin, setShowOrigin] = useState(false);
   const [showThoughts, setShowThoughts] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isCuriousOpen, setIsCuriousOpen] = useState(false);
   const [isQuestionOpen, setIsQuestionOpen] = useState(false);
   const [questionAnswer, setQuestionAnswer] = useState('');
@@ -915,6 +916,28 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   }, [isCuriousOpen, isToolboxOpen, isQuestionOpen]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      const heroSection = document.getElementById('hero-section');
+      if (!heroSection) return;
+
+      const heroHeight = heroSection.offsetHeight;
+      const scrollY = window.scrollY;
+      const progress = Math.min(scrollY / heroHeight, 1);
+
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!questionProfile) return;
     setQuestionName(questionProfile.name);
     setQuestionCountry(questionProfile.country.name);
@@ -1103,15 +1126,26 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Floating clouds only - no background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-1">
+      {/* Floating clouds only - no background - with parallax */}
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-1"
+        style={{
+          transform: `translateY(${scrollProgress * 150}px)`,
+          opacity: 1 - scrollProgress * 1.5,
+        }}
+      >
         <div className="cloud"></div>
         <div className="cloud cloud-1"></div>
-        <div className="cloud cloud-2"></div>
       </div>
 
-      {/* Content - wrapped for animation */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0">
+      {/* Content - wrapped for animation with parallax fade */}
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0"
+        style={{
+          opacity: 1 - scrollProgress * 1.8,
+          transform: `translateY(${scrollProgress * 100}px) scale(${1 - scrollProgress * 0.1})`,
+        }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end md:items-end w-full md:-ml-12 mx-auto">
           {/* Left side - Photo */}
           <div
@@ -1742,14 +1776,6 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
         filter: blur(1px);
         animation-delay: 0;
         animation-duration: 100s;
-      }
-      .cloud-2 {
-        left: 40vmin;
-        top: 35vmin;
-        opacity: 0.22;
-        filter: blur(2px);
-        animation-delay: -30s;
-        animation-duration: 140s;
       }
       @media (prefers-reduced-motion: reduce) {
         * {
