@@ -3,6 +3,7 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import IslamicPattern from './IslamicPattern';
 import SkyMidMorning from './SkyMidMorning';
+import Stars from './Stars';
 import { countryOptions, type CountryOption } from '../data/countries';
 import type { PersonalQuestion } from '../data/personalQuestions';
 
@@ -1126,6 +1127,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
   return (
     <>
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Falling Stars Background */}
+      <Stars />
+
       {/* Content - wrapped for animation with parallax fade */}
       <div
         className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0"
@@ -1164,14 +1168,14 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               transform: isQuestionOpen ? 'translateX(400%)' : 'translateX(0)',
             }}
           >
-            <div className="w-full max-w-xl text-left mx-auto md:mx-0 space-y-6">
+            <div className="w-full max-w-xl text-center md:text-left mx-auto md:mx-0 space-y-6">
               <div className="space-y-2">
                 <h1
                   id="hero-title"
                   className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight select-none cursor-pointer transition-all duration-300"
                   style={{
                     color: '#ffffff',
-                    textShadow: '-3px 3px 0 #a855f7, -5px 5px 0 #7e22ce'
+                    textShadow: '-3px 3px 0 #1e3a5f, -5px 5px 0 #0f1f3d'
                   }}
                   onClick={() => setIsHoveringName(!isHoveringName)}
                 >
@@ -1219,7 +1223,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               </div>
 
               {/* Subtle CTA that matches the design */}
-              <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center">
+              <div className="pt-3 md:pt-6 flex gap-2 flex-wrap items-center justify-center md:justify-start">
                 <a
                   href="#about"
                   className="group relative inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-white font-light bg-black/40 backdrop-blur-md border border-white/10 shadow-lg hover:bg-black/50 transition-all duration-300 overflow-hidden"
