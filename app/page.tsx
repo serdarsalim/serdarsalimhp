@@ -57,33 +57,29 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-3 md:px-5 py-3">
           <div className="flex items-center">
             <div className="inline-flex items-center gap-3">
-              {/* Logo - always visible, scrolls to top */}
-              <a
-                href="#hero-section"
-                className={`select-none cursor-pointer transition-opacity duration-300 ${showNavBrand ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <img
-                  src="/app-logo.png"
-                  alt="Serdar Salim"
-                  className="h-6 md:h-8 w-auto rounded-md"
-                />
-              </a>
-
               {/* Name - only visible when scrolled down, flips on click */}
               {showNavBrand && (
-                <span
-                  className="text-lg md:text-xl font-bold tracking-tight text-white transition-all duration-300 cursor-pointer select-none"
-                  style={{
-                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                <a
+                  href="#hero-section"
+                  className="select-none cursor-pointer transition-opacity duration-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  onClick={() => setIsNavHovered(!isNavHovered)}
                 >
-                  {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
-                </span>
+                  <span
+                    className="text-lg md:text-xl font-bold tracking-tight text-white transition-all duration-300"
+                    style={{
+                      textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsNavHovered(!isNavHovered);
+                    }}
+                  >
+                    {isNavHovered ? 'Salim Serdar' : 'Serdar Salim'}
+                  </span>
+                </a>
               )}
             </div>
 

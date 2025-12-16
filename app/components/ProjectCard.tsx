@@ -40,8 +40,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">
           {/* Left Column - Logo, Title, Links */}
-          <div className="flex flex-col md:min-w-[180px]">
-            <div className="flex flex-row md:flex-col items-center md:items-center gap-3 md:gap-3 mb-4 text-left md:text-center">
+          <div className="flex flex-col md:min-w-[180px] md:justify-center">
+            <div className="flex flex-row md:flex-col items-center md:items-center gap-3 md:gap-3 mb-4 md:mb-0 text-left md:text-center">
               {/* Logo */}
               {project.image ? (
                 project.demoUrl ? (
@@ -107,25 +107,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 )
               )}
 
-              {/* Title & Category */}
-              <div className="flex-1">
+              {/* Title */}
+              <div className="flex-1 flex items-center">
                 {project.demoUrl ? (
                   <a
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg md:text-xl font-semibold text-white hover:text-purple-200 mb-1 inline-block transition-colors"
+                    className="text-lg md:text-xl font-semibold text-white hover:text-purple-200 transition-colors"
                   >
                     {project.name}
                   </a>
                 ) : (
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-1">
+                  <h3 className="text-lg md:text-xl font-semibold text-white">
                     {project.name}
                   </h3>
                 )}
-                <p className="text-xs md:text-sm text-white/70">
-                  {project.category} · {project.year}
-                </p>
               </div>
             </div>
           </div>

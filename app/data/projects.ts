@@ -48,7 +48,7 @@ export const projects: Project[] = [
   },
   {
     id: 'workout-tracker',
-    name: 'Gym Tracker 4',
+    name: 'Gym Tracker',
     letter: '🏋️',
     image: '/gymtracker4.png',
     shortDescription: '• Simple, no-bloat gym workout tracker for beginners and pros\n• Build workout plans and track sets, reps, and weights\n• Exercises include YouTube tutorial videos for quick reference',
