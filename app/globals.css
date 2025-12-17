@@ -127,21 +127,21 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #444;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #333;
 }
 
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-thumb {
-    background: #444;
+    background: #2a2a2a;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #666;
+    background: #444;
   }
 }
 
