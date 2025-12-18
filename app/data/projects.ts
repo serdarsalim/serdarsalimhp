@@ -8,11 +8,11 @@ export const projects: Project[] = [
     image: '/simplifybudget.png',
     shortDescription:
       '• Budget web app to manage your personal finances\n' +
-      '• Stores every transaction in a Google Sheet in your own Google Drive\n' +
+      '• Stores transactions in a spreadsheet in your own Google Drive\n' +
       '• Integrated net worth view and subscription tracking',
     fullDescription:
       '• Budget web app to manage your personal finances\n' +
-      '• Stores every transaction in a Google Sheet in your own Google Drive\n' +
+      '• Stores transactions in a spreadsheet in your own Google Drive\n' +
       '• Integrated net worth view and subscription tracking',
     techStack: ['Google Apps Script', 'Google Sheets API', 'HTML/CSS', 'JavaScript'],
     year: '2024',
@@ -64,17 +64,17 @@ export const projects: Project[] = [
     letter: 'O',
     image: '/slmtrack.png',
     shortDescription:
-      '• Focused personal OKR tracker for weekly planning and daily self-scoring\n' +
-      '• Set long-term objectives, plan each week, and rate your execution day by day\n' +
-      '• Year-at-a-glance calendar to spot patterns, stay accountable, and course-correct',
+      '• Personal OKR tracker for weekly planning and self-scoring\n' +
+      '• Set long-term goals, plan each week, and rate your execution\n' +
+      '• Yearly calendar to spot patterns, stay accountable and course-correct',
     fullDescription:
-      '• Focused personal OKR tracker for weekly planning and daily self-scoring\n' +
-      '• Set long-term objectives, plan each week, and rate your execution day by day\n' +
-      '• Year-at-a-glance calendar to spot patterns, stay accountable, and course-correct',
+      '• Personal OKR tracker for weekly planning and self-scoring\n' +
+      '• Set long-term goals, plan each week, and rate your execution\n' +
+      '• Yearly calendar to spot patterns, stay accountable and course-correct',
     techStack: ['Next.js', 'Supabase', 'Tailwind CSS'],
     year: '2025',
     category: 'Web App',
-    demoUrl: '',
+    demoUrl: 'https://slmtrack.vercel.app/',
     githubUrl: '',
   },
   {
