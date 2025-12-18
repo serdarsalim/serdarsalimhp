@@ -14,7 +14,7 @@ export default function Experience() {
     },
     {
       company: 'Twitter',
-      role: 'Training & Quality Program Manager',
+      role: 'Program Manager',
       period: '2013 - 2023',
       description: 'Led crisis management initiatives for content moderation and online safety training during critical incidents. Managed training for new hires and policy changes across 100+ support policies. Built strong cross-functional relationships with Quality Teams, Vendor Partners, Engineering and Policy Owners. Facilitated the launch of multiple vendor sites in over 10 locations worldwide.',
     },
@@ -23,9 +23,9 @@ export default function Experience() {
   const education = [
     {
       school: 'University of Graz',
-      degree: 'Bachelor of Arts in Transcultural Communication',
+      degree: 'BA in Transcultural Communication',
       period: '2008 - 2012',
-      description: 'Studied communication across cultures, languages, and systems.',
+      description: 'Bridging languages and cultures through translation, interpretation, strategic communication, and cross-cultural analysis.',
     },
   ];
 
@@ -59,7 +59,7 @@ export default function Experience() {
             opacity: Math.min(0.6, scrollProgress * 1.2),
           }}
         >
-          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#8a65cc]/20 to-[#5e30d9]/40" />
+          <div className="w-full h-full bg-linear-to-b from-transparent via-[#8a65cc]/20 to-[#5e30d9]/40" />
         </div>
 
         {/* Layer 2 - Medium speed (mid purple/pink) */}
@@ -70,7 +70,7 @@ export default function Experience() {
             opacity: Math.min(0.5, scrollProgress * 1.5),
           }}
         >
-          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#be91c6]/15 to-[#8a65cc]/35" />
+          <div className="w-full h-full bg-linear-to-b from-transparent via-[#be91c6]/15 to-[#8a65cc]/35" />
         </div>
 
         {/* Layer 3 - Fastest (foreground warm tones) */}
@@ -81,7 +81,7 @@ export default function Experience() {
             opacity: Math.min(0.4, scrollProgress * 1.8),
           }}
         >
-          <div className="w-full h-full bg-gradient-to-b from-transparent via-[#fea798]/10 to-[#be91c6]/30" />
+          <div className="w-full h-full bg-linear-to-b from-transparent via-[#fea798]/10 to-[#be91c6]/30" />
         </div>
       </div>
       <div className="relative max-w-6xl mx-auto px-4 md:px-6">

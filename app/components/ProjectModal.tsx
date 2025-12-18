@@ -66,7 +66,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               {/* Header */}
               <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6 mb-6 md:mb-8">
                 {/* Letter Logo */}
-                <div className="flex-shrink-0 w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl md:rounded-2xl flex items-center justify-center text-white text-2xl md:text-4xl font-bold shadow-xl">
+                <div className="shrink-0 w-16 h-16 md:w-24 md:h-24 bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl md:rounded-2xl flex items-center justify-center text-white text-2xl md:text-4xl font-bold shadow-xl">
                   {project.letter}
                 </div>
 
@@ -104,7 +104,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 text-gray-700 dark:text-gray-300 rounded-lg border border-gray-300 dark:border-gray-600"
+                      className="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium bg-linear-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 text-gray-700 dark:text-gray-300 rounded-lg border border-gray-300 dark:border-gray-600"
                     >
                       {tech}
                     </span>
@@ -119,7 +119,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg text-sm md:text-base font-semibold hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
+                    className="flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white rounded-lg text-sm md:text-base font-semibold hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
                   >
                     <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

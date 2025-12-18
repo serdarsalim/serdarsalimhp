@@ -13,6 +13,16 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const logoRef = useRef<HTMLAnchorElement | HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    cardRef.current.style.setProperty('--mouse-x', `${x}%`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}%`);
+  };
 
   useEffect(() => {
     // Only run mobile animation for Culturia
@@ -39,7 +49,9 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
 
   return (
     <div
-      className={`project-card group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_35px_90px_rgba(0,0,0,0.55)] ${
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className={`project-card group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-white/20 hover:shadow-[0_35px_90px_rgba(0,0,0,0.55)] ${
         shouldAnimate ? 'project-card-visible' : ''
       }`}
       style={{ transitionDelay: animationDelay }}
@@ -53,7 +65,7 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
           aria-label={`Visit ${project.name}`}
         />
       ) : null}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/20 via-transparent to-transparent opacity-60 transition-opacity duration-700 group-hover:opacity-90" aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60 transition-opacity duration-700 group-hover:opacity-90" aria-hidden="true" />
       <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">
           {/* Left Column - Logo, Title, Links */}
@@ -64,11 +76,11 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
                 <div
                   ref={logoRef as any}
                   onMouseEnter={() => isCulturia && setIsHovered(true)}
-                  className={`flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-white/10 ${
+                  className={`shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-white/10 ${
                     isCulturia && isHovered
-                      ? 'rotate-[-360deg] md:transition-transform md:duration-[1500ms]'
+                      ? 'rotate-[-360deg] md:transition-transform md:duration-1500'
                       : isCulturia
-                      ? 'md:transition-transform md:duration-[1500ms]'
+                      ? 'md:transition-transform md:duration-1500'
                       : 'group-hover:scale-105 transition-all duration-200'
                   }`}
                 >
@@ -76,13 +88,13 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
                     src={project.image}
                     alt={`${project.name} logo`}
                     className={`w-full h-full object-contain ${
-                      isCulturia && hasAnimated ? 'md:!animate-none animate-spin-once' : ''
+                      isCulturia && hasAnimated ? 'md:animate-none! animate-spin-once' : ''
                     }`}
                     style={isCulturia && hasAnimated ? { animation: 'spin-once 2s ease-in-out forwards' } : {}}
                   />
                 </div>
               ) : (
-                <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
+                <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl md:text-3xl font-bold group-hover:scale-105 transition-all duration-200 shadow-sm">
                   {project.letter}
                 </div>
               )}
