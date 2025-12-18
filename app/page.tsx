@@ -13,7 +13,9 @@ import SkyDay from './components/SkyDay';
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
+  const [projectsVisible, setProjectsVisible] = useState(false);
   const heroRef = useRef<HeroHandle>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const heroTitle = document.getElementById('hero-title');
@@ -27,6 +29,25 @@ export default function Home() {
     observer.observe(heroTitle);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (projectsVisible) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setProjectsVisible(true);
+          if (projectsRef.current) observer.unobserve(projectsRef.current);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (projectsRef.current) {
+      observer.observe(projectsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [projectsVisible]);
 
   return (
     <div
@@ -193,15 +214,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-4 md:max-w-4xl md:mx-auto md:px-10 lg:px-18">
+          <div ref={projectsRef} className="grid gap-4 md:max-w-4xl md:mx-auto md:px-10 lg:px-18">
             {projects.map((project, index) => (
-              <div
-                key={project.id}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <ProjectCard project={project} />
-              </div>
+              <ProjectCard key={project.id} project={project} index={index} shouldAnimate={projectsVisible} />
             ))}
           </div>
         </div>

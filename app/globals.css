@@ -104,6 +104,41 @@ body {
   animation: scale-in 0.3s ease-out;
 }
 
+.project-card {
+  transform-origin: center;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition-property: opacity, transform, box-shadow, border-color, background;
+  transition-duration: 0.65s, 0.65s, 0.4s, 0.4s, 0.4s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.project-card-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22), transparent 55%);
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.project-card:hover::after {
+  opacity: 0.45;
+  transform: translateY(0) scale(1);
+}
+
 .animation-delay-2000 {
   animation-delay: 2s;
 }
