@@ -60,8 +60,8 @@ export const projects: Project[] = [
   },
   {
     id: 'okr-tracker',
-    name: 'OKR Tracker',
-    letter: 'O',
+    name: 'Goal Tracker',
+    letter: 'G',
     image: '/slmtrack.png',
     shortDescription:
       '• Personal OKR tracker for weekly planning and self-scoring\n' +
