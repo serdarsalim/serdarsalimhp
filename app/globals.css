@@ -499,10 +499,8 @@ body {
   --blog-auto-angle: 0deg;
   --blog-hover-angle: 0deg;
   transform: rotate(calc(var(--blog-auto-angle) + var(--blog-hover-angle)));
-  animation:
-    blog-cover-peek-initial 2s ease-in-out forwards,
-    blog-cover-peek 20s ease-in-out infinite;
-  animation-delay: 0s, 10s;
+  animation: blog-cover-peek 20s ease-in-out forwards;
+  animation-delay: 20s;
   animation-fill-mode: forwards, both;
   transition: background-color 0.3s, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
   display: flex;
