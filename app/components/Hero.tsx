@@ -1150,6 +1150,9 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <img
                 src="/profile.png"
                 alt="Serdar Salim"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full max-w-xs md:max-w-lg object-contain drop-shadow-2xl relative md:translate-y-8"
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
