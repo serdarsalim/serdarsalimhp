@@ -98,9 +98,12 @@ export default function Experience() {
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold text-white">{exp.role}</h3>
-                    <p className="text-sm md:text-base text-white/80">{exp.company}</p>
+                    <div className="flex flex-wrap items-center gap-2 md:block">
+                      <p className="text-sm md:text-base text-white/80">{exp.company}</p>
+                      <span className="text-xs text-white/70 md:hidden">{exp.period}</span>
+                    </div>
                   </div>
-                  <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
+                  <span className="hidden md:inline text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
                 </div>
                 <p className="relative text-base md:text-lg text-white leading-relaxed">{exp.description}</p>
               </div>
@@ -121,9 +124,12 @@ export default function Experience() {
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold text-white">{edu.degree}</h3>
-                    <p className="text-sm md:text-base text-white/80">{edu.school}</p>
+                    <div className="flex flex-wrap items-center gap-2 md:block">
+                      <p className="text-sm md:text-base text-white/80">{edu.school}</p>
+                      <span className="text-xs text-white/70 md:hidden">{edu.period}</span>
+                    </div>
                   </div>
-                  <span className="text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
+                  <span className="hidden md:inline text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
                 </div>
                 <p className="relative text-base md:text-lg text-white leading-relaxed">{edu.description}</p>
               </div>
