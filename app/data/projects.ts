@@ -21,6 +21,25 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/yourusername/simplify-budget',
   },
   {
+    id: 'okr-tracker',
+    name: 'Cadencia',
+    letter: 'C',
+    image: '/slmtrack.png',
+    shortDescription:
+      '• Personal OKR tracker for weekly planning and self-scoring\n' +
+      '• Set long-term goals, plan each week, and rate your execution\n' +
+      '• Yearly calendar to spot patterns, stay accountable and course-correct',
+    fullDescription:
+      '• Personal OKR tracker for weekly planning and self-scoring\n' +
+      '• Set long-term goals, plan each week, and rate your execution\n' +
+      '• Yearly calendar to spot patterns, stay accountable and course-correct',
+    techStack: ['Next.js', 'Supabase', 'Tailwind CSS'],
+    year: '2025',
+    category: 'Web App',
+    demoUrl: 'https://cadencia.xyz',
+    githubUrl: '',
+  },
+  {
     id: 'culturia',
     name: 'Culturia',
     letter: 'C',
@@ -56,25 +75,6 @@ export const projects: Project[] = [
     year: '2023',
     category: 'Web App',
     demoUrl: 'https://gymtracker4.vercel.app/',
-    githubUrl: '',
-  },
-  {
-    id: 'okr-tracker',
-    name: 'Goal Tracker',
-    letter: 'G',
-    image: '/slmtrack.png',
-    shortDescription:
-      '• Personal OKR tracker for weekly planning and self-scoring\n' +
-      '• Set long-term goals, plan each week, and rate your execution\n' +
-      '• Yearly calendar to spot patterns, stay accountable and course-correct',
-    fullDescription:
-      '• Personal OKR tracker for weekly planning and self-scoring\n' +
-      '• Set long-term goals, plan each week, and rate your execution\n' +
-      '• Yearly calendar to spot patterns, stay accountable and course-correct',
-    techStack: ['Next.js', 'Supabase', 'Tailwind CSS'],
-    year: '2025',
-    category: 'Web App',
-    demoUrl: 'https://slmtrack.vercel.app/',
     githubUrl: '',
   },
   {
