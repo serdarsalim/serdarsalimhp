@@ -1175,7 +1175,7 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
               <div className="space-y-2">
                 <h1
                   id="hero-title"
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight select-none cursor-pointer transition-all duration-300"
+                  className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight select-none cursor-pointer transition-all duration-300"
                   style={{
                     color: '#ffffff',
                     textShadow: '-3px 3px 0 #1e3a5f, -5px 5px 0 #0f1f3d'

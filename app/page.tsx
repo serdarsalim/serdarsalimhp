@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import Hero, { HeroHandle } from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import Experience from './components/Experience';
-import IslamicPattern from './components/IslamicPattern';
 import { projects } from './data/projects';
 import BlogButton from './components/BlogButton';
 import Landscape from './components/Landscape';
-import SkyDay from './components/SkyDay';
 
 export default function Home() {
   const [showNavBrand, setShowNavBrand] = useState(false);
@@ -147,40 +145,36 @@ export default function Home() {
       <Hero ref={heroRef} />
 
       {/* Unified background wrapper for About, Apps, and Experience */}
-      <div className="relative overflow-hidden">
-        <SkyDay />
+      <div className="relative overflow-hidden bg-linear-to-b from-blue-50 via-blue-50/30 to-white">
 
         {/* About Section */}
         <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
           {/* Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-16 lg:px-24 py-16 md:py-24 space-y-6">
-          <h2 className="text-2xl md:text-4xl font-bold text-white/90 text-center tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-center tracking-[0.25em] uppercase">
             About Me
           </h2>
-          <div className="rounded-3xl border border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.45)] overflow-hidden relative">
-            <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
-            <div className="relative px-5 md:px-10 pt-6 md:pt-8 pb-6 md:pb-8 space-y-6">
-              <div className="space-y-4 text-base md:text-lg text-white/90 leading-relaxed">
-                <p>
-                  I build web apps for everyday use and share my thoughts on living with purpose.
-                </p>
-                <p>
-                  I grew up in a Turkish immigrant family in Austria, which taught me two things: adapt fast and aim higher. My dream back then was to live somewhere by choice, not necessity. I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
-                </p>
-              </div>
+          <div className="rounded-3xl border border-gray-200 bg-white shadow-lg overflow-hidden relative">
+            <div className="relative px-5 md:px-10 pt-6 md:pt-8 pb-6 md:pb-8">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:items-center">
+                {/* Text column */}
+                <div className="space-y-4 text-base md:text-lg text-gray-800 leading-relaxed">
+                  <p>
+                    I build web apps for everyday use and share my thoughts on living with purpose.
+                  </p>
+                  <p>
+                    I grew up in a Turkish immigrant family in Austria, which taught me two things: adapt fast and aim higher. My dream back then was to live somewhere by choice, not necessity. I became the first in my family to graduate university and moved to Ireland, where I built a career leading international teams at a global tech company.
+                  </p>
+                  <p>
+                    After living across five countries, I've now made Malaysia home. I'm married and have a daughter. My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
+                  </p>
+                </div>
 
-              <div className="space-y-4 text-base md:text-lg text-white/90 leading-relaxed">
-                <p>
-                  After living across five countries, I've now made Malaysia home. I'm married and have a daughter. My goal now is to help shape a future where Muslims are seen not just as immigrants, but as innovators.
-                </p>
-              </div>
-
-              {/* Closing seal image */}
-              <div className="flex justify-center pt-2">
+                {/* Image column */}
                 <img
                   src="/SalimsWappen.png"
                   alt="Salim's Seal"
-                  className="h-40 sm:h-48 md:h-56 w-auto rounded-md select-none"
+                  className="h-32 sm:h-40 md:h-44 w-auto rounded-md select-none mx-auto md:mx-0"
                   style={{
                     filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06))'
                   }}
@@ -190,22 +184,19 @@ export default function Home() {
           </div>
 
         </div>
-
-        {/* Subtle Islamic pattern - fades upward */}
-        <IslamicPattern position="bottom" variant={1} />
       </section>
 
       {/* Projects Section */}
       <section
         id="projects"
-        className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0 text-white"
+        className="relative overflow-hidden pt-24 pb-12 md:pt-24 md:pb-24 scroll-mt-0"
       >
         <div className="relative max-w-6xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-[0.25em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4 tracking-[0.25em] uppercase">
               Web Apps
             </h2>
-            <p className="text-sm md:text-base text-white/80" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+            <p className="text-sm md:text-base text-gray-700" style={{ fontFamily: 'var(--font-jetbrains)' }}>
              These are webapps I created, free to use.
             </p>
           </div>
@@ -216,9 +207,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-
-        {/* Subtle Islamic pattern - fades upward */}
-        <IslamicPattern position="bottom" variant={1} />
       </section>
 
       {/* Experience Section */}

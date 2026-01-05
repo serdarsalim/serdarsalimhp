@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const experiences = [
     {
       company: 'Independent',
@@ -29,109 +28,54 @@ export default function Experience() {
     },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = rect.height;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / sectionHeight));
-
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-32 text-white overflow-hidden">
-      {/* Parallax color transition - multi-layer gradients moving at different speeds */}
-      <div className="absolute bottom-0 left-0 right-0 h-[120vh] pointer-events-none overflow-hidden">
-        {/* Layer 1 - Slowest (background purple) */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-full"
-          style={{
-            transform: `translateY(${(1 - scrollProgress) * 80}vh)`,
-            opacity: Math.min(0.6, scrollProgress * 1.2),
-          }}
-        >
-          <div className="w-full h-full bg-linear-to-b from-transparent via-[#8a65cc]/20 to-[#5e30d9]/40" />
-        </div>
-
-        {/* Layer 2 - Medium speed (mid purple/pink) */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-full"
-          style={{
-            transform: `translateY(${(1 - scrollProgress) * 50}vh)`,
-            opacity: Math.min(0.5, scrollProgress * 1.5),
-          }}
-        >
-          <div className="w-full h-full bg-linear-to-b from-transparent via-[#be91c6]/15 to-[#8a65cc]/35" />
-        </div>
-
-        {/* Layer 3 - Fastest (foreground warm tones) */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-full"
-          style={{
-            transform: `translateY(${(1 - scrollProgress) * 30}vh)`,
-            opacity: Math.min(0.4, scrollProgress * 1.8),
-          }}
-        >
-          <div className="w-full h-full bg-linear-to-b from-transparent via-[#fea798]/10 to-[#be91c6]/30" />
-        </div>
-      </div>
+    <section ref={sectionRef} className="relative py-16 md:py-32 overflow-hidden">
       <div className="relative max-w-6xl mx-auto px-4 md:px-6">
         {/* Work Experience */}
         <div className="pt-14 md:pt-14 mb-12 md:mb-20 md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Experience</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 tracking-[0.3em] uppercase text-center">Experience</h2>
           <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 py-6 md:px-8 md:py-8 shadow-lg"
               >
-                <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-white">{exp.role}</h3>
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{exp.role}</h3>
                     <div className="flex flex-wrap items-center gap-2 md:block">
-                      <p className="text-sm md:text-base text-white/80">{exp.company}</p>
-                      <span className="text-xs text-white/70 md:hidden">{exp.period}</span>
+                      <p className="text-sm md:text-base text-gray-700">{exp.company}</p>
+                      <span className="text-xs text-gray-600 md:hidden">{exp.period}</span>
                     </div>
                   </div>
-                  <span className="hidden md:inline text-xs md:text-sm text-white/70 mt-1 md:mt-0">{exp.period}</span>
+                  <span className="hidden md:inline text-xs md:text-sm text-gray-600 mt-1 md:mt-0">{exp.period}</span>
                 </div>
-                <p className="relative text-base md:text-lg text-white leading-relaxed">{exp.description}</p>
+                <p className="relative text-base md:text-lg text-gray-800 leading-relaxed">{exp.description}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Education */}
-        <div className="education-sunset md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 tracking-[0.3em] uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.25)] text-center">Education</h2>
+        <div className="md:max-w-4xl md:mx-auto md:px-6 lg:px-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 tracking-[0.3em] uppercase text-center">Education</h2>
           <div className="space-y-6 md:space-y-8">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl px-5 py-6 md:px-8 md:py-8 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 py-6 md:px-8 md:py-8 shadow-lg"
               >
-                <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60" aria-hidden="true" />
                 <div className="relative flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-2">
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-white">{edu.degree}</h3>
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">{edu.degree}</h3>
                     <div className="flex flex-wrap items-center gap-2 md:block">
-                      <p className="text-sm md:text-base text-white/80">{edu.school}</p>
-                      <span className="text-xs text-white/70 md:hidden">{edu.period}</span>
+                      <p className="text-sm md:text-base text-gray-700">{edu.school}</p>
+                      <span className="text-xs text-gray-600 md:hidden">{edu.period}</span>
                     </div>
                   </div>
-                  <span className="hidden md:inline text-xs md:text-sm text-white/70 mt-1 md:mt-0">{edu.period}</span>
+                  <span className="hidden md:inline text-xs md:text-sm text-gray-600 mt-1 md:mt-0">{edu.period}</span>
                 </div>
-                <p className="relative text-base md:text-lg text-white leading-relaxed">{edu.description}</p>
+                <p className="relative text-base md:text-lg text-gray-800 leading-relaxed">{edu.description}</p>
               </div>
             ))}
           </div>

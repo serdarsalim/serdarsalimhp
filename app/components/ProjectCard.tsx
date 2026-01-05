@@ -51,7 +51,7 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className={`project-card group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-white/20 hover:shadow-[0_35px_90px_rgba(0,0,0,0.55)] ${
+      className={`project-card group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-500 hover:border-gray-300 hover:shadow-xl ${
         shouldAnimate ? 'project-card-visible' : ''
       }`}
       style={{ transitionDelay: animationDelay }}
@@ -65,7 +65,6 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
           aria-label={`Visit ${project.name}`}
         />
       ) : null}
-      <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/20 via-transparent to-transparent opacity-60 transition-opacity duration-700 group-hover:opacity-90" aria-hidden="true" />
       <div className="relative p-3 pr-4 md:pr-6">
         <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-3 md:gap-1">
           {/* Left Column - Logo, Title, Links */}
@@ -76,7 +75,7 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
                 <div
                   ref={logoRef as any}
                   onMouseEnter={() => isCulturia && setIsHovered(true)}
-                  className={`shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-white/10 ${
+                  className={`shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center bg-gray-100 ${
                     isCulturia && isHovered
                       ? 'rotate-[-360deg] md:transition-transform md:duration-1500'
                       : isCulturia
@@ -101,7 +100,7 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
 
               {/* Title */}
               <div className="flex-1 flex items-center">
-                <h3 className="text-lg md:text-xl font-semibold text-white">
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900">
                   {project.name}
                 </h3>
               </div>
@@ -110,9 +109,9 @@ export default function ProjectCard({ project, index, shouldAnimate }: ProjectCa
 
           {/* Right Column - Description */}
           <div className="flex items-center">
-            <div className="text-base md:text-lg text-white leading-relaxed w-full space-y-2">
+            <div className="text-base md:text-lg text-gray-800 leading-relaxed w-full space-y-2">
               {project.shortDescription.split('\n').map((line, index) => (
-                <p key={index} className="text-white/90">
+                <p key={index}>
                   {line.replace(/^•\s*/, '')}
                 </p>
               ))}
