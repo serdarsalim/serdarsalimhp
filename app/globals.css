@@ -625,6 +625,8 @@ body {
   transform: scale(0.245);
   transform-origin: bottom center;
   filter: brightness(0.85);
+  /* Make all #1b1b1b colors black */
+  --minaret-black: #0c0207;
 }
 
 /**top-minaret**/
@@ -770,7 +772,7 @@ body {
 .top-minaret .cube {
   width: 250px;
   height: 220px;
-  background-color: #1b1b1b;
+  background-color: var(--minaret-black, #0c0207);
   position: relative;
   top: -150px;
   left: -28px;
@@ -815,14 +817,14 @@ body {
 .top-minaret .cube .porte .fill1 {
   width: 12px;
   height: 120px;
-  background-color: #1b1b1b;
+  background-color: var(--minaret-black, #0c0207);
   position: relative;
   top: -90px;
 }
 .top-minaret .cube .porte .fill2 {
   width: 11px;
   height: 120px;
-  background-color: #1b1b1b;
+  background-color: var(--minaret-black, #0c0207);
   position: relative;
   top: -210px;
   float: right;
@@ -835,7 +837,7 @@ body {
 .top-minaret .cube .porte .arc-ext .motif-cadre .motif-left{
   width: 22px;
   height: 10px;
-  background-color: #1b1b1b;
+  background-color: var(--minaret-black, #0c0207);
   border: 1px solid #353535;
   border-radius: 20px;
   float: left;
@@ -844,7 +846,7 @@ body {
 .top-minaret .cube .porte .arc-ext .motif-cadre .motif-right{
   width: 22px;
   height: 10px;
-  background-color: #1b1b1b;
+  background-color: var(--minaret-black, #0c0207);
   border: 1px solid #353535;
   border-radius: 20px;
   float: right;

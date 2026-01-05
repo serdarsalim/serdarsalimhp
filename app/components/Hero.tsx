@@ -1130,6 +1130,15 @@ const Hero = forwardRef<HeroHandle>(function Hero(_, ref) {
       {/* Falling Stars Background */}
       <Stars />
 
+      {/* Bottom gradient blend to About Me section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[30vh] pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(239, 246, 255, 0.3) 40%, rgba(239, 246, 255, 0.7) 70%, rgba(239, 246, 255, 0.95) 100%)',
+          zIndex: 1,
+        }}
+      />
+
       {/* Content - wrapped for animation with parallax fade */}
       <div
         className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 flex items-center min-h-screen py-20 md:py-0"

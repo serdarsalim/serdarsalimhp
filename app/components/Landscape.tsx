@@ -148,7 +148,7 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
 
       {/* Animated cat sprite - walking in place */}
       <div
-        className="cat-sprite"
+        className="cat-sprite hidden"
         style={{
           position: 'absolute',
           bottom: '17vh',
@@ -217,8 +217,8 @@ export default function Landscape({ heroRef: _heroRef }: LandscapeProps) {
         }
 
         @keyframes moveMinaretWrapper {
-          0%, 100% { transform: translateX(0); }
-          99% { transform: translateX(-3000px); }
+          from { transform: translateX(0); }
+          to { transform: translateX(-3000px); }
         }
 
         @keyframes catWalk {
