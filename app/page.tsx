@@ -145,7 +145,7 @@ export default function Home() {
       <Hero ref={heroRef} />
 
       {/* Unified background wrapper for About, Apps, and Experience */}
-      <div className="relative overflow-hidden bg-linear-to-b from-blue-50 via-blue-50/30 to-white">
+      <div className="relative overflow-hidden bg-linear-to-b from-blue-50 via-blue-50/30 to-blue-100">
 
         {/* About Section */}
         <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
